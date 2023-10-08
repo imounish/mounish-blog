@@ -2,7 +2,7 @@ import React from 'react';
 
 const IndexPage = () => (
   <>
-    <h1>Welcome to "TechHub-Blog" Project</h1>
+    <h1>Welcome to "mounish-blog" Project</h1>
     <h2>
       - by{' '}
       <a
