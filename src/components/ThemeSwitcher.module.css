@@ -1,0 +1,7 @@
+.theme-switch input {
+  display: none;
+}
+
+.theme-switch:hover {
+  cursor: pointer;
+}
