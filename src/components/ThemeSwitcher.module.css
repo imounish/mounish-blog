@@ -5,3 +5,41 @@
 .theme-switch:hover {
   cursor: pointer;
 }
+
+.fadeIn {
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+  transition: width 0.5s, height 0.5s, opacity 0.5s;
+}
+
+.fadeOut {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: width 0.5s, height 0.5s, opacity 0.5s;
+}
+
+.vertical-shake:hover {
+  /* animation: vertical-shaking 0.3s infinite; */
+  animation: vertical-shaking 0.5s;
+  animation-duration: 500ms;
+}
+
+@keyframes vertical-shaking {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  75% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

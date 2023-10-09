@@ -1,20 +1,29 @@
 import React from 'react';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
+import { HiMoon, HiSun } from 'react-icons/hi2';
 import { ThemeToggler } from 'gatsby-plugin-dark-mode';
-import { themeSwitch } from './ThemeSwitcher.module.css';
+import {
+  themeSwitch,
+  fadeIn,
+  fadeOut,
+  verticalShake,
+} from './ThemeSwitcher.module.css';
 
 export default function ThemeSwitcher() {
   return (
     <ThemeToggler>
       {({ theme, toggleTheme }) => (
-        <label className={themeSwitch}>
+        <label className={`${themeSwitch} ${verticalShake}`}>
           <input
             type="checkbox"
             onChange={(e) => toggleTheme(e.target.checked ? 'dark' : 'light')}
             checked={theme === 'dark'}
           />
-          {theme !== 'dark' && <SunIcon className="w-6" />}
-          {theme === 'dark' && <MoonIcon className="w-6 dark:text-gray-50" />}
+          <HiSun className={theme !== 'dark' ? fadeIn : fadeOut} />
+          <HiMoon
+            className={theme === 'dark' ? `dark:text-white ${fadeIn}` : fadeOut}
+          />
+          {/* {theme !== 'dark' && <SunIcon className="w-6" />}
+          {theme === 'dark' && <MoonIcon className="w-6 dark:text-gray-50" />} */}
         </label>
       )}
     </ThemeToggler>
