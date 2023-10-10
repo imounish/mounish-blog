@@ -12,6 +12,8 @@ import { hoverUnderlineAnimation } from './Header.module.css';
 
 function Header() {
   const [openNav, setOpenNav] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
   const { openSearchModal } = useContext(SearchModalContext);
 
   useEffect(() => {
@@ -20,6 +22,19 @@ function Header() {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset;
+    setVisible
+      (prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    setPrevScrollPos(currentScrollPos);
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos, visible, handleScroll])
 
   const navList = (
     <ul className="dark:text-gray-50 mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -40,7 +55,13 @@ function Header() {
   );
 
   return (
-    <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-gray-900 dark:shadow-white font-worksans text-base">
+    <Navbar
+      className="fixed top-0 z-10 transition-opacity backdrop-blur-md opacity-100 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-black/70  dark:shadow-sm dark:shadow-gray-800 font-worksans text-base"
+      style={{
+        top: visible ? "0" : "-68px",
+        transition: "0.5s",
+      }}
+    >
       <div className="flex items-center justify-between relative text-black">
         <Logo />
         <div className="flex items-center gap-4">

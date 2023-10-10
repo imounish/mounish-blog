@@ -39,14 +39,14 @@ function Search() {
   return (
     <>
       <div
-        className={`transition-opacity backdrop-blur-sm opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
+        className={`transition-opacity backdrop-blur opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
         onClick={closeSearchModal}
         onKeyDown={closeSearchModal}
         role="button"
         tabIndex={0}
         aria-label="Close"
       />
-      <div className={`text-black font-worksans + ${modal}`}>
+      <div className={`font-worksans + ${modal}`}>
         <SearchField
           value={searchQuery}
           setValue={setSearchQuery}

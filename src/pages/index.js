@@ -8,8 +8,12 @@ const IndexPage = () => (
   <>
     <Seo />
     {/* <HeroSection /> */}
-    <div className="container mx-auto">
-      <FeaturedBlogs />
+    <div
+      className="bg-white dark:bg-black pt-[52px] lg:pt-[68px]"
+    >
+      <div className="container mx-auto ">
+        <FeaturedBlogs />
+      </div>
     </div>
   </>
 );

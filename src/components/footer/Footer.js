@@ -4,7 +4,7 @@ import { socialLinks, websiteUrl } from '../../constants/social';
 
 function Footer() {
   return (
-    <footer className="w-full px-0 sm:px-4 dark:bg-gray-900 dark:text-gray-400 text-gray-800 fixed bottom-0 font-worksans">
+    <footer className="w-full px-0 sm:px-4 dark:bg-black dark:text-gray-400 text-gray-800 font-worksans">
       <div className="w-full mx-auto max-w-full p-4 md:flex md:items-center md:justify-between">
         <span className="text-sm sm:text-center">
           © {new Date().getFullYear()}{' '}

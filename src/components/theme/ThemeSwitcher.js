@@ -15,17 +15,17 @@ export default function ThemeSwitcher() {
         <label className={`${themeSwitch} ${verticalShake}`}>
           <input
             type="checkbox"
-            onChange={(e) => toggleTheme(e.target.checked ? 'dark' : 'light')}
-            checked={theme === 'dark'}
+            onChange={(e) => toggleTheme(e.target.checked ? "dark" : "light")}
+            checked={theme === "dark"}
           />
           <HiSun
-            className={`h-6 w-6 sm:h-8 sm:w-8 ${
-              theme !== 'dark' ? fadeIn : fadeOut
+            className={`h-6 w-6 sm:h-8 sm:w-8 text-gray-800 hover:text-black ${
+              theme !== "dark" ? fadeIn : fadeOut
             }`}
           />
           <HiMoon
-            className={`h-6 w-6 sm:h-8 sm:w-8 dark:text-white ${
-              theme === 'dark' ? `${fadeIn}` : fadeOut
+            className={`h-6 w-6 sm:h-8 sm:w-8 dark:text-gray-400 dark:hover:text-gray-50 ${
+              theme === "dark" ? `${fadeIn}` : fadeOut
             }`}
           />
         </label>

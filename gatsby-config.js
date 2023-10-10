@@ -1,4 +1,5 @@
 require('dotenv').config('./.env');
+const sanityConfig = require('./sanity.config')
 
 module.exports = {
   siteMetadata: {
@@ -13,5 +14,11 @@ module.exports = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-source-sanity',
+      options: {
+        ...sanityConfig
+      }
+    }
   ],
 };

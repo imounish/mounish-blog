@@ -7,13 +7,13 @@ function SearchField({ value, setValue, onFocus, closeModal }) {
   return (
     <div className="rounded-lg text-lg flex flex-row items-center justify-between ring-0 border-0">
       <div className="absolute inset-y-0 left-0 ml-3 flex items-center">
-        <MagnifyingGlassIcon className="w-6 h-6 text-black" />
+        <MagnifyingGlassIcon className="w-6 h-6 text-gray-900 dark:text-gray-100" />
       </div>
       <input
         type="text"
         name="Search"
         id="search"
-        className="block w-full rounded-lg border-0 py-2 px-11 text-black placeholder:text-gray-600 focus:outline-none"
+        className="block w-full rounded-lg border-0 py-2 px-11 text-black dark:text-gray-50 placeholder:text-gray-600 dark:placeholder:text-gray-400 focus:outline-none dark:bg-gray-800"
         placeholder="Search"
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
@@ -26,7 +26,7 @@ function SearchField({ value, setValue, onFocus, closeModal }) {
         className="absolute inset-y-0 right-0 mr-3 flex items-center"
         onClick={closeModal}
       >
-        <MdClose className="w-6 h-6 text-black" />
+        <MdClose className="w-6 h-6 text-gray-900 dark:text-gray-100" />
       </button>
     </div>
   );
