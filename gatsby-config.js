@@ -1,10 +1,25 @@
 require('dotenv').config('./.env');
+const sanityConfig = require('./sanity.config')
 
 module.exports = {
   siteMetadata: {
-    title: `TechHub-blog`,
-    siteUrl: `https://techhub-blog.netlify.com`,
-    description: `TechHub Blog is a platform for latest technology news and updates.`,
+    title: `mounish's blog`,
+    siteUrl: `https://blog.mounish.dev`,
+    description: `A website where you can read articles, tutorials, and updates from Mounish as he dives into depths of imagination, weaves words into captivating stories.`,
   },
-  plugins: [],
+  plugins: [
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-dark-mode',
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-source-sanity',
+      options: {
+        ...sanityConfig
+      }
+    },
+    'gatsby-plugin-netlify'
+  ],
 };
