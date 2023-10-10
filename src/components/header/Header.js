@@ -3,11 +3,11 @@ import { Link } from 'gatsby';
 import { Navbar, IconButton, Collapse } from '@material-tailwind/react';
 import { HiOutlineMenu, HiX } from 'react-icons/hi';
 
-import { menu } from '../constants/menu';
-import Logo from './Logo';
-import ThemeSwitcher from './ThemeSwitcher';
-import { SearchModalContext } from '../context/searchModalContext';
-import SearchButton from './SearchButton';
+import { menu } from '../../constants/menu';
+import Logo from '../logo/Logo';
+import ThemeSwitcher from '../theme/ThemeSwitcher';
+import { SearchModalContext } from '../../context/searchModalContext';
+import SearchButton from '../search/SearchButton';
 import { hoverUnderlineAnimation } from './Header.module.css';
 
 function Header() {

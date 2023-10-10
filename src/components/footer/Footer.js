@@ -1,6 +1,6 @@
 import { Link } from 'gatsby';
 import React from 'react';
-import { socialLinks, websiteUrl } from '../constants/social';
+import { socialLinks, websiteUrl } from '../../constants/social';
 
 function Footer() {
   return (

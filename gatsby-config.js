@@ -6,5 +6,11 @@ module.exports = {
     siteUrl: `https://blog.mounish.dev`,
     description: `A website where you can read articles, tutorials, and updates from Mounish as he dives into depths of imagination, weaves words into captivating stories.`,
   },
-  plugins: ['gatsby-plugin-postcss', 'gatsby-plugin-dark-mode'],
+  plugins: [
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-dark-mode',
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+  ],
 };
