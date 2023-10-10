@@ -19,6 +19,7 @@ module.exports = {
       options: {
         ...sanityConfig
       }
-    }
+    },
+    'gatsby-plugin-netlify'
   ],
 };
