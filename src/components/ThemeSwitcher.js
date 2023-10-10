@@ -18,12 +18,16 @@ export default function ThemeSwitcher() {
             onChange={(e) => toggleTheme(e.target.checked ? 'dark' : 'light')}
             checked={theme === 'dark'}
           />
-          <HiSun className={theme !== 'dark' ? fadeIn : fadeOut} />
-          <HiMoon
-            className={theme === 'dark' ? `dark:text-white ${fadeIn}` : fadeOut}
+          <HiSun
+            className={`h-6 w-6 sm:h-8 sm:w-8 ${
+              theme !== 'dark' ? fadeIn : fadeOut
+            }`}
           />
-          {/* {theme !== 'dark' && <SunIcon className="w-6" />}
-          {theme === 'dark' && <MoonIcon className="w-6 dark:text-gray-50" />} */}
+          <HiMoon
+            className={`h-6 w-6 sm:h-8 sm:w-8 dark:text-white ${
+              theme === 'dark' ? `${fadeIn}` : fadeOut
+            }`}
+          />
         </label>
       )}
     </ThemeToggler>

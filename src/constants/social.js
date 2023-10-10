@@ -16,7 +16,9 @@ export const socialLinks = [
   },
   {
     name: 'medium',
-    url: 'https://medium.com/imounish',
+    url: 'https://medium.com/@mounishp',
     icon: <FaMedium className="w-6 h-6" />,
   },
 ];
+
+export const websiteUrl = 'https://mounish.dev';
