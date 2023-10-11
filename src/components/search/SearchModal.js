@@ -39,7 +39,7 @@ function Search() {
   return (
     <>
       <div
-        className={`transition-opacity backdrop-blur opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
+        className={`transition-opacity backdrop-blur-xl opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
         onClick={closeSearchModal}
         onKeyDown={closeSearchModal}
         role="button"

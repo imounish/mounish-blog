@@ -9,6 +9,7 @@ import {
 } from './ThemeSwitcher.module.css';
 
 export default function ThemeSwitcher() {
+  // todo: when opening on phone, it is showing light mode icon in dark mode
   return (
     <ThemeToggler>
       {({ theme, toggleTheme }) => (
