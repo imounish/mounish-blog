@@ -9,9 +9,9 @@ import {
 } from './ThemeSwitcher.module.css';
 
 const useThemeDetector = () => {
-  const getCurrentTheme = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme());
+  // const getCurrentTheme = () =>
+  //   window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [isDarkTheme, setIsDarkTheme] = useState();
   const mqListener = (e) => {
     setIsDarkTheme(e.matches);
   };
