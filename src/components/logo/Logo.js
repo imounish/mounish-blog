@@ -5,7 +5,7 @@ function Logo() {
   return (
     <Link
       to="/"
-      className="mr-4 py-1 font-bold text-xl dark:text-gray-50 font-warnock tracking-wide"
+      className="mr-4 py-1 font-bold text-2xl dark:text-gray-50 font-warnockdisp tracking-wide"
     >
       mounish's blog
     </Link>

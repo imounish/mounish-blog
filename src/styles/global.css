@@ -2,33 +2,279 @@
 @tailwind components;
 @tailwind utilities;
 
+/* work sans font */
 @font-face {
   font-family: "work-sans";
   src: url(/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf)
     format("truetype-variations");
+  font-style: normal;
   font-weight: 1 999;
 }
 
 @font-face {
-  font-family: "work-sans-italic";
+  font-family: "work-sans";
   src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf)
     format("truetype-variations");
+  font-style: italic;
   font-weight: 1 999;
 }
 
+/* warnock pro font */
+/* normal - light */
 @font-face {
   font-family: "warnock";
-  src: url(/fonts/Warnock_Pro/WarnockPro-Regular.otf) format("opentype");
+  src: url(/fonts/Warnock_Pro/WarnockPro-Light.otf) format("opentype");
+  font-style: normal;
+  font-weight: 300;
 }
 
+/* normal - regular */
 @font-face {
-  font-family: "warnock-bold";
+  font-family: "warnock";
+  src: url(/fonts/Warnock_Pro/WarnockPro.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* normal - semi bold */
+@font-face {
+  font-family: "warnock";
+  src: url(/fonts/Warnock_Pro/WarnockPro-Semibold.otf) format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* normal - bold */
+@font-face {
+  font-family: "warnock";
   src: url(/fonts/Warnock_Pro/WarnockPro-Bold.otf) format("opentype");
-  font-weight: bold;
+  font-style: normal;
+  font-weight: 700;
 }
 
+/* italic - light */
 @font-face {
-  font-family: "warnock-italic";
+  font-family: "warnock";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightIt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* italic - regular */
+@font-face {
+  font-family: "warnock";
   src: url(/fonts/Warnock_Pro/WarnockPro-It.otf) format("opentype");
   font-style: italic;
+  font-weight: 400;
+}
+
+/* italic - semi bold */
+@font-face {
+  font-family: "warnock";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldIt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* italic - bold */
+@font-face {
+  font-family: "warnock";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldIt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* warnock pro display font */
+/* normal - light */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightDisp.otf) format("opentype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+/* normal - regular */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-Disp.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* normal - semi bold */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldDisp.otf) format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* normal - bold */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldDisp.otf) format("opentype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* italic - light */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightItDisp.otf) format("opentype");
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* italic - regular */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-ItDisp.otf) format("opentype");
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* italic - semi bold */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldItDisp.otf) format("opentype");
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* italic - bold */
+@font-face {
+  font-family: "warnock-disp";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldItDisp.otf) format("opentype");
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* warnock pro caption font */
+/* normal - light */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightCapt.otf) format("opentype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+/* normal - regular */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-Capt.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* normal - semi bold */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldCapt.otf) format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* normal - bold */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldCapt.otf) format("opentype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* italic - light */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightItCapt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* italic - regular */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-ItCapt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* italic - semi bold */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldItCapt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* italic - bold */
+@font-face {
+  font-family: "warnock-capt";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldItCapt.otf) format("opentype");
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* warnock pro subheading font */
+/* normal - light */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightSubh.otf) format("opentype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+/* normal - regular */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-Subh.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* normal - semi bold */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldSubh.otf) format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* normal - bold */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldSubh.otf) format("opentype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* italic - light */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-LightItSubh.otf) format("opentype");
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* italic - regular */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-ItSubh.otf) format("opentype");
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* italic - semi bold */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-SemiboldItSubh.otf) format("opentype");
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* italic - bold */
+@font-face {
+  font-family: "warnock-subh";
+  src: url(/fonts/Warnock_Pro/WarnockPro-BoldItSubh.otf) format("opentype");
+  font-style: italic;
+  font-weight: 700;
 }

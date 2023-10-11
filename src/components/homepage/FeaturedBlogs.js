@@ -5,7 +5,7 @@ import FeaturedBlogGrid from '../blogs/FeaturedBlogGrid';
 function FeaturedBlogs() {
   const { allSanityFeatured } = useStaticQuery(graphql`
     {
-      allSanityFeatured(filter: { _id: { eq: "featuredItems" } } ) {
+      allSanityFeatured(filter: { _id: { eq: "featuredItems" } }) {
         nodes {
           blogs {
             title
@@ -24,7 +24,6 @@ function FeaturedBlogs() {
               slug {
                 current
               }
-              
             }
             slug {
               current

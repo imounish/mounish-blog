@@ -6,7 +6,7 @@ import { hoverUnderlineAnimation } from './BlogItem.module.css';
 function BlogItem({ title, path, author, categories, image, publishedAt }) {
   return (
     <div className="flex flex-wrap">
-      <article className="overflow-hidden">
+      <article className="overflow-hidden font-worksans">
         <Link to={`/posts/${path}`}>
           <GatsbyImage
             image={image.imageData}
@@ -20,7 +20,7 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
           />
         </Link>
         <header className="flex flex-col items-start leading-tight">
-          <ul className="flex flex-row items-center w-full font-worksans pt-2 pb-1 text-base">
+          <ul className="flex flex-row items-center w-full pt-2 pb-1 text-base">
             {categories.map((category) => (
               <li key={category.title} className="pr-2">
                 <Link
@@ -33,7 +33,8 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
             ))}
           </ul>
 
-          <h1 className="text-xl font-worksans tracking-tight font-semibold">
+          <h1 className="text-2xl tracking-wide font-bold font-warnockdisp">
+            {/* title of the blog post */}
             <Link
               className={`no-underline text-gray-900 dark:text-gray-50 ${hoverUnderlineAnimation}`}
               to={`/posts/${path}`}
@@ -45,17 +46,24 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
 
         <footer className="flex items-center justify-start leading-none py-2 md:pt-3">
           <Link
-            className="flex items-center text-sm text-gray-800 dark:text-gray-400 font-worksans"
+            className="flex items-center text-sm text-gray-800 dark:text-gray-400"
             to={`/author/${author.slug.current}`}
           >
             <GatsbyImage
-              alt={author.profileImage.asset.altText}
+              alt={
+                author.profileImage.asset.altText
+                  ? author.profileImage.asset.altText
+                  : ''
+              }
               className="block rounded-full"
               image={author.profileImage.asset.gatsbyImageData}
             />
             <p className="ml-2">{author.name}</p>
           </Link>
-          <p className="mx-2 text-gray-700 dark:text-gray-400"> &#9679; </p>
+          <p className="mx-2 text-gray-700 dark:text-gray-400 text-xs">
+            {' '}
+            &#9679;{' '}
+          </p>
           <p className="text-sm text-gray-600">
             {new Date(publishedAt).toLocaleDateString('en-us', {
               weekday: 'short',

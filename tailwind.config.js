@@ -12,6 +12,9 @@ module.exports = withMT({
     fontFamily: {
       worksans: ['work-sans', 'sans-serif'],
       warnock: ['warnock', 'serif'],
+      warnockdisp: ['warnock-disp', 'serif'],
+      warnockcapt: ['warnock-capt', 'serif'],
+      warnocksubh: ['warnock-subh', 'serif'],
     },
   },
   plugins: [],
