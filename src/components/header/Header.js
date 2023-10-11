@@ -57,7 +57,7 @@ function Header() {
     <Navbar
       className="fixed top-0 z-10 transition-opacity backdrop-blur-lg opacity-100 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-black/75 font-worksans text-base"
       style={{
-        top: visible ? '0' : '-68px',
+        top: visible ? '0' : '-72px',
         transition: '0.5s',
         '-webkit-backdrop-filter': 'blur(16px)',
       }}
