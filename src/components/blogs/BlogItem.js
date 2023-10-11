@@ -1,7 +1,7 @@
 import React from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
-import { hoverUnderlineAnimation } from "./BlogItem.module.css";
+import { hoverUnderlineAnimation } from './BlogItem.module.css';
 
 function BlogItem({ title, path, author, categories, image, publishedAt }) {
   return (
@@ -11,9 +11,12 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
           <GatsbyImage
             image={image.imageData}
             alt={image.altText}
-            className="block h-auto w-full rounded-md scale-100 hover:scale-105 transition-all"
+            className="block h-auto w-full rounded-md scale-100 hover:scale-105"
             loading="lazy"
-            style={{ maxHeight: "258px" }}
+            style={{
+              height: '258px',
+              transition: '0.3s ease-in-out transform',
+            }}
           />
         </Link>
         <header className="flex flex-col items-start leading-tight">
@@ -54,11 +57,11 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
           </Link>
           <p className="mx-2 text-gray-700 dark:text-gray-400"> &#9679; </p>
           <p className="text-sm text-gray-600">
-            {new Date(publishedAt).toLocaleDateString("en-us", {
-              weekday: "short",
-              year: "numeric",
-              month: "short",
-              day: "numeric",
+            {new Date(publishedAt).toLocaleDateString('en-us', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
             })}
           </p>
         </footer>
