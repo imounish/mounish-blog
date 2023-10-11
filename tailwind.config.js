@@ -15,6 +15,8 @@ module.exports = withMT({
       warnockdisp: ['warnock-disp', 'serif'],
       warnockcapt: ['warnock-capt', 'serif'],
       warnocksubh: ['warnock-subh', 'serif'],
+      lora: ['lora', 'serif'],
+      courier: ['courier-prime', 'monospace'],
     },
   },
   plugins: [],

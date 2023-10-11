@@ -4,7 +4,7 @@ import BlogItem from './BlogItem';
 function FeaturedBlogGrid({ blogs }) {
   return (
     <>
-      <div className="grid sm:grid-cols-2 gap-8 my-8 sm:my-10 lg:my-12 mx-auto px-4 lg:px-12">
+      <div className="grid sm:grid-cols-2 gap-8 mb-8 sm:mb-10 lg:mb-12 mt-3 lg:mt-4 mx-auto px-4 lg:px-12">
         {blogs &&
           blogs.slice(0, 2).map((blog) => (
             <BlogItem
@@ -22,7 +22,7 @@ function FeaturedBlogGrid({ blogs }) {
           ))}
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 my-8 sm:my-10 lg:my-12 mx-auto px-4 lg:px-12">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10 lg:mt-12 mb-2 lg:mb-4 mx-auto px-4 lg:px-12">
         {blogs &&
           blogs.slice(2).map((blog) => (
             <BlogItem

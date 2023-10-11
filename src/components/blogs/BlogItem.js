@@ -33,7 +33,7 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
             ))}
           </ul>
 
-          <h1 className="text-2xl tracking-wide font-bold font-warnockdisp">
+          <h3 className="text-2xl tracking-wide font-semibold font-lora">
             {/* title of the blog post */}
             <Link
               className={`no-underline text-gray-900 dark:text-gray-50 ${hoverUnderlineAnimation}`}
@@ -41,7 +41,7 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
             >
               {title}
             </Link>
-          </h1>
+          </h3>
         </header>
 
         <footer className="flex items-center justify-start leading-none py-2 md:pt-3">
@@ -66,7 +66,7 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
           </p>
           <p className="text-sm text-gray-600">
             {new Date(publishedAt).toLocaleDateString('en-us', {
-              weekday: 'short',
+              // weekday: 'short',
               year: 'numeric',
               month: 'short',
               day: 'numeric',

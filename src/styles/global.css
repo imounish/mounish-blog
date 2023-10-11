@@ -19,6 +19,55 @@
   font-weight: 1 999;
 }
 
+/* courier prime font */
+/* normal - regular */
+@font-face {
+  font-family: "courier-prime";
+  src: url(/fonts/Courier_Prime/CourierPrime-Regular.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* normal - bold */
+@font-face {
+  font-family: "courier-prime";
+  src: url(/fonts/Courier_Prime/CourierPrime-Bold.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* italic - regular */
+@font-face {
+  font-family: "courier-prime";
+  src: url(/fonts/Courier_Prime/CourierPrime-Italic.ttf) format("truetype");
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* italic - bold */
+@font-face {
+  font-family: "courier-prime";
+  src: url(/fonts/Courier_Prime/CourierPrime-BoldItalic.ttf) format("truetype");
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* lora font */
+@font-face {
+  font-family: "lora";
+  src: url(/fonts/Lora/Lora-VariableFont_wght.ttf) format("truetype-variations");
+  font-style: normal;
+  font-weight: 1 999;
+}
+
+@font-face {
+  font-family: "lora";
+  src: url(/fonts/Lora/Lora-Italic-VariableFont_wght.ttf)
+    format("truetype-variations");
+  font-style: italic;
+  font-weight: 1 999;
+}
+
 /* warnock pro font */
 /* normal - light */
 @font-face {
