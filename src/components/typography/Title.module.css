@@ -11,7 +11,6 @@
   height: 0.1rem;
   bottom: -0.1rem;
   left: 0;
-  background-color: #41b3a3;
   transform-origin: bottom right;
   transition: transform 300ms ease-out;
 }
@@ -19,4 +18,12 @@
 .hover-underline-animation:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.bg-custom-green::after {
+  background-color: #41b3a3;
+}
+
+.bg-custom-maroon::after {
+  background-color: #9a1750;
 }

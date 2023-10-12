@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+ import styled from 'styled-components';
 
 export const PageSpaceStyles = styled.div`
   padding-top: ${(props) => props.top || 100}px;

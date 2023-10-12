@@ -41,7 +41,7 @@ function Search() {
       <div
         className={`transition-opacity backdrop-blur-lg opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
         style={{
-          '-webkit-backdrop-filter': 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
         }}
         onClick={closeSearchModal}
         onKeyDown={closeSearchModal}

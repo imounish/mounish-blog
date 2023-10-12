@@ -80,7 +80,7 @@
 /* normal - regular */
 @font-face {
   font-family: "warnock";
-  src: url(/fonts/Warnock_Pro/WarnockPro.otf) format("opentype");
+  src: url(/fonts/Warnock_Pro/WarnockPro-Regular.otf) format("opentype");
   font-style: normal;
   font-weight: 400;
 }

@@ -1,20 +1,26 @@
 import React from 'react';
 import CategoryItem from './CategoryItem';
+import SectionRest from '../partials/SectionRest';
+import SectionBottom from '../partials/SectionBottom';
 
 function FeaturedCategoriesGrid({ categories }) {
-  console.log(categories);
   return (
-    <div className="mx-auto px-4 lg:px-12">
+    <SectionRest className="flex flex-col gap-8">
       {categories &&
         categories.map((category) => (
           <CategoryItem
             key={category.id}
             title={category.title}
             path={category.slug.current}
+            color={category.color}
             description={category._rawDescription}
+            image={{
+              imageData: category.coverImage.asset.gatsbyImageData,
+              altText: category.coverImage.alt,
+            }}
           />
         ))}
-    </div>
+    </SectionRest>
   );
 }
 

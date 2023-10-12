@@ -55,11 +55,11 @@ function Header() {
 
   return (
     <Navbar
-      className="fixed top-0 z-10 transition-opacity backdrop-blur-lg opacity-100 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-black/75 font-worksans text-base"
+      className="fixed top-0 z-10 transition-opacity backdrop-blur-lg opacity-100 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-black/75 font-worksans text-lg"
       style={{
         top: visible ? '0' : '-72px',
         transition: '0.5s',
-        '-webkit-backdrop-filter': 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
       }}
     >
       <div className="flex items-center justify-between relative text-black">

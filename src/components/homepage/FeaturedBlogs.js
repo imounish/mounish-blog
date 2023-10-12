@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import FeaturedBlogGrid from '../blogs/FeaturedBlogGrid';
-import SectionHeading from '../typography/SectionHeading';
+import Section from '../partials/Section';
 
 function FeaturedBlogs() {
   const { allSanityFeatured } = useStaticQuery(graphql`
@@ -9,15 +9,11 @@ function FeaturedBlogs() {
       allSanityFeatured(filter: { _id: { eq: "featuredItems" } }) {
         nodes {
           blogs {
-            title
             id
+            title
             publishedAt
-            coverImage {
-              alt
-              asset {
-                gatsbyImageData(placeholder: BLURRED)
-                altText
-              }
+            slug {
+              current
             }
             categories {
               title
@@ -26,8 +22,12 @@ function FeaturedBlogs() {
                 current
               }
             }
-            slug {
-              current
+            coverImage {
+              alt
+              asset {
+                gatsbyImageData(placeholder: BLURRED)
+                altText
+              }
             }
             author {
               name
@@ -50,16 +50,19 @@ function FeaturedBlogs() {
   const featuredBlogs = allSanityFeatured.nodes[0].blogs;
 
   return (
-    <div className="pt-2 pb-2 md:pt-4 lg:pt-8 md:pb-4">
-      {/* <h2 className="font-worksans text-2xl sm:text-2xl text-black dark:text-gray-50 px-4 sm:px-0">
-        Featured
-      </h2> */}
-      {/* <BlogGrid blogs={featuredBlogs} /> */}
-      <SectionHeading className="mx-auto px-4 lg:px-12">
-        top posts
-      </SectionHeading>
+    // <div className="pt-2 pb-2 md:pt-4 lg:pt-8 md:pb-4">
+    //   {/* <h2 className="font-worksans text-2xl sm:text-2xl text-black dark:text-gray-50 px-4 sm:px-0">
+    //     Featured
+    //   </h2> */}
+    //   {/* <BlogGrid blogs={featuredBlogs} /> */}
+    //   <SectionHeading className="mx-auto px-4 lg:px-12">
+    //     top posts
+    //   </SectionHeading>
+    //   <FeaturedBlogGrid blogs={featuredBlogs} />
+    // </div>
+    <Section sectionHeading='top posts'>
       <FeaturedBlogGrid blogs={featuredBlogs} />
-    </div>
+    </Section>
   );
 }
 

@@ -8,6 +8,10 @@ import {
   verticalShake,
 } from './ThemeSwitcher.module.css';
 
+// TODO: use localStorage to save the user preference and update accordingly
+// write a util fn to store the dark mode preference
+// explore and implement adding class to the body tag of the website directly without using 3rd party plugin
+
 const useThemeDetector = () => {
   // const getCurrentTheme = () =>
   //   window.matchMedia('(prefers-color-scheme: dark)').matches;

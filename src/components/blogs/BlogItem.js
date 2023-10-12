@@ -1,7 +1,7 @@
 import React from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
-import { hoverUnderlineAnimation } from './BlogItem.module.css';
+import Title from '../typography/Title';
 
 function BlogItem({ title, path, author, categories, image, publishedAt }) {
   return (
@@ -10,7 +10,7 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
         <Link to={`/posts/${path}`}>
           <GatsbyImage
             image={image.imageData}
-            alt={image.altText}
+            alt={image.altText ? image.altText : ''}
             className="block h-auto w-full rounded-md scale-100 hover:scale-105"
             loading="lazy"
             style={{
@@ -32,19 +32,14 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
               </li>
             ))}
           </ul>
-
-          <h3 className="text-2xl tracking-wide font-semibold font-lora">
-            {/* title of the blog post */}
-            <Link
-              className={`no-underline text-gray-900 dark:text-gray-50 ${hoverUnderlineAnimation}`}
-              to={`/posts/${path}`}
-            >
-              {title}
-            </Link>
-          </h3>
+          <Title path={`/posts/${path}`} highLightColor="green">
+            {title}
+          </Title>
         </header>
 
-        <footer className="flex items-center justify-start leading-none py-2 md:pt-3">
+        <footer className="flex items-center justify-start leading-none py-1">
+          {/* 
+          // commenting the author section
           <Link
             className="flex items-center text-sm text-gray-800 dark:text-gray-400"
             to={`/author/${author.slug.current}`}
@@ -63,8 +58,9 @@ function BlogItem({ title, path, author, categories, image, publishedAt }) {
           <p className="mx-2 text-gray-700 dark:text-gray-400 text-xs">
             {' '}
             &#9679;{' '}
-          </p>
+          </p> */}
           <p className="text-sm text-gray-600">
+            <span className='italic font-warnockcapt font-bold text-base'>On </span>
             {new Date(publishedAt).toLocaleDateString('en-us', {
               // weekday: 'short',
               year: 'numeric',

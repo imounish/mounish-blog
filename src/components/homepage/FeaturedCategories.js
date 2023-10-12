@@ -2,6 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import FeaturedCategoriesGrid from '../categories/FeaturedCategoriesGrid';
 import SectionHeading from '../typography/SectionHeading';
+import Section from '../partials/Section';
 
 function FeaturedCategories() {
   const { allSanityFeatured } = useStaticQuery(graphql`
@@ -11,10 +12,17 @@ function FeaturedCategories() {
           categories {
             id
             title
+            color
             slug {
               current
             }
             _rawDescription
+            coverImage {
+              alt
+              asset {
+                gatsbyImageData(placeholder: BLURRED, width: 128, height: 128)
+              }
+            }
           }
         }
       }
@@ -24,12 +32,9 @@ function FeaturedCategories() {
   const featuredCategories = allSanityFeatured.nodes[0].categories;
 
   return (
-    <div className="pt-2 pb-2 md:pb-4 lg:pb-8">
-      <SectionHeading className="mx-auto px-4 lg:px-12">
-        top categories
-      </SectionHeading>
+    <Section sectionHeading='top categories'>
       <FeaturedCategoriesGrid categories={featuredCategories} />
-    </div>
+    </Section>
   );
 }
 
