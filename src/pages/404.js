@@ -16,12 +16,10 @@ function NotFoundPage() {
             <AnimatedArrowButton to="/">
               home
             </AnimatedArrowButton>
-            <br />
             or you can see all my
             <AnimatedArrowButton to="/posts">
               posts
             </AnimatedArrowButton>
-            <br />
             or you can explore various
             <AnimatedArrowButton to="/categories">
               categories
