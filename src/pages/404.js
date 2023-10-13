@@ -1,9 +1,9 @@
 import React from 'react';
-import { StaticImage } from "gatsby-plugin-image";
+import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 import PageSpace from '../components/PageSpace';
-import Section from "../components/partials/Section";
-import SectionRest from "../components/partials/SectionRest";
+import Section from '../components/partials/Section';
+import SectionRest from '../components/partials/SectionRest';
 import AnimatedArrowButton from '../components/buttons/AnimatedArrowButton';
 
 function NotFoundPage() {
@@ -13,15 +13,15 @@ function NotFoundPage() {
         <SectionRest className="flex flex-col lg:flex-row lg:justify-between">
           <p className="font-warnocksubh text-lg sm:text-xl font-light text-gray-900 dark:text-gray-50">
             But the good news is you are now free to visit
-            <AnimatedArrowButton to="/">
+            <AnimatedArrowButton to="/" className="pb-1.5">
               home
             </AnimatedArrowButton>
             or you can see all my
-            <AnimatedArrowButton to="/posts">
+            <AnimatedArrowButton to="/posts" className="pb-1.5">
               posts
             </AnimatedArrowButton>
             or you can explore various
-            <AnimatedArrowButton to="/categories">
+            <AnimatedArrowButton to="/categories" className="pb-1.5">
               categories
             </AnimatedArrowButton>
           </p>
@@ -29,7 +29,8 @@ function NotFoundPage() {
             <div className="flex flex-col justify-center">
               <StaticImage
                 src="../images/kowalski.png"
-                alt="Kowalski"s
+                alt="Kowalski"
+                s
                 placeholder="blurred"
                 height={540}
                 width={540}

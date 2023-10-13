@@ -11,8 +11,11 @@ import SearchButton from '../search/SearchButton';
 import { hoverUnderlineAnimation } from './Header.module.css';
 
 function Header() {
+  // add close on click outside
   const [openNav, setOpenNav] = useState(false);
+  // scroll state
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  // header visible state
   const [visible, setVisible] = useState(true);
   const { openSearchModal } = useContext(SearchModalContext);
 
@@ -45,6 +48,9 @@ function Header() {
           <Link
             className={`flex items-center ${hoverUnderlineAnimation}`}
             to={item.path}
+            onClick={() => {
+              if (openNav) setOpenNav(!openNav);
+            }}
           >
             {item.title}
           </Link>
