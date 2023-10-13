@@ -3,7 +3,14 @@ import { Link, graphql } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 
 import Seo from '../components/seo/Seo';
-import MyPortableText from "../components/typography/MyPortableText";
+import MyPortableText from '../components/typography/MyPortableText';
+import Container from '../components/partials/Container';
+import Section from '../components/partials/Section';
+import SectionTop from '../components/partials/SectionTop';
+import SectionMiddle from '../components/partials/SectionMiddle';
+import SectionBottom from '../components/partials/SectionBottom';
+import MarginedContainer from '../components/partials/MarginedContainer';
+import PostHeadingSection from '../components/blogposts/PostHeadingSection';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -11,14 +18,23 @@ export const postQuery = graphql`
       title
       publishedAt
       _rawBody
+      _rawExcerpt
       coverImage {
         alt
         asset {
           gatsbyImageData
         }
       }
-      categories {
+      category {
         title
+        color
+        slug {
+          current
+        }
+      }
+      tags {
+        title
+        color
         slug {
           current
         }
@@ -36,42 +52,82 @@ export const postQuery = graphql`
 function SingleBlogPost({ data }) {
   const blog = data.sanityBlog;
   return (
-    <article>
-      <section>
-        <Seo title={blog.title} />
+    <>
+      <Seo title={blog.title} />
+      <Container>
+        <MarginedContainer>
+          <PostHeadingSection 
+            postTitle={blog.title} 
+            // TODO: should pass actual subheading here
+            postSubHeading="Ed John. Fifteen watches. An hour long conversation for the ages." 
+            postPublishedAt={blog.publishedAt} 
+            tags={blog.tags}
+          />
+        </MarginedContainer>
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
-          alt={blog.coverImage.alt}
-          className="h-40"
+          alt={blog.coverImage.alt || ""}
+          loading="lazy"
+          className="block w-full"
+          style={{
+            height: "45vh",
+          }}
         />
-        <h1>{blog.title}</h1>
-        <p>
-          {new Date(blog.publishedAt).toLocaleDateString("en-us", {
-            // weekday: 'short',
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })}
-        </p>
-        <ul>
-          {blog.categories.map((category) => (
-            <li key={category.slug.current}>
-              <Link to={`/categories/${category.slug.current}`}>
-                {category.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {/* <p>
-          <Link to={`/author/${blog.author.slug.current}`}>
-            {blog.author.name}
-          </Link>
-        </p> */}
-      </section>
-      <section>
-        <MyPortableText value={blog._rawBody}></MyPortableText>
-      </section>
-    </article>
+        <MarginedContainer>
+          <Section sectionHeading={blog.title}>
+            <SectionTop>
+              <MyPortableText value={blog._rawExcerpt} />
+              <p>
+                {new Date(blog.publishedAt).toLocaleDateString("en-us", {
+                  // weekday: 'short',
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </SectionTop>
+            <SectionMiddle />
+            <SectionBottom />
+          </Section>
+        </MarginedContainer>
+      </Container>
+    </>
+    // <article>
+    //   <section>
+    //     <Seo title={blog.title} />
+    //     <GatsbyImage
+    //       image={blog.coverImage.asset.gatsbyImageData}
+    //       alt={blog.coverImage.alt}
+    //       className="h-40"
+    //     />
+    //     <h1>{blog.title}</h1>
+    // <p>
+    //   {new Date(blog.publishedAt).toLocaleDateString("en-us", {
+    //     // weekday: 'short',
+    //     year: "numeric",
+    //     month: "short",
+    //     day: "numeric",
+    //   })}
+    // </p>
+    //     <ul>
+    //       {blog.categories.map((category) => (
+    //         <li key={category.slug.current}>
+    //           <Link to={`/categories/${category.slug.current}`}>
+    //             {category.title}
+    //           </Link>
+    //         </li>
+    //       ))}
+    //     </ul>
+    //     {/* <p>
+    //       <Link to={`/author/${blog.author.slug.current}`}>
+    //         {blog.author.name}
+    //       </Link>
+    //     </p> */}
+    //   </section>
+    //   <section>
+    //     <MyPortableText value={blog._rawBody}></MyPortableText>
+    //   </section>
+    // </article>
   );
 }
 

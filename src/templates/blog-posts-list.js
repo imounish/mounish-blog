@@ -1,11 +1,12 @@
-import React from 'react'
-import { graphql } from "gatsby";
+import React from 'react';
+import { graphql } from 'gatsby';
 import Seo from '../components/seo/Seo';
-import BlogGrid from "../components/blogs/BlogGrid";
+import BlogGrid from '../components/blogs/BlogGrid';
 import Pagination from '../components/Pagination';
 import Section from '../components/partials/Section';
-import SectionBottom from "../components/partials/SectionBottom";
+import SectionBottom from '../components/partials/SectionBottom';
 import PageSpace from '../components/PageSpace';
+import MarginedContainer from '../components/partials/MarginedContainer';
 
 export const BlogsQuery = graphql`
   query blogListQuery($limit: Int!, $offset: Int!) {
@@ -17,7 +18,14 @@ export const BlogsQuery = graphql`
         slug {
           current
         }
-        categories {
+        category {
+          title
+          color
+          slug {
+            current
+          }
+        }
+        tags {
           title
           color
           slug {
@@ -56,32 +64,23 @@ function BlogPostsList({ data, pageContext }) {
     <>
       <Seo title="All Posts" />
       <PageSpace>
-        <Section sectionHeading="all posts">
-          <BlogGrid blogs={blogs} />
-          <SectionBottom>
-            {numberOfPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                numberOfPages={numberOfPages}
-                baseUrl="/posts"
-              />
-            )}
-          </SectionBottom>
-        </Section>
+        <MarginedContainer>
+          <Section sectionHeading="all posts">
+            <BlogGrid blogs={blogs} />
+            <SectionBottom>
+              {numberOfPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  numberOfPages={numberOfPages}
+                  baseUrl="/posts"
+                />
+              )}
+            </SectionBottom>
+          </Section>
+        </MarginedContainer>
       </PageSpace>
-      {/* <div className="container mx-auto">
-        <SectionHeading>all posts</SectionHeading>
-        <BlogGrid blogs={blogs} />
-        {numberOfPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            numberOfPages={numberOfPages}
-            baseUrl="/posts"
-          />
-        )}
-      </div> */}
     </>
   );
 }
 
-export default BlogPostsList
+export default BlogPostsList;

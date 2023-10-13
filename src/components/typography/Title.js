@@ -6,15 +6,20 @@ import {
   bgCustomMaroon,
 } from './Title.module.css';
 
-function Title({ children, className, path, highLightColor }) {
+function Title({ children, className, path, highLightColor, leadingText }) {
   return (
-    <h3 className={`font-lora text-xl md:text-2xl font-semibold ${className ? className : ''}`}>
+    <h3 className={`${className || ""}`}>
       <Link
-        className={`no-underline text-gray-900 dark:text-gray-50 ${hoverUnderlineAnimation} ${
-          highLightColor === 'maroon' && bgCustomMaroon
-        } ${highLightColor === 'green' && bgCustomGreen}`}
+        className={`no-underline text-gray-900 dark:text-gray-50  ${hoverUnderlineAnimation} ${
+          highLightColor === "maroon" && bgCustomMaroon
+        } ${highLightColor === "green" && bgCustomGreen}`}
         to={path}
       >
+        {leadingText && (
+          <span className="font-warnockdisp text-lg md:text-xl font-light no-underline text-gray-800 dark:text-gray-200 pr-3">
+            {leadingText}
+          </span>
+        )}
         {children}
       </Link>
     </h3>

@@ -13,7 +13,8 @@ function FeaturedBlogGrid({ blogs }) {
               key={blog.title}
               title={blog.title}
               path={blog.slug.current}
-              categories={blog.categories}
+              tags={blog.tags}
+              category={blog.category}
               image={{
                 imageData: blog.coverImage.asset.gatsbyImageData,
                 altText: blog.coverImage.alt,
@@ -33,7 +34,8 @@ function FeaturedBlogGrid({ blogs }) {
               key={blog.title}
               title={blog.title}
               path={blog.slug.current}
-              categories={blog.categories}
+              tags={blog.tags}
+              category={blog.category}
               image={{
                 imageData: blog.coverImage.asset.gatsbyImageData,
                 altText: blog.coverImage.alt,

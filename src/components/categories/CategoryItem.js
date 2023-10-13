@@ -20,7 +20,7 @@ function CategoryItem({ title, path, color, description, image }) {
       <div className="sm:col-span-2 sm:row-span-5 ml-0 sm:ml-2 mt-2 sm:mt-0 flex flex-col justify-between">
         <div>
           <Title
-            className="pb-2"
+            className="pb-1 pt-1 sm:pt-0 font-warnockdisp font-medium text-2xl sm:text-3xl"
             path={`/categories/${path}`}
             highLightColor="maroon"
           >

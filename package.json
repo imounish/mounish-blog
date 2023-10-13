@@ -8,9 +8,9 @@
     "gatsby"
   ],
   "scripts": {
-    "dev": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
+    "dev": "gatsby clean && gatsby develop",
+    "start": "gatsby clean && gatsby develop",
+    "build": "gatsby clean && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
@@ -35,6 +35,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.11.0",
+    "react-share": "^4.4.1",
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {

@@ -1,16 +1,15 @@
 import React from 'react';
 import { pageSpaceContainer } from './PageSpace.module.css';
 
-function PageSpace({ children, className }) {
+function PageSpace({ children, className, ...props }) {
   return (
     <div
       className={`${
-        className ? className : ""
+        className || ''
       } ${pageSpaceContainer} bg-white dark:bg-black overflow-auto`}
+      {...props}
     >
-      <div className='container mx-auto'>
       {children}
-      </div>
     </div>
   );
 }

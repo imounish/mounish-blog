@@ -15,7 +15,14 @@ function FeaturedBlogs() {
             slug {
               current
             }
-            categories {
+            category {
+              title
+              color
+              slug {
+                current
+              }
+            }
+            tags {
               title
               color
               slug {
@@ -50,17 +57,7 @@ function FeaturedBlogs() {
   const featuredBlogs = allSanityFeatured.nodes[0].blogs;
 
   return (
-    // <div className="pt-2 pb-2 md:pt-4 lg:pt-8 md:pb-4">
-    //   {/* <h2 className="font-worksans text-2xl sm:text-2xl text-black dark:text-gray-50 px-4 sm:px-0">
-    //     Featured
-    //   </h2> */}
-    //   {/* <BlogGrid blogs={featuredBlogs} /> */}
-    //   <SectionHeading className="mx-auto px-4 lg:px-12">
-    //     top posts
-    //   </SectionHeading>
-    //   <FeaturedBlogGrid blogs={featuredBlogs} />
-    // </div>
-    <Section sectionHeading='top posts'>
+    <Section sectionHeading="top posts">
       <FeaturedBlogGrid blogs={featuredBlogs} />
     </Section>
   );
