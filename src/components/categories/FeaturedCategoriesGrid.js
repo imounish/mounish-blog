@@ -5,7 +5,7 @@ import SectionBottom from '../partials/SectionBottom';
 
 function FeaturedCategoriesGrid({ categories }) {
   return (
-    <SectionRest className="flex flex-col gap-8">
+    <SectionRest className="flex flex-col gap-8 pb-2">
       {categories &&
         categories.map((category) => (
           <CategoryItem

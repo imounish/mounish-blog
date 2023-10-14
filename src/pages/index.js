@@ -7,6 +7,7 @@ import FeaturedCategories from '../components/homepage/FeaturedCategories';
 import Container from '../components/partials/Container';
 import NewsletterSection from '../components/homepage/NewsletterSection';
 import MarginedContainer from '../components/partials/MarginedContainer';
+import Break from '../components/partials/Break';
 
 const IndexPage = () => (
   <>
@@ -15,7 +16,9 @@ const IndexPage = () => (
     <Container>
       <MarginedContainer>
         <FeaturedBlogs />
+        <Break />
         <FeaturedCategories />
+        <Break />
         <NewsletterSection />
       </MarginedContainer>
     </Container>

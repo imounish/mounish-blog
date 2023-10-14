@@ -28,9 +28,9 @@ function Footer() {
             </a>
           </li>
         </ul> */}
-        <ul className="flex flex-wrap mt-3 items-center sm:mt-0">
+        <ul className="flex flex-wrap mt-3 gap-4 items-center md:mt-0">
           {socialLinks.map((item) => (
-            <li key={item.name} className="mr-4 sm:mr-0 ml-0 sm:ml-4">
+            <li key={item.name} className="">
               <a href={item.url} target="blank">
                 {item.icon}
               </a>

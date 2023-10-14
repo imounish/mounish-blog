@@ -3,7 +3,7 @@ import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 import Title from '../typography/Title';
 import TagsArray from '../tags/TagsArray';
-import CategoryText from "../categories/CategoryText";
+import CategoryText from '../categories/CategoryText';
 
 function BlogItem({ title, path, author, tags, category, image, publishedAt }) {
   console.log(title, category);
@@ -13,12 +13,12 @@ function BlogItem({ title, path, author, tags, category, image, publishedAt }) {
         <Link to={`/posts/${path}`}>
           <GatsbyImage
             image={image.imageData}
-            alt={image.altText ? image.altText : ""}
+            alt={image.altText ? image.altText : ''}
             className="block h-auto w-full rounded-md scale-100 hover:scale-105"
             loading="lazy"
             style={{
-              height: "258px",
-              transition: "0.3s ease-in-out transform",
+              height: '258px',
+              transition: '0.3s ease-in-out transform',
             }}
           />
         </Link>
@@ -42,13 +42,13 @@ function BlogItem({ title, path, author, tags, category, image, publishedAt }) {
         <footer className="flex flex-row gap-2 py-1">
           <p className="text-sm text-gray-600 w-full">
             <span className="italic font-warnockcapt font-bold text-base">
-              On{" "}
+              On{' '}
             </span>
-            {new Date(publishedAt).toLocaleDateString("en-us", {
+            {new Date(publishedAt).toLocaleDateString('en-us', {
               // weekday: 'short',
-              year: "numeric",
-              month: "short",
-              day: "numeric",
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
             })}
           </p>
           <TagsArray

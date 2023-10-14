@@ -16,6 +16,7 @@ export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
     sanityBlog(id: { eq: $id }) {
       title
+      subTitle
       publishedAt
       _rawBody
       _rawExcerpt
@@ -56,21 +57,20 @@ function SingleBlogPost({ data }) {
       <Seo title={blog.title} />
       <Container>
         <MarginedContainer>
-          <PostHeadingSection 
-            postTitle={blog.title} 
-            // TODO: should pass actual subheading here
-            postSubHeading="Ed John. Fifteen watches. An hour long conversation for the ages." 
-            postPublishedAt={blog.publishedAt} 
+          <PostHeadingSection
+            postTitle={blog.title}
+            postSubHeading={blog.subTitle}
+            postPublishedAt={blog.publishedAt}
             tags={blog.tags}
           />
         </MarginedContainer>
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
-          alt={blog.coverImage.alt || ""}
+          alt={blog.coverImage.alt || ''}
           loading="lazy"
           className="block w-full"
           style={{
-            height: "45vh",
+            height: '45vh',
           }}
         />
         <MarginedContainer>
@@ -78,11 +78,11 @@ function SingleBlogPost({ data }) {
             <SectionTop>
               <MyPortableText value={blog._rawExcerpt} />
               <p>
-                {new Date(blog.publishedAt).toLocaleDateString("en-us", {
+                {new Date(blog.publishedAt).toLocaleDateString('en-us', {
                   // weekday: 'short',
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
                 })}
               </p>
             </SectionTop>

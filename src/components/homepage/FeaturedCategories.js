@@ -32,7 +32,7 @@ function FeaturedCategories() {
   const featuredCategories = allSanityFeatured.nodes[0].categories;
 
   return (
-    <Section sectionHeading='top categories'>
+    <Section sectionHeading="top categories">
       <FeaturedCategoriesGrid categories={featuredCategories} />
     </Section>
   );

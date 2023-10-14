@@ -1,18 +1,15 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import {
-  hoverUnderlineAnimation,
-  bgCustomGreen,
-  bgCustomMaroon,
+  customAnimationGreen,
+  customAnimationMaroon,
 } from './Title.module.css';
 
 function Title({ children, className, path, highLightColor, leadingText }) {
   return (
-    <h3 className={`${className || ""}`}>
+    <h3 className={`${className || ''}`}>
       <Link
-        className={`no-underline text-gray-900 dark:text-gray-50  ${hoverUnderlineAnimation} ${
-          highLightColor === "maroon" && bgCustomMaroon
-        } ${highLightColor === "green" && bgCustomGreen}`}
+        className={`no-underline text-gray-900 dark:text-gray-50 `}
         to={path}
       >
         {leadingText && (
@@ -20,7 +17,13 @@ function Title({ children, className, path, highLightColor, leadingText }) {
             {leadingText}
           </span>
         )}
-        {children}
+        <span
+          className={`${highLightColor === 'maroon' && customAnimationMaroon} ${
+            highLightColor === 'green' && customAnimationGreen
+          }`}
+        >
+          {children}
+        </span>
       </Link>
     </h3>
   );

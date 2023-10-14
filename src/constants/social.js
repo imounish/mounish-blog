@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import {} from '@heroicons/react/24/outline';
-import { FaInstagram, FaThreads, FaMedium } from 'react-icons/fa6';
+import { FaInstagram, FaThreads, FaMedium, FaGithub } from 'react-icons/fa6';
 
 export const socialLinks = [
   {
@@ -18,6 +17,11 @@ export const socialLinks = [
     name: 'medium',
     url: 'https://medium.com/@mounishp',
     icon: <FaMedium className="w-6 h-6" />,
+  },
+  {
+    name: 'github',
+    url: 'https://github.com/imounish',
+    icon: <FaGithub className="w-6 h-6" />,
   },
 ];
 

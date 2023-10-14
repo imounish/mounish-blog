@@ -1,24 +1,53 @@
-import { FaInstagram, FaTwitter, FaLinkedin, FaPinterest, FaWhatsapp } from "react-icons/fa6";
-import { LinkedinShareButton, TwitterShareButton, WhatsappShareButton, PinterestShareButton } from "react-share";
+import {
+  FaInstagram,
+  FaTwitter,
+  FaLinkedin,
+  FaPinterest,
+  FaWhatsapp,
+  FaShare,
+} from 'react-icons/fa6';
+import {
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  PinterestShareButton,
+} from 'react-share';
 
-import React from 'react'
+import React from 'react';
 
-function SocialShareButtons({ url, title }) {
-  return (
-    <div className="flex flex-row align-middle justify-between text-gray-800 dark:text-gray-200  gap-4">
+export const socialShareLinks = [
+  {
+    name: 'whatsapp',
+    component: ({ url, title }) => (
       <WhatsappShareButton url={url} title={title}>
-        <FaWhatsapp className="h-6 w-6 lg:h-7 lg:w-7 hover:text-gray-600 dark:hover:text-gray-400" />
+        <FaWhatsapp className="h-5 w-5 lg:h-6 lg:w-6 hover:text-gray-900 dark:hover:text-gray-200" />
       </WhatsappShareButton>
-
+    ),
+  },
+  {
+    name: 'twitter',
+    component: ({ url, title }) => (
       <TwitterShareButton url={url} title={title}>
-        <FaTwitter className="h-6 w-6 lg:h-7 lg:w-7 hover:text-gray-600 dark:hover:text-gray-400" />
+        <FaTwitter className="h-5 w-5 lg:h-6 lg:w-6 hover:text-gray-900 dark:hover:text-gray-200" />
       </TwitterShareButton>
-
+    ),
+  },
+  {
+    name: 'linkedin',
+    component: ({ url, title }) => (
       <LinkedinShareButton url={url} title={title}>
-        <FaLinkedin className="h-6 w-6 lg:h-7 lg:w-7 hover:text-gray-600 dark:hover:text-gray-400" />
+        <FaLinkedin className="h-5 w-5 lg:h-6 lg:w-6 hover:text-gray-900 dark:hover:text-gray-200" />
       </LinkedinShareButton>
-    </div>
-  );
-}
-
-export default SocialShareButtons
+    ),
+  },
+  {
+    name: 'email',
+    component: ({ url, title }) => (
+      <a
+        href={`mailto:?to=&subject=${title.toString()}&body=${url.toString()}`}
+      >
+        <FaShare className="h-5 w-5 lg:h-6 lg:w-6 hover:text-gray-900 dark:hover:text-gray-200" />
+      </a>
+    ),
+  },
+];
