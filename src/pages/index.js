@@ -19,7 +19,7 @@ const IndexPage = () => (
         <Break />
         <FeaturedCategories />
         <Break />
-        <NewsletterSection />
+        <NewsletterSection className="pb-8" heading="stay in touch?" />
       </MarginedContainer>
     </Container>
   </>

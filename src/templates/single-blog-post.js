@@ -15,6 +15,10 @@ import CategoryCatalogue from '../components/categories/CategoryCatalogue';
 import Break from '../components/partials/Break';
 import ExcerptText from '../components/typography/ExcerptText';
 import { textContainer } from './single-blog-post.module.css';
+import RichText from '../components/typography/RichText';
+import TagsArray from '../components/tags/TagsArray';
+import NewsletterSection from "../components/homepage/NewsletterSection";
+import { socialShareLinks } from "../components/social/SocialShareButtons";
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -31,6 +35,7 @@ export const postQuery = graphql`
       _rawExcerpt
       coverImage {
         alt
+        caption
         asset {
           gatsbyImageData
         }
@@ -81,11 +86,11 @@ function SingleBlogPost({ data, location }) {
         </MarginedContainer>
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
-          alt={blog.coverImage.alt || ''}
+          alt={blog.coverImage.alt || ""}
           loading="lazy"
           className="block w-full"
           style={{
-            height: '65vh',
+            height: "65vh",
           }}
         />
         <MarginedContainer>
@@ -99,11 +104,30 @@ function SingleBlogPost({ data, location }) {
             </SectionTop>
             <SectionMiddle className={textContainer}>
               <ExcerptText value={blog._rawExcerpt} />
-              <MyPortableText value={blog._rawBody} />
+              <RichText value={blog._rawBody} />
+              <div className="grid grid-flow-col sm:grid-cols-2 gap-8 pt-6 pb-0 md:pb-2">
+                <TagsArray
+                  tags={blog.tags}
+                  className="sm:col-span-1 flex flex-row gap-2 items-center justify-start"
+                />
+                <ul className="sm:col-span-1 flex flex-row justify-end sm:justify-between gap-4 text-gray-700 dark:text-gray-400">
+                  {socialShareLinks.map((item) => (
+                    <li key={item.name} className="">
+                      <item.component
+                        url={data.site.siteMetadata.siteURL + location.pathname}
+                        title={blog.title}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </SectionMiddle>
-            {/* <MyPortableText value={blog._rawExcerpt} /> */}
-            <SectionBottom />
+            <Break />
           </Section>
+          <NewsletterSection
+            className="pb-8"
+            heading="want to stay in touch?"
+          />
         </MarginedContainer>
       </Container>
     </>

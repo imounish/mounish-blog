@@ -4,9 +4,9 @@ import Section from '../partials/Section';
 import SectionRest from '../partials/SectionRest';
 import Input from '../input/Input';
 
-function NewsletterSection() {
+function NewsletterSection({ heading, className }) {
   return (
-    <Section className="pb-4" sectionHeading="stay in touch?">
+    <Section className={className} sectionHeading={heading}>
       <SectionRest className="flex flex-col items-center justify-center ">
         <p className="w-full font-warnock text-lg sm:text-xl text-gray-700 dark:text-gray-300 text-center">
           Hit that subscribe button (<i>ofc, after entering your email</i>) to

@@ -47,7 +47,6 @@ function PostHeadingSection({
         <ul className="hidden md:flex flex-row align-middle justify-between gap-4 text-gray-700 dark:text-gray-400">
           {socialShareLinks.map((item) => (
             <li key={item.name} className="">
-              {item.component}
               <item.component
                 url={postURL.siteURL + postURL.path}
                 title={postTitle}

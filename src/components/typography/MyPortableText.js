@@ -8,7 +8,7 @@ import { getImage, getImageDimensions } from '@sanity/asset-utils';
 import sanityConfig from '../../../sanity.config';
 import { getSanityImageData } from '../../utils/getSanityImageData';
 import ParagraphText from './ParagraphText';
-import H1Text from './H1Text';
+import H1Text from './HeadingText';
 
 const myPortableTextComponents = {
   block: {
