@@ -8,9 +8,9 @@ function PostHeadingSection({
   postSubHeading,
   postAuthor,
   postPublishedAt,
+  postURL,
   tags,
 }) {
-  const url = typeof window !== 'undefined' ? window.location.href : '';
   return (
     <div className="py-4 px-4">
       <div className="flex flex-col items-center justify-center text-center py-2 lg:py-4">
@@ -36,19 +36,22 @@ function PostHeadingSection({
             })}
           </p>
         </div>
-        {tags && (
+        {/* {tags && (
           <TagsArray
             tags={tags}
             className="font-worksans text-md gap-1 flex flex-col items-center  sm:text-base sm:gap-4 sm:flex-row sm:items-center"
           />
-        )}
+        )} */}
 
         {/* social share links not working correctly, check once */}
         <ul className="hidden md:flex flex-row align-middle justify-between gap-4 text-gray-700 dark:text-gray-400">
           {socialShareLinks.map((item) => (
             <li key={item.name} className="">
               {item.component}
-              <item.component url={url} title={postTitle} />
+              <item.component
+                url={postURL.siteURL + postURL.path}
+                title={postTitle}
+              />
             </li>
           ))}
         </ul>

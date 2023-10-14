@@ -11,9 +11,17 @@ import SectionMiddle from '../components/partials/SectionMiddle';
 import SectionBottom from '../components/partials/SectionBottom';
 import MarginedContainer from '../components/partials/MarginedContainer';
 import PostHeadingSection from '../components/blogposts/PostHeadingSection';
+import CategoryCatalogue from '../components/categories/CategoryCatalogue';
+import Break from '../components/partials/Break';
+import ExcerptText from '../components/typography/ExcerptText';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
+    site {
+      siteMetadata {
+        siteURL
+      }
+    }
     sanityBlog(id: { eq: $id }) {
       title
       subTitle
@@ -27,8 +35,10 @@ export const postQuery = graphql`
         }
       }
       category {
+        _id
         title
         color
+        _rawDescription
         slug {
           current
         }
@@ -50,7 +60,7 @@ export const postQuery = graphql`
   }
 `;
 
-function SingleBlogPost({ data }) {
+function SingleBlogPost({ data, location }) {
   const blog = data.sanityBlog;
   return (
     <>
@@ -62,6 +72,10 @@ function SingleBlogPost({ data }) {
             postSubHeading={blog.subTitle}
             postPublishedAt={blog.publishedAt}
             tags={blog.tags}
+            postURL={{
+              siteURL: data.site.siteMetadata.siteURL,
+              path: location.pathname,
+            }}
           />
         </MarginedContainer>
         <GatsbyImage
@@ -70,23 +84,22 @@ function SingleBlogPost({ data }) {
           loading="lazy"
           className="block w-full"
           style={{
-            height: '45vh',
+            height: '65vh',
           }}
         />
         <MarginedContainer>
-          <Section sectionHeading={blog.title}>
+          <Section>
             <SectionTop>
-              <MyPortableText value={blog._rawExcerpt} />
-              <p>
-                {new Date(blog.publishedAt).toLocaleDateString('en-us', {
-                  // weekday: 'short',
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </p>
+              <CategoryCatalogue
+                category={blog.category}
+                pagePath={location.pathname}
+              />
+              <Break />
             </SectionTop>
-            <SectionMiddle />
+            <SectionMiddle>
+              <ExcerptText value={blog._rawExcerpt} />
+            </SectionMiddle>
+            {/* <MyPortableText value={blog._rawExcerpt} /> */}
             <SectionBottom />
           </Section>
         </MarginedContainer>

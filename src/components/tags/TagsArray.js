@@ -8,10 +8,11 @@ function TagsArray({ tags, className, ...props }) {
         <li key={tag.title}>
           <Link
             to={`/tags/${tag.slug.current}`}
-            style={{ color: `${tag.color}` }}
+            style={{ backgroundColor: `${tag.color}` }}
+            className="rounded-3xl text-gray-900 py-1.5 px-2"
           >
-            #{tag.title}
-            {idx === arr.length - 1 ? '' : ','}
+            {tag.title}
+            {/* {idx === arr.length -1 ? '' : ','} */}
           </Link>
         </li>
       ))}
@@ -22,10 +23,10 @@ function TagsArray({ tags, className, ...props }) {
 export default TagsArray;
 
 // <Link
-//   to={`/tags/${tag.slug.current}`}
-//   style={{ backgroundColor: `${tag.color}` }}
-//   className="rounded-3xl text-gray-900 py-1.5 px-2"
+//  to={`/tags/${tag.slug.current}`}
+//  style={{ backgroundColor: `${tag.color}` }}
+//  className="rounded-3xl text-gray-900 py-1.5 px-2"
 // >
-//   #{tag.title}
-//   {/* {idx === arr.length -1 ? '' : ','} */}
-// </Link>;
+//  #{tag.title}
+//  {/* {idx === arr.length -1 ? '' : ','} */}
+// </Link>

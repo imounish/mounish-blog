@@ -1,6 +1,6 @@
 import React from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
 import { PortableText } from '@portabletext/react';
 import { getImage, getImageDimensions } from '@sanity/asset-utils';
@@ -18,7 +18,7 @@ const myPortableTextComponents = {
   types: {
     customCode: ({ value }) => (
       <SyntaxHighlighter style={theme} language={value.code.language}>
-        {String(value.code.code).replace(/\n$/, "")}
+        {String(value.code.code).replace(/\n$/, '')}
       </SyntaxHighlighter>
     ),
     customImage: ({ value }) => {
@@ -29,19 +29,14 @@ const myPortableTextComponents = {
         url: imageData.url,
         height,
         width,
-      }
+      };
       const gatsbyImageData = getSanityImageData({
         image,
-        layout: 'constrained'
+        layout: 'constrained',
       });
 
-      return (
-        <GatsbyImage 
-          image={gatsbyImageData}
-          alt={value.alt}
-        />
-      )
-    }
+      return <GatsbyImage image={gatsbyImageData} alt={value.alt} />;
+    },
   },
 };
 

@@ -4,7 +4,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const singleBlogTemplate = require.resolve(
     './src/templates/single-blog-post.js'
   );
-  const blogsListTemplate = require.resolve('./src/templates/blog-posts-list.js')
+  const blogsListTemplate = require.resolve(
+    './src/templates/blog-posts-list.js'
+  );
   const { createPage } = actions;
 
   const result = await graphql(`
@@ -34,7 +36,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // blog list pages
   const totalBlogListPages = Math.ceil(blogs.length / postsPerPage);
-  Array.from({ length:  totalBlogListPages }).forEach((_, index) => {
+  Array.from({ length: totalBlogListPages }).forEach((_, index) => {
     createPage({
       path: index === 0 ? '/posts' : `/posts/${index + 1}`,
       component: blogsListTemplate,
@@ -43,7 +45,7 @@ exports.createPages = async ({ graphql, actions }) => {
         offset: index * postsPerPage,
         numberOfPages: totalBlogListPages,
         currentPage: index + 1,
-      }
-    })
-  })
+      },
+    });
+  });
 };

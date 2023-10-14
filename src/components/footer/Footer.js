@@ -28,15 +28,22 @@ function Footer() {
             </a>
           </li>
         </ul> */}
-        <ul className="flex flex-wrap mt-3 gap-4 items-center md:mt-0">
-          {socialLinks.map((item) => (
-            <li key={item.name} className="">
-              <a href={item.url} target="blank">
-                {item.icon}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-row items-end justify-between md:justify-start gap-4">
+          <ul className="flex flex-wrap mt-3 gap-4 items-center md:mt-0">
+            {socialLinks.map((item) => (
+              <li key={item.name} className="">
+                <a href={item.url} target="blank">
+                  {item.icon}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <p className="font-worksans text-sm">
+            Made with <span style={{ color: '#e25555' }}>&#9829;</span> by
+            Mounish
+          </p>
+        </div>
       </div>
     </footer>
   );

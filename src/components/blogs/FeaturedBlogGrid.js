@@ -19,6 +19,7 @@ function FeaturedBlogGrid({ blogs }) {
                 imageData: blog.coverImage.asset.gatsbyImageData,
                 altText: blog.coverImage.alt,
               }}
+              imageHeight="256px"
               publishedAt={blog.publishedAt}
               author={blog.author}
             />
@@ -40,6 +41,7 @@ function FeaturedBlogGrid({ blogs }) {
                 imageData: blog.coverImage.asset.gatsbyImageData,
                 altText: blog.coverImage.alt,
               }}
+              imageHeight="256px"
               publishedAt={blog.publishedAt}
               author={blog.author}
             />

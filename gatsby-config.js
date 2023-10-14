@@ -4,7 +4,7 @@ const sanityConfig = require('./sanity.config');
 module.exports = {
   siteMetadata: {
     title: `mounish's blog`,
-    siteUrl: `https://blog.mounish.dev`,
+    siteURL: `https://blog.mounish.dev`,
     description: `A website where you can read articles, tutorials, and updates from Mounish as he dives into depths of imagination, weaves words into captivating stories.`,
   },
   plugins: [

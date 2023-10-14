@@ -18,6 +18,7 @@ function FeaturedCategoriesGrid({ categories }) {
               imageData: category.coverImage.asset.gatsbyImageData,
               altText: category.coverImage.alt,
             }}
+            exploreBtnDisplay
           />
         ))}
     </SectionRest>
