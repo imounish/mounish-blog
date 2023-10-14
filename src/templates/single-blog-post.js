@@ -14,6 +14,7 @@ import PostHeadingSection from '../components/blogposts/PostHeadingSection';
 import CategoryCatalogue from '../components/categories/CategoryCatalogue';
 import Break from '../components/partials/Break';
 import ExcerptText from '../components/typography/ExcerptText';
+import { textContainer } from './single-blog-post.module.css';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -96,8 +97,9 @@ function SingleBlogPost({ data, location }) {
               />
               <Break />
             </SectionTop>
-            <SectionMiddle>
+            <SectionMiddle className={textContainer}>
               <ExcerptText value={blog._rawExcerpt} />
+              <MyPortableText value={blog._rawBody} />
             </SectionMiddle>
             {/* <MyPortableText value={blog._rawExcerpt} /> */}
             <SectionBottom />
@@ -105,42 +107,6 @@ function SingleBlogPost({ data, location }) {
         </MarginedContainer>
       </Container>
     </>
-    // <article>
-    //   <section>
-    //     <Seo title={blog.title} />
-    //     <GatsbyImage
-    //       image={blog.coverImage.asset.gatsbyImageData}
-    //       alt={blog.coverImage.alt}
-    //       className="h-40"
-    //     />
-    //     <h1>{blog.title}</h1>
-    // <p>
-    //   {new Date(blog.publishedAt).toLocaleDateString("en-us", {
-    //     // weekday: 'short',
-    //     year: "numeric",
-    //     month: "short",
-    //     day: "numeric",
-    //   })}
-    // </p>
-    //     <ul>
-    //       {blog.categories.map((category) => (
-    //         <li key={category.slug.current}>
-    //           <Link to={`/categories/${category.slug.current}`}>
-    //             {category.title}
-    //           </Link>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //     {/* <p>
-    //       <Link to={`/author/${blog.author.slug.current}`}>
-    //         {blog.author.name}
-    //       </Link>
-    //     </p> */}
-    //   </section>
-    //   <section>
-    //     <MyPortableText value={blog._rawBody}></MyPortableText>
-    //   </section>
-    // </article>
   );
 }
 
