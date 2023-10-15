@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 
-import Seo from '../components/seo/Seo';
+import SEO from '../components/seo/SEO';
 import Container from '../components/partials/Container';
 import Section from '../components/partials/Section';
 import SectionTop from '../components/partials/SectionTop';
@@ -31,6 +31,7 @@ export const postQuery = graphql`
       title
       subTitle
       publishedAt
+      timeToRead
       _rawBody
       _rawExcerpt
       coverImage {
@@ -70,7 +71,7 @@ function SingleBlogPost({ data, location }) {
   const blog = data.sanityBlog;
   return (
     <>
-      <Seo title={blog.title} />
+      <SEO title={blog.title} />
       <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
       <Container>
         <MarginedContainer>
@@ -80,6 +81,7 @@ function SingleBlogPost({ data, location }) {
             postSubHeading={blog.subTitle}
             postPublishedAt={blog.publishedAt}
             tags={blog.tags}
+            timeToRead={blog.timeToRead}
             postURL={{
               siteURL: data.site.siteMetadata.siteURL,
               path: location.pathname,
@@ -134,6 +136,8 @@ function SingleBlogPost({ data, location }) {
       </Container>
     </>
   );
-}
+};
+
+export const Head = ({ data }) => <SEO title={data.sanityBlog.title} />;
 
 export default SingleBlogPost;

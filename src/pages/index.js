@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HeroSection from '../components/homepage/HeroSection';
-import Seo from '../components/seo/Seo';
+import SEO from '../components/seo/SEO';
 import FeaturedBlogs from '../components/homepage/FeaturedBlogs';
 import FeaturedCategories from '../components/homepage/FeaturedCategories';
 import Container from '../components/partials/Container';
@@ -12,7 +12,6 @@ import ScrollToTop from '../components/partials/ScrollToTop';
 
 const IndexPage = () => (
   <>
-    <Seo />
     {/* <HeroSection /> */}
     <Container>
       <MarginedContainer>
@@ -26,5 +25,7 @@ const IndexPage = () => (
     </Container>
   </>
 );
+
+export const Head = () => <SEO />
 
 export default IndexPage;

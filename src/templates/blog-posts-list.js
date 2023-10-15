@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Seo from '../components/seo/Seo';
+import SEO from '../components/seo/SEO';
 import BlogGrid from '../components/blogs/BlogGrid';
 import Pagination from '../components/partials/Pagination';
 import Section from '../components/partials/Section';
@@ -14,6 +14,7 @@ export const BlogsQuery = graphql`
       nodes {
         id
         title
+        timeToRead
         publishedAt
         slug {
           current
@@ -61,26 +62,25 @@ function BlogPostsList({ data, pageContext }) {
   const blogs = data.allSanityBlog.nodes;
 
   return (
-    <>
-      <Seo title="All Posts" />
-      <PageSpace>
-        <MarginedContainer>
-          <Section sectionHeading="all posts">
-            <BlogGrid blogs={blogs} />
-            <SectionBottom>
-              {numberOfPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  numberOfPages={numberOfPages}
-                  baseUrl="/posts"
-                />
-              )}
-            </SectionBottom>
-          </Section>
-        </MarginedContainer>
-      </PageSpace>
-    </>
+    <PageSpace>
+      <MarginedContainer>
+        <Section sectionHeading="all posts">
+          <BlogGrid blogs={blogs} />
+          <SectionBottom>
+            {numberOfPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                numberOfPages={numberOfPages}
+                baseUrl="/posts"
+              />
+            )}
+          </SectionBottom>
+        </Section>
+      </MarginedContainer>
+    </PageSpace>
   );
 }
+
+export const Head = () => <SEO title="all posts" />
 
 export default BlogPostsList;

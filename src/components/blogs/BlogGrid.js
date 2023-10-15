@@ -14,6 +14,7 @@ function BlogGrid({ blogs }) {
             path={blog.slug.current}
             tags={blog.tags}
             category={blog.category}
+            timeToRead={blog.timeToRead}
             image={{
               imageData: blog.coverImage.asset.gatsbyImageData,
               altText: blog.coverImage.alt,

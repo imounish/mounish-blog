@@ -2,6 +2,7 @@ import React from 'react';
 import { socialShareLinks } from '../social/SocialShareButtons';
 import TagsArray from '../tags/TagsArray';
 import Break from '../partials/Break';
+import TimeToRead from '../typography/TimeToRead';
 
 function PostHeadingSection({
   postTitle,
@@ -10,6 +11,7 @@ function PostHeadingSection({
   postPublishedAt,
   postURL,
   tags,
+  timeToRead,
 }) {
   return (
     <div className="py-4 px-4">
@@ -22,27 +24,62 @@ function PostHeadingSection({
         </h3>
       </div>
       <Break />
-      <div className="flex flex-row items-center justify-between py-2 lg:py-4">
-        <div className="flex flex-col items-start font-worksans text-gray-700 dark:text-gray-400">
-          <p className="font-warnockcapt lowercase text-base font-bold italic pl-0.5">
-            published on
-          </p>
-          <p className="text-base">
-            {new Date(postPublishedAt).toLocaleDateString('en-us', {
-              // weekday: 'short',
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })}
-          </p>
-        </div>
-        {/* {tags && (
-          <TagsArray
-            tags={tags}
-            className="font-worksans text-md gap-1 flex flex-col items-center  sm:text-base sm:gap-4 sm:flex-row sm:items-center"
-          />
-        )} */}
-
+      <div className="flex flex-row items-center justify-between py-2 lg:py-4 font-worksans text-gray-700 dark:text-gray-400">
+        {timeToRead && (
+          <>
+            <div className="w-full flex flex-row items-center justify-between md:hidden">
+              <p>
+                <span className="font-warnockcapt lowercase text-base font-bold italic pl-0.5 pr-1.5">
+                  published on
+                </span>
+                <span className="text-base">
+                  {new Date(postPublishedAt).toLocaleDateString("en-us", {
+                    // weekday: 'short',
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </p>
+              <p>
+                <TimeToRead timeToRead={timeToRead} />
+              </p>
+            </div>
+            <div className="hidden md:flex md:flex-col md:items-start">
+              <TimeToRead timeToRead={timeToRead} />
+              <p>
+                <span className="font-warnockcapt lowercase text-base font-bold italic pl-0.5 pr-1.5">
+                  published on
+                </span>
+                <span className="text-base">
+                  {new Date(postPublishedAt).toLocaleDateString("en-us", {
+                    // weekday: 'short',
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </p>
+            </div>
+          </>
+        )}
+        {!timeToRead && (
+          <div className="flex flex-col items-start">
+            <p>
+              <span className="font-warnockcapt lowercase text-base font-bold italic pl-0.5 pr-1.5">
+                published on
+              </span>
+              <span className="text-base">
+                {new Date(postPublishedAt).toLocaleDateString("en-us", {
+                  // weekday: 'short',
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          </div>
+        )}
         {/* social share links not working correctly, check once */}
         <ul className="hidden md:flex flex-row align-middle justify-between gap-4 text-gray-700 dark:text-gray-400">
           {socialShareLinks.map((item) => (

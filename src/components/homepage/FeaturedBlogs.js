@@ -12,6 +12,7 @@ function FeaturedBlogs() {
             id
             title
             publishedAt
+            timeToRead
             slug {
               current
             }

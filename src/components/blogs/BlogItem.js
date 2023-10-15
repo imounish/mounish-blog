@@ -4,12 +4,14 @@ import { Link } from 'gatsby';
 import Title from '../typography/Title';
 import TagsArray from '../tags/TagsArray';
 import CategoryText from '../categories/CategoryText';
+import TimeToRead from '../typography/TimeToRead';
 
 function BlogItem({
   title,
   path,
   author,
   tags,
+  timeToRead,
   category,
   image,
   imageHeight,
@@ -20,16 +22,15 @@ function BlogItem({
       <Link to={`/posts/${path}`}>
         <GatsbyImage
           image={image.imageData}
-          alt={image.altText ? image.altText : ''}
+          alt={image.altText ? image.altText : ""}
           className="block h-auto w-full rounded-md scale-100 hover:scale-105"
           loading="lazy"
           style={{
             height: imageHeight,
-            transition: '0.3s ease-in-out transform',
+            transition: "0.3s ease-in-out transform",
           }}
         />
       </Link>
-
       <header className="flex flex-col items-start pt-3 pb-1">
         {/* <CategoryText
             category={category}
@@ -49,19 +50,20 @@ function BlogItem({
           {title}
         </Title>
       </header>
-
       {publishedAt && (
         <footer className="flex flex-row gap-2 py-1">
-          <p className="text-sm text-gray-600 w-full">
+          <p className="text-sm text-gray-600 w-full leading-4">
             <span className="italic font-warnockcapt font-bold text-base">
-              On{' '}
+              On{" "}
             </span>
-            {new Date(publishedAt).toLocaleDateString('en-us', {
+            {new Date(publishedAt).toLocaleDateString("en-us", {
               // weekday: 'short',
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
+              year: "numeric",
+              month: "short",
+              day: "numeric",
             })}
+
+            {timeToRead && <TimeToRead separator={true} timeToRead={timeToRead} />}
           </p>
         </footer>
       )}
