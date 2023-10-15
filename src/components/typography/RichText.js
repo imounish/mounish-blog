@@ -17,7 +17,7 @@ import NumberedList from './NumberedList';
 const richTextComponents = {
   block: {
     normal: ({ children }) => (
-      <ParagraphText className="text-lg md:text-xl font-warnock py-4">
+      <ParagraphText className="text-xl font-warnock py-4">
         {children}
       </ParagraphText>
     ),
@@ -57,19 +57,15 @@ const richTextComponents = {
     ),
   },
   listItem: {
-    bullet: ({ children }) => (
-      <li className='pl-2'>{children}</li>
-    ),
-    number: ({ children }) => (
-      <li className='pl-2'>{children}</li>
-    )
+    bullet: ({ children }) => <li className="pl-2">{children}</li>,
+    number: ({ children }) => <li className="pl-2">{children}</li>,
   },
   types: {
     // URL is still remaining
     customCode: ({ value }) => (
       <div className="py-2 lg:py-4">
         <SyntaxHighlighter style={theme} language={value.code.language}>
-          {String(value.code.code).replace(/\n$/, "")}
+          {String(value.code.code).replace(/\n$/, '')}
         </SyntaxHighlighter>
       </div>
     ),
@@ -84,7 +80,7 @@ const richTextComponents = {
       };
       const gatsbyImageData = getSanityImageData({
         image,
-        layout: "constrained",
+        layout: 'constrained',
       });
 
       return (

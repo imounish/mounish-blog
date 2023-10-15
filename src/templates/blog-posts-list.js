@@ -2,10 +2,10 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Seo from '../components/seo/Seo';
 import BlogGrid from '../components/blogs/BlogGrid';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/partials/Pagination';
 import Section from '../components/partials/Section';
 import SectionBottom from '../components/partials/SectionBottom';
-import PageSpace from '../components/PageSpace';
+import PageSpace from '../components/partials/PageSpace';
 import MarginedContainer from '../components/partials/MarginedContainer';
 
 export const BlogsQuery = graphql`

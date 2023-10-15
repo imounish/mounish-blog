@@ -1,7 +1,7 @@
 import React from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
-import PageSpace from '../components/PageSpace';
+import PageSpace from '../components/partials/PageSpace';
 import Section from '../components/partials/Section';
 import SectionRest from '../components/partials/SectionRest';
 import AnimatedArrowButton from '../components/buttons/AnimatedArrowButton';

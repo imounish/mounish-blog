@@ -17,8 +17,9 @@ import ExcerptText from '../components/typography/ExcerptText';
 import { textContainer } from './single-blog-post.module.css';
 import RichText from '../components/typography/RichText';
 import TagsArray from '../components/tags/TagsArray';
-import NewsletterSection from "../components/homepage/NewsletterSection";
-import { socialShareLinks } from "../components/social/SocialShareButtons";
+import NewsletterSection from '../components/homepage/NewsletterSection';
+import { socialShareLinks } from '../components/social/SocialShareButtons';
+import ScrollToTop from '../components/partials/ScrollToTop';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -71,8 +72,10 @@ function SingleBlogPost({ data, location }) {
   return (
     <>
       <Seo title={blog.title} />
+
       <Container>
         <MarginedContainer>
+          <ScrollToTop showBelow={250} />
           <PostHeadingSection
             postTitle={blog.title}
             postSubHeading={blog.subTitle}
@@ -86,11 +89,11 @@ function SingleBlogPost({ data, location }) {
         </MarginedContainer>
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
-          alt={blog.coverImage.alt || ""}
+          alt={blog.coverImage.alt || ''}
           loading="lazy"
           className="block w-full"
           style={{
-            height: "65vh",
+            height: '65vh',
           }}
         />
         <MarginedContainer>
