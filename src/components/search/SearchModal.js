@@ -25,7 +25,7 @@ function Search() {
     document.addEventListener('keydown', keyDownHandler);
 
     return () => {
-      document.removeEventListener('keydown'.keyDownHandler);
+      document.removeEventListener('keydown', keyDownHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,25 +1,24 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 
 import Seo from '../components/seo/Seo';
-import MyPortableText from '../components/typography/MyPortableText';
 import Container from '../components/partials/Container';
 import Section from '../components/partials/Section';
 import SectionTop from '../components/partials/SectionTop';
 import SectionMiddle from '../components/partials/SectionMiddle';
-import SectionBottom from '../components/partials/SectionBottom';
 import MarginedContainer from '../components/partials/MarginedContainer';
 import PostHeadingSection from '../components/blogposts/PostHeadingSection';
 import CategoryCatalogue from '../components/categories/CategoryCatalogue';
 import Break from '../components/partials/Break';
 import ExcerptText from '../components/typography/ExcerptText';
-import { textContainer } from './single-blog-post.module.css';
 import RichText from '../components/typography/RichText';
 import TagsArray from '../components/tags/TagsArray';
 import NewsletterSection from '../components/homepage/NewsletterSection';
 import { socialShareLinks } from '../components/social/SocialShareButtons';
 import ScrollToTop from '../components/partials/ScrollToTop';
+import { textContainer, blogImage } from './single-blog-post.module.css';
+import ProgressBar from '../components/partials/ProgressBar';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -72,10 +71,10 @@ function SingleBlogPost({ data, location }) {
   return (
     <>
       <Seo title={blog.title} />
-
+      <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
       <Container>
         <MarginedContainer>
-          <ScrollToTop showBelow={250} />
+          <ScrollToTop showBelow={800} />
           <PostHeadingSection
             postTitle={blog.title}
             postSubHeading={blog.subTitle}
@@ -91,10 +90,10 @@ function SingleBlogPost({ data, location }) {
           image={blog.coverImage.asset.gatsbyImageData}
           alt={blog.coverImage.alt || ''}
           loading="lazy"
-          className="block w-full"
-          style={{
-            height: '65vh',
-          }}
+          className={`block w-full ${blogImage}`}
+          // style={{
+          //   height: '65vh',
+          // }}
         />
         <MarginedContainer>
           <Section>

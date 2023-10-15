@@ -2,8 +2,21 @@
   margin-right: 25vw;
 }
 
+.blog-image {
+  height: 70vh;
+}
+
 @media only screen and (max-width: 960px) {
   .text-container {
     margin-right: 0;
+  }
+  .blog-image {
+    height: 55vh;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .blog-image {
+    height: 40vh;
   }
 }

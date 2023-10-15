@@ -8,6 +8,7 @@ import Container from '../components/partials/Container';
 import NewsletterSection from '../components/homepage/NewsletterSection';
 import MarginedContainer from '../components/partials/MarginedContainer';
 import Break from '../components/partials/Break';
+import ScrollToTop from '../components/partials/ScrollToTop';
 
 const IndexPage = () => (
   <>
@@ -15,6 +16,7 @@ const IndexPage = () => (
     {/* <HeroSection /> */}
     <Container>
       <MarginedContainer>
+        <ScrollToTop showBelow={500} />
         <FeaturedBlogs />
         <Break />
         <FeaturedCategories />

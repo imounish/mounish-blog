@@ -1,11 +1,11 @@
 import React from 'react';
-import {  } from "./QuoteText.module.css";
+import {} from './QuoteText.module.css';
 
 function QuoteText({ children, className, ...props }) {
   return (
     <div
       className={` font-warnockcapt text-xl text-center font-light text-gray-600 dark:text-gray-400 my-5 py-6 px-12 border-y-blue-gray-300 dark:border-y-blue-gray-700 border-y-[1px] ${
-        className || ""
+        className || ''
       }`}
       {...props}
     >
