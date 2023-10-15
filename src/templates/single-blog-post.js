@@ -17,8 +17,8 @@ import TagsArray from '../components/tags/TagsArray';
 import NewsletterSection from '../components/homepage/NewsletterSection';
 import { socialShareLinks } from '../components/social/SocialShareButtons';
 import ScrollToTop from '../components/partials/ScrollToTop';
-import { textContainer, blogImage } from './single-blog-post.module.css';
 import ProgressBar from '../components/partials/ProgressBar';
+import { textContainer, blogImage } from './single-blog-post.module.css';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -136,7 +136,7 @@ function SingleBlogPost({ data, location }) {
       </Container>
     </>
   );
-};
+}
 
 export const Head = ({ data }) => <SEO title={data.sanityBlog.title} />;
 

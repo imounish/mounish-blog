@@ -1,6 +1,5 @@
 import React from 'react';
 import BlogItem from './BlogItem';
-import SectionRest from '../partials/SectionRest';
 import SectionTop from '../partials/SectionTop';
 
 function BlogGrid({ blogs }) {

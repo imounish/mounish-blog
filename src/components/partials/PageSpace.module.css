@@ -4,15 +4,22 @@
   padding-top: 56px;
 }
 
-@media only screen and (min-width: 540px) {
+/* @media only screen and (min-width: 540px) {
   .page-space-container {
     height: calc(100vh - 80px);
   }
-}
+} */
 
 @media only screen and (min-width: 720px) {
   .page-space-container {
-    padding-top: 72px;
+    padding-top: 56px;
     height: calc(100vh - 56px);
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  .page-space-container {
+    padding-top: 72px;
+    /* height: calc(100vh - 56px); */
   }
 }

@@ -9,7 +9,7 @@ import PageSpace from '../components/partials/PageSpace';
 import MarginedContainer from '../components/partials/MarginedContainer';
 
 export const BlogsQuery = graphql`
-  query blogListQuery($limit: Int!, $offset: Int!) {
+  query BlogListQuery($limit: Int!, $offset: Int!) {
     allSanityBlog(sort: { publishedAt: DESC }, limit: $limit, skip: $offset) {
       nodes {
         id
@@ -81,6 +81,6 @@ function BlogPostsList({ data, pageContext }) {
   );
 }
 
-export const Head = () => <SEO title="all posts" />
+export const Head = () => <SEO title="all posts" />;
 
 export default BlogPostsList;

@@ -45,7 +45,7 @@ function NewsletterSection({ heading, className }) {
                 <span className="text-gray-500">
                   You'll receive no spam from me.
                   <br />
-                  Don't be like 007 saying his name everywhere.
+                  But, don't be like 007 disclosing his name everywhere.
                 </span>
               </p>
             }
