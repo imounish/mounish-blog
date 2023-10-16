@@ -1,20 +1,18 @@
-import React from 'react';
-import { GatsbyImage } from 'gatsby-plugin-image';
-import Title from '../typography/Title';
-import { category } from './CategoryItem.module.css';
 import AnimatedArrowButton from '../buttons/AnimatedArrowButton';
 import DescriptionText from '../typography/DescriptionText';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import React from 'react';
+import Title from '../typography/Title';
 
 function CategoryItem({
   title,
   path,
-  color,
   description,
   image,
   exploreBtnDisplay,
 }) {
   return (
-    <div className={`grid sm:grid-rows-3 sm:grid-cols-4 ${category}`}>
+    <div className={`grid sm:grid-rows-3 sm:grid-cols-4`}>
       {image && (
         <GatsbyImage
           image={image.imageData}
@@ -35,11 +33,13 @@ function CategoryItem({
           >
             {title}
           </Title>
-          <DescriptionText value={description} />
+          <div className="italic">
+            <DescriptionText value={description} />
+          </div>
         </div>
         {exploreBtnDisplay && (
           <AnimatedArrowButton
-            className="pt-2 sm:pt-0"
+            className="pt-2 sm:pt-0 w-min"
             path={`/categories/${path}`}
           >
             explore

@@ -6,7 +6,7 @@ import { animatedArrowButton } from './AnimatedArrowButton.module.css';
 function AnimatedArrowButton({ children, path, className, ...props }) {
   return (
     <Link
-      className={`flex items-center gap-2 w-min font-worksans text-lg font-medium text-gray-800 dark:text-gray-400 hover:text-black hover:dark:text-gray-50 ${animatedArrowButton} ${className}`}
+      className={`flex items-center gap-2 font-worksans text-lg font-medium text-gray-800 dark:text-gray-400 hover:text-black hover:dark:text-gray-50 ${animatedArrowButton} ${className}`}
       to={path}
       {...props}
     >

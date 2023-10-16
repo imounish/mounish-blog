@@ -1,9 +1,10 @@
-import React from 'react';
-import { Link } from 'gatsby';
 import {
   customAnimationGreen,
   customAnimationMaroon,
 } from './Title.module.css';
+
+import { Link } from 'gatsby';
+import React from 'react';
 
 function Title({ children, className, path, highLightColor, leadingText }) {
   return (

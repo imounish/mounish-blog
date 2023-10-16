@@ -2,6 +2,5 @@ export const menu = [
   { title: 'Home', path: '/' },
   { title: 'Posts', path: '/posts' },
   { title: 'Categories', path: '/categories' },
-  // { title: 'Author', path: '/author' },
-  { title: 'About', path: '/about'}
+  { title: 'About', path: '/authors/mounish-pedagandham'}
 ];

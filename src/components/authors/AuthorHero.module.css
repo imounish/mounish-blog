@@ -1,0 +1,15 @@
+.profile-image {
+  height: 60vh;
+}
+
+@media only screen and (max-width: 960px) {
+  .profile-image {
+    height: 25vh;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .profile-image {
+    height: 20vh;
+  }
+}

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
 import { Link, graphql, useStaticQuery } from 'gatsby';
+import React, { useState } from 'react';
+import { blogImageContainer, disabled } from './CategoryCatalogue.module.css';
+
+import DescriptionText from '../typography/DescriptionText';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import Title from '../typography/Title';
-import { blogImageContainer, disabled } from './CategoryCatalogue.module.css';
-import DescriptionText from '../typography/DescriptionText';
 
 const CustomBlogItem = ({ blog, category, pageSlug }) => (
   <div className="font-worksans">
     <Link
-      to={blog.slug.current !== pageSlug && `/posts/${blog.slug.current}`}
+      to={blog.slug.current !== pageSlug ? `/posts/${blog.slug.current}` : ''}
       className={`${blog.slug.current === pageSlug && disabled} `}
     >
       <GatsbyImage
@@ -104,7 +105,9 @@ function CategoryCatalogue({ category, pagePath, className }) {
           >
             {category.title}
           </Title>
-          <DescriptionText value={category._rawDescription} />
+          <div className='italic'>
+            <DescriptionText value={category._rawDescription} />
+          </div>
           <button
             type="button"
             onClick={toggleHandler}

@@ -1,18 +1,19 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import { GatsbyImage } from 'gatsby-plugin-image';
-
-import SEO from '../components/seo/SEO';
 import BlogGrid from '../components/blogs/BlogGrid';
-import Section from '../components/partials/Section';
-import SectionTop from '../components/partials/SectionTop';
 import Break from '../components/partials/Break';
-import PageSpace from '../components/partials/PageSpace';
-import MarginedContainer from '../components/partials/MarginedContainer';
-import SectionHeading from '../components/typography/SectionHeading';
 import DescriptionText from '../components/typography/DescriptionText';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import MarginedContainer from '../components/partials/MarginedContainer';
+import PageSpace from '../components/partials/PageSpace';
+import React from 'react';
+import SEO from '../components/seo/SEO';
+import Section from '../components/partials/Section';
+import SectionHeading from '../components/typography/SectionHeading';
 import SectionMiddle from '../components/partials/SectionMiddle';
+import SectionTop from '../components/partials/SectionTop';
 import { categoryImage } from './single-category.module.css';
+import { graphql } from 'gatsby';
+
+s
 
 export const query = graphql`
   query SingleCategoryQuery($id: String!) {
@@ -70,7 +71,6 @@ export const query = graphql`
 function SingleCategory({ data }) {
   const category = data.sanityCategory;
   const blogs = data.allSanityBlog.nodes;
-  console.log(blogs);
   return (
     <PageSpace>
       <GatsbyImage
@@ -85,14 +85,16 @@ function SingleCategory({ data }) {
             {category.title}
           </SectionHeading>
           <SectionTop>
-            <DescriptionText value={category._rawDescription} />
+            <div className='italic'>
+              <DescriptionText value={category._rawDescription} />
+            </div>
           </SectionTop>
           <Break />
           <SectionMiddle>
             {blogs && <BlogGrid blogs={blogs} />}
             {blogs.length === 0 && (
               <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
-                The brains are at work to fill this empty space !!!
+                The brains are at work writing new posts !!!
               </p>
             )}
           </SectionMiddle>

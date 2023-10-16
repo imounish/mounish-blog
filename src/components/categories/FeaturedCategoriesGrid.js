@@ -11,7 +11,6 @@ function FeaturedCategoriesGrid({ categories }) {
             key={category.id}
             title={category.title}
             path={category.slug.current}
-            color={category.color}
             description={category._rawDescription}
             image={{
               imageData: category.coverImage.asset.gatsbyImageData,

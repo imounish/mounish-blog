@@ -12,7 +12,6 @@ function FeaturedCategories() {
           categories {
             id
             title
-            color
             slug {
               current
             }

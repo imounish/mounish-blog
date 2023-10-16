@@ -1,14 +1,14 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import SEO from '../components/seo/SEO';
 import BlogGrid from '../components/blogs/BlogGrid';
+import MarginedContainer from '../components/partials/MarginedContainer';
+import PageSpace from '../components/partials/PageSpace';
 import Pagination from '../components/partials/Pagination';
+import React from 'react';
+import SEO from '../components/seo/SEO';
 import Section from '../components/partials/Section';
 import SectionBottom from '../components/partials/SectionBottom';
-import PageSpace from '../components/partials/PageSpace';
-import MarginedContainer from '../components/partials/MarginedContainer';
+import { graphql } from 'gatsby';
 
-export const BlogsQuery = graphql`
+export const BlogsListQuery = graphql`
   query BlogListQuery($limit: Int!, $offset: Int!) {
     allSanityBlog(sort: { publishedAt: DESC }, limit: $limit, skip: $offset) {
       nodes {

@@ -1,24 +1,26 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import { GatsbyImage } from 'gatsby-plugin-image';
+import { Link, graphql } from 'gatsby';
+import { blogImage, textContainer } from './single-blog-post.module.css';
 
-import SEO from '../components/seo/SEO';
-import Container from '../components/partials/Container';
-import Section from '../components/partials/Section';
-import SectionTop from '../components/partials/SectionTop';
-import SectionMiddle from '../components/partials/SectionMiddle';
-import MarginedContainer from '../components/partials/MarginedContainer';
-import PostHeadingSection from '../components/blogposts/PostHeadingSection';
-import CategoryCatalogue from '../components/categories/CategoryCatalogue';
 import Break from '../components/partials/Break';
+import CategoryCatalogue from '../components/categories/CategoryCatalogue';
+import Container from '../components/partials/Container';
 import ExcerptText from '../components/typography/ExcerptText';
-import RichText from '../components/typography/RichText';
-import TagsArray from '../components/tags/TagsArray';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import MarginedContainer from '../components/partials/MarginedContainer';
 import NewsletterSection from '../components/homepage/NewsletterSection';
-import { socialShareLinks } from '../components/social/SocialShareButtons';
-import ScrollToTop from '../components/partials/ScrollToTop';
+import NormalText from '../components/typography/NormalText';
+import PostHeadingSection from '../components/blogs/PostHeadingSection';
 import ProgressBar from '../components/partials/ProgressBar';
-import { textContainer, blogImage } from './single-blog-post.module.css';
+import React from 'react';
+import RichText from '../components/typography/RichText';
+import SEO from '../components/seo/SEO';
+import ScrollToTop from '../components/partials/ScrollToTop';
+import Section from '../components/partials/Section';
+import SectionBottom from '../components/partials/SectionBottom';
+import SectionMiddle from '../components/partials/SectionMiddle';
+import SectionTop from '../components/partials/SectionTop';
+import TagsArray from '../components/tags/TagsArray';
+import { socialShareLinks } from '../components/social/SocialShareButtons';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -59,6 +61,7 @@ export const postQuery = graphql`
       }
       author {
         name
+        description
         slug {
           current
         }
@@ -130,6 +133,16 @@ function SingleBlogPost({ data, location }) {
                 </ul>
               </div>
             </SectionMiddle>
+            <SectionBottom>
+              {blog.author && <div className='flex flex-col gap-1'>
+                <p className='font-lora text-base md:text-lg text-gray-700 dark:text-gray-300 '>
+                  This post was written by <Link className='hover:underline text-gray-900 dark:text-gray-100' to={`/authors/${blog.author.slug.current}`}>{blog.author.name}</Link>
+                </p> 
+                <p className='font-warnockcapt italic font-light text-base md:text-lg text-gray-500'>
+                  {blog.author.description}
+                </p>
+              </div>}
+            </SectionBottom>
             <Break />
           </Section>
           <NewsletterSection
