@@ -69,6 +69,7 @@ export const postQuery = graphql`
 
 function SingleBlogPost({ data, location }) {
   const blog = data.sanityBlog;
+  console.log(blog);
   return (
     <>
       <SEO title={blog.title} />
@@ -93,27 +94,30 @@ function SingleBlogPost({ data, location }) {
           alt={blog.coverImage.alt || ''}
           loading="lazy"
           className={`block w-full ${blogImage}`}
-          // style={{
-          //   height: '65vh',
-          // }}
         />
         <MarginedContainer>
           <Section>
             <SectionTop>
-              <CategoryCatalogue
-                category={blog.category}
-                pagePath={location.pathname}
-              />
-              <Break />
+              {blog.category && (
+                <>
+                  <CategoryCatalogue
+                    category={blog.category}
+                    pagePath={location.pathname}
+                  />
+                  <Break />
+                </>
+              )}
             </SectionTop>
             <SectionMiddle className={textContainer}>
               <ExcerptText value={blog._rawExcerpt} />
               <RichText value={blog._rawBody} />
               <div className="grid grid-flow-col sm:grid-cols-2 gap-8 pt-6 pb-0 md:pb-2">
-                <TagsArray
-                  tags={blog.tags}
-                  className="sm:col-span-1 flex flex-row gap-2 items-center justify-start"
-                />
+                {blog.tags && (
+                  <TagsArray
+                    tags={blog.tags}
+                    className="sm:col-span-1 flex flex-row gap-2 items-center justify-start"
+                  />
+                )}
                 <ul className="sm:col-span-1 flex flex-row justify-end sm:justify-between gap-4 text-gray-700 dark:text-gray-400">
                   {socialShareLinks.map((item) => (
                     <li key={item.name} className="">

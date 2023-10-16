@@ -2,7 +2,6 @@ import React from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import Title from '../typography/Title';
 import { category } from './CategoryItem.module.css';
-import MyPortableText from '../typography/MyPortableText';
 import AnimatedArrowButton from '../buttons/AnimatedArrowButton';
 import DescriptionText from '../typography/DescriptionText';
 

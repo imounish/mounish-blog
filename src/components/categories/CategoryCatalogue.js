@@ -8,7 +8,7 @@ import DescriptionText from '../typography/DescriptionText';
 const CustomBlogItem = ({ blog, category, pageSlug }) => (
   <div className="font-worksans">
     <Link
-      to={`/posts/${blog.slug.current}`}
+      to={blog.slug.current !== pageSlug && `/posts/${blog.slug.current}`}
       className={`${blog.slug.current === pageSlug && disabled} `}
     >
       <GatsbyImage
@@ -55,13 +55,6 @@ function CategoryCatalogue({ category, pagePath, className }) {
               current
             }
           }
-          tags {
-            title
-            color
-            slug {
-              current
-            }
-          }
           coverImage {
             alt
             asset {
@@ -71,12 +64,6 @@ function CategoryCatalogue({ category, pagePath, className }) {
           }
           author {
             name
-            profileImage {
-              asset {
-                gatsbyImageData(width: 24, height: 24, placeholder: BLURRED)
-                altText
-              }
-            }
             slug {
               current
             }
@@ -86,7 +73,11 @@ function CategoryCatalogue({ category, pagePath, className }) {
     }
   `);
 
-  const selectedBlogs = allSanityBlog.nodes
+  // excluding blogs which do not have a category present
+  const cleanedBlogs = allSanityBlog.nodes.filter((blog) => blog.category);
+
+  // selecting those blogs which match the given category
+  const selectedBlogs = cleanedBlogs
     .filter((blog) => blog.category._id === category._id)
     .sort((a, b) => {
       const da = new Date(a.publishedAt);
@@ -107,7 +98,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
       <div className="lg:col-span-1">
         <div className="sm:col-span-2 sm:row-span-5 flex flex-col justify-between">
           <Title
-            className="pb-1 pt-1 sm:pt-0 font-warnockdisp font-medium text-2xl sm:text-3xl"
+            className="pb-1.5 pt-1 sm:pt-0 font-warnockdisp font-medium text-2xl sm:text-3xl"
             path={`/categories/${category.slug.current}`}
             highLightColor="maroon"
           >
@@ -117,7 +108,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
           <button
             type="button"
             onClick={toggleHandler}
-            className="font-worksans text-md text-start capitalize text-gray-900 dark:text-gray-100"
+            className="pt-2 sm:pt-3 w-fit font-worksans text-md text-start capitalize text-gray-800 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-300"
           >
             SEE {toggleViewAll ? 'LESS' : 'ALL'}
           </button>

@@ -1,7 +1,6 @@
 import React from 'react';
 import CategoryItem from './CategoryItem';
 import SectionRest from '../partials/SectionRest';
-import SectionBottom from '../partials/SectionBottom';
 
 function FeaturedCategoriesGrid({ categories }) {
   return (

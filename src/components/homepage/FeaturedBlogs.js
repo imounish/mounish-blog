@@ -23,13 +23,6 @@ function FeaturedBlogs() {
                 current
               }
             }
-            tags {
-              title
-              color
-              slug {
-                current
-              }
-            }
             coverImage {
               alt
               asset {

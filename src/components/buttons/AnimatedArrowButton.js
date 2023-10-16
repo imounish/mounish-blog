@@ -1,7 +1,7 @@
-import React from 'react'
-import { animatedArrowButton } from './AnimatedArrowButton.module.css'; 
-import { HiArrowUpRight } from "react-icons/hi2";
+import React from 'react';
+import { HiArrowUpRight } from 'react-icons/hi2';
 import { Link } from 'gatsby';
+import { animatedArrowButton } from './AnimatedArrowButton.module.css';
 
 function AnimatedArrowButton({ children, path, className, ...props }) {
   return (
@@ -11,9 +11,9 @@ function AnimatedArrowButton({ children, path, className, ...props }) {
       {...props}
     >
       {children}
-      <HiArrowUpRight className='text-semibold w-6 h-6' />
+      <HiArrowUpRight className="text-semibold w-6 h-6" />
     </Link>
   );
 }
 
-export default AnimatedArrowButton
+export default AnimatedArrowButton;

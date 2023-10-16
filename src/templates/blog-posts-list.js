@@ -26,13 +26,6 @@ export const BlogsQuery = graphql`
             current
           }
         }
-        tags {
-          title
-          color
-          slug {
-            current
-          }
-        }
         coverImage {
           alt
           asset {

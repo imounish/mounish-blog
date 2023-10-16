@@ -43,13 +43,6 @@ export const query = graphql`
             current
           }
         }
-        tags {
-          title
-          color
-          slug {
-            current
-          }
-        }
         author {
           name
           profileImage {
@@ -77,9 +70,7 @@ export const query = graphql`
 function SingleCategory({ data }) {
   const category = data.sanityCategory;
   const blogs = data.allSanityBlog.nodes;
-
-  console.log(category);
-
+  console.log(blogs);
   return (
     <PageSpace>
       <GatsbyImage
@@ -98,7 +89,12 @@ function SingleCategory({ data }) {
           </SectionTop>
           <Break />
           <SectionMiddle>
-            <BlogGrid blogs={blogs} />
+            {blogs && <BlogGrid blogs={blogs} />}
+            {blogs.length === 0 && (
+              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
+                The brains are at work to fill this empty space !!!
+              </p>
+            )}
           </SectionMiddle>
         </Section>
       </MarginedContainer>

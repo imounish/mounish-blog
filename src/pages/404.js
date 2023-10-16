@@ -1,6 +1,6 @@
 import React from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
-import SEO from "../components/seo/SEO";
+import SEO from '../components/seo/SEO';
 import PageSpace from '../components/partials/PageSpace';
 import Section from '../components/partials/Section';
 import SectionRest from '../components/partials/SectionRest';
@@ -49,6 +49,11 @@ function NotFoundPage() {
   );
 }
 
-export const Head = () => <SEO title="not found" description="You have lost your way buddy! Please go back to Home." />
+export const Head = () => (
+  <SEO
+    title="not found"
+    description="You have lost your way buddy! Please go back to Home."
+  />
+);
 
 export default NotFoundPage;

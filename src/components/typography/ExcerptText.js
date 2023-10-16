@@ -5,7 +5,7 @@ import NormalText from './NormalText';
 const excerptTextComponents = {
   block: {
     normal: ({ children }) => (
-      <NormalText className="py-2 font-warnocksubh font-normal text-2xl first-letter:dark first-letter:text-6xl md:first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:-mb-2 first-letter:float-left">
+      <NormalText className="py-2 font-warnocksubh font-normal text-2xl first-letter:dark first-letter:text-6xl md:first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:-mb-2 first-letter:mt-1.5 first-letter:float-left">
         {children}
       </NormalText>
     ),

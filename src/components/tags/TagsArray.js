@@ -19,12 +19,3 @@ function TagsArray({ tags, className, ...props }) {
 }
 
 export default TagsArray;
-
-// <Link
-//  to={`/tags/${tag.slug.current}`}
-//  style={{ backgroundColor: `${tag.color}` }}
-//  className="rounded-3xl text-gray-900 py-1.5 px-2"
-// >
-//  #{tag.title}
-//  {/* {idx === arr.length -1 ? '' : ','} */}
-// </Link>
