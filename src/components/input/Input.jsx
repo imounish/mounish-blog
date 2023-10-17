@@ -10,7 +10,7 @@ function Input({
   value,
   onChange,
   onFocus,
-
+  style,
 }) {
   return (
     <input
@@ -26,6 +26,7 @@ function Input({
       value={value}
       onChange={onChange}
       onFocus={onFocus}
+      style={style}
     />
   );
 }
