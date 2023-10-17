@@ -102,7 +102,7 @@ function TagsPage({data, location}) {
 }
 
 export function Head() {
-  return <SEO title="tags" />
+  return <SEO title="tags" description="Explore the articles on this website through the tags that are used on this website." />
 }
 
 export default TagsPage;

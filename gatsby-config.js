@@ -7,6 +7,10 @@ module.exports = {
     title: `mounish's blog`,
     siteURL: `https://blog.mounish.dev`,
     description: `A website where you can read articles, tutorials, and updates from Mounish as he dives into depths of imagination, weaves words into captivating stories.`,
+    og: {
+      siteName: `mounish's blog - A personal blog`,
+      twitterCreator: '@imounish',
+    }
   },
   plugins: [
     'gatsby-plugin-postcss',

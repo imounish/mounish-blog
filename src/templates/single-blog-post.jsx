@@ -153,7 +153,7 @@ function SingleBlogPost({ data, location }) {
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityBlog.title} />
+  return <SEO title={data.sanityBlog.title} description={data.sanityBlog.subTitle} featuredImage={data.sanityBlog.coverImage.asset.gatsbyImageData} />
 }
 
 export default SingleBlogPost;

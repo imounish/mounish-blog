@@ -54,7 +54,7 @@ function AuthorList({ data, pageContext }) {
 }
 
 export function Head() {
-  return <SEO title="all authors" />
+  return <SEO title="all authors" description="Explore all the authors that have written articles on this website." />
 }
 
 export default AuthorList;

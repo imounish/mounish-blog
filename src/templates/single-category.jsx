@@ -104,7 +104,7 @@ function SingleCategory({ data }) {
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityCategory.title} />
+  return <SEO title={data.sanityCategory.title} description={`Explore all the articles written in the category ${data.sanityCategory.title} on this website.`} />
 }
 
 export default SingleCategory;

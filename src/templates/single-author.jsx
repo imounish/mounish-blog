@@ -79,7 +79,7 @@ function SingleAuthor({ data }) {
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityAuthor.name} />
+  return <SEO title={data.sanityAuthor.name} description={data.sanityAuthor.description} />
 }
 
 export default SingleAuthor

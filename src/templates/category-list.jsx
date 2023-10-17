@@ -57,7 +57,7 @@ function CategoryList({ data, pageContext }) {
 }
 
 export function Head() {
-  return <SEO title="all categories" />
+  return <SEO title="all categories" description="Explore all the categories in which articles have been written on this website." />
 }
 
 export default CategoryList;
