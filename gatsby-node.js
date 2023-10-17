@@ -1,25 +1,23 @@
 exports.createPages = async ({ graphql, actions }) => {
-  const postsPerPage = parseInt(process.env.GATSBY_POSTS_PER_PAGE) || 10;
-  const categoriesPerPage = parseInt(
-    process.env.GATSBY_CATEGORIES_PER_PAGE || 6
-  );
-  const authorsPerPage = parseInt(process.env.GATSBY_AUTHORS_PER_PAGE || 4);
+  const postsPerPage = parseInt(process.env.GATSBY_POSTS_PER_PAGE, 10) || 10;
+  const categoriesPerPage = parseInt(process.env.GATSBY_CATEGORIES_PER_PAGE, 10) || 6;
+  const authorsPerPage = parseInt(process.env.GATSBY_AUTHORS_PER_PAGE, 10) || 4;
 
   // template paths
   const singleBlogTemplate = require.resolve(
-    './src/templates/single-blog-post.js'
+    './src/templates/single-blog-post.jsx'
   );
   const blogsListTemplate = require.resolve(
-    './src/templates/blog-post-list.js'
+    './src/templates/blog-post-list.jsx'
   );
   const singleCategoryTemplate = require.resolve(
-    './src/templates/single-category.js'
+    './src/templates/single-category.jsx'
   );
   const categoryListTemplate = require.resolve(
-    './src/templates/category-list.js'
+    './src/templates/category-list.jsx'
   );
-  const singleAuthorTemplate = require.resolve('./src/templates/single-author.js');
-  const authorListTemplate = require.resolve('./src/templates/author-list.js');
+  const singleAuthorTemplate = require.resolve('./src/templates/single-author.jsx');
+  const authorListTemplate = require.resolve('./src/templates/author-list.jsx');
 
   const { createPage } = actions;
   const result = await graphql(`
