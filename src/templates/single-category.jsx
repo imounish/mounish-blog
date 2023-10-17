@@ -1,19 +1,18 @@
+import { GatsbyImage } from 'gatsby-plugin-image';
+import React from 'react';
+import { graphql } from 'gatsby';
 import BlogGrid from '../components/blogs/BlogGrid';
 import Break from '../components/partials/Break';
 import DescriptionText from '../components/typography/DescriptionText';
-import { GatsbyImage } from 'gatsby-plugin-image';
 import MarginedContainer from '../components/partials/MarginedContainer';
 import PageSpace from '../components/partials/PageSpace';
-import React from 'react';
 import SEO from '../components/seo/SEO';
 import Section from '../components/partials/Section';
 import SectionHeading from '../components/typography/SectionHeading';
 import SectionMiddle from '../components/partials/SectionMiddle';
 import SectionTop from '../components/partials/SectionTop';
 import { categoryImage } from './single-category.module.css';
-import { graphql } from 'gatsby';
 
-s
 
 export const query = graphql`
   query SingleCategoryQuery($id: String!) {
@@ -104,6 +103,8 @@ function SingleCategory({ data }) {
   );
 }
 
-export const Head = ({ data }) => <SEO title={data.sanityCategory.title} />;
+export function Head({ data }) {
+  return <SEO title={data.sanityCategory.title} />
+}
 
 export default SingleCategory;

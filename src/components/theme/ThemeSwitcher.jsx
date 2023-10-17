@@ -29,7 +29,6 @@ import {
 // };
 
 export default function ThemeSwitcher() {
-
   // todo: when opening on phone, it is showing light mode icon in dark mode
   return (
     <ThemeToggler>
@@ -42,12 +41,12 @@ export default function ThemeSwitcher() {
             checked={theme === 'dark'}
           />
           <HiSun
-            className={`h-6 w-6 sm:h-8 sm:w-8 text-gray-800 hover:text-black ${
+            className={`w-full h-full text-gray-800 hover:text-black ${
               theme !== 'dark' ? fadeIn : fadeOut
             }`}
           />
           <HiMoon
-            className={`h-6 w-6 sm:h-8 sm:w-8 dark:text-gray-400 dark:hover:text-gray-50 ${
+            className={`w-full h-full dark:text-gray-400 dark:hover:text-gray-50 ${
               theme === 'dark' ? `${fadeIn}` : fadeOut
             }`}
           />

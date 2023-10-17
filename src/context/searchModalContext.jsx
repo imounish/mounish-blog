@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useState } from 'react';
 
 const SearchModalContext = createContext();
 
-const SearchModalContextProvider = ({ children }) => {
+function SearchModalContextProvider({ children }) {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState();
 
   const initialValue = useMemo(
@@ -23,6 +23,6 @@ const SearchModalContextProvider = ({ children }) => {
       {children}
     </SearchModalContext.Provider>
   );
-};
+}
 
 export { SearchModalContext, SearchModalContextProvider };

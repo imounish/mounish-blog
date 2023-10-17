@@ -1,5 +1,5 @@
-import AuthorItem from './AuthorItem';
 import React from 'react';
+import AuthorItem from './AuthorItem';
 import SectionTop from '../partials/SectionTop';
 
 function AuthorGrid({ authors }) {

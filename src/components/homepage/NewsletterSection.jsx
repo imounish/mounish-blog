@@ -21,7 +21,7 @@ function NewsletterSection({ heading, className }) {
           name="Email"
           id="search"
           placeholder="jamesbond@mi6.com"
-          className="py-3 px-5 my-2 md:mt-3 w-full sm:w-96 font-worksans text-lg"
+          className="py-3 px-5 my-2 md:mt-3 w-full sm:w-96 font-worksans text-lg rounded-lg"
         />
         <Button
           size="sm"

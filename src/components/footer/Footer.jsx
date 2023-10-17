@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { socialLinks, websiteUrl } from '../../constants/social';
 
 function Footer() {
@@ -39,8 +40,8 @@ function Footer() {
           </ul>
 
           <p className="font-worksans text-sm">
-            Built with <span style={{ color: "#e25555" }}>&#9829;</span> by
-            Mounish
+            Built with <span style={{ color: "#e25555" }}>&#9829;</span> by{' '}
+            <Link to='/authors/mounish-pedagandham' className='hover:underline' >Mounish</Link>
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { modal, modalBackdrop } from './SearchModal.module.css';
 
 import SearchField from './SearchField';
 import { SearchModalContext } from '../../context/searchModalContext';
+import SearchResult from './SearchResult';
 
 const query = graphql`
   {
@@ -31,6 +32,15 @@ function Search() {
   const [categoriesIndexStore, setCategoriesIndexStore] = useState(null);
   const [authorsIndexStore, setAuthorsIndexStore] = useState(null);
   const data = useStaticQuery(query);
+
+  useEffect(() => {
+    if (isSearchModalOpen) {
+      document.body.style.overflow = 'hidden';
+      setSearchQuery('');
+    } else {
+      document.body.style.overflow = 'initial';
+    }
+  }, [isSearchModalOpen]);
 
   const {
     publicStoreURL: blogsPublicStoreURL,
@@ -115,18 +125,26 @@ function Search() {
         tabIndex={0}
         aria-label="Close"
       />
-      <div className={`font-worksans + ${modal}`}>
-        <SearchField
-          value={searchQuery}
-          setValue={setSearchQuery}
-          onFocus={onFocusHandler}
-          closeModal={closeSearchModal}
-        />
-        {
-          searchQuery && blogsIndexStore && categoriesIndexStore && authorsIndexStore && (
-            <div />
-          )
-        }
+        <div className="flex flex-col">
+          <div className={`font-worksans + ${modal}`}>
+            <SearchField
+              value={searchQuery}
+              setValue={setSearchQuery}
+              onFocus={onFocusHandler}
+              closeModal={closeSearchModal}
+              resultVisible={searchQuery}
+            />
+            {
+              searchQuery && blogsIndexStore && categoriesIndexStore && authorsIndexStore && (
+                <SearchResult 
+                  searchQuery={searchQuery}
+                  blogsIndexStore={blogsIndexStore}
+                  categoriesIndexStore={categoriesIndexStore}
+                  authorsIndexStore={authorsIndexStore}
+                />
+              )
+            }
+        </div>
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 require('dotenv').config('./.env');
 const sanityConfig = require('./sanity.config');
 
@@ -76,10 +77,13 @@ module.exports = {
               slug {
                 current
               }
+              category {
+                title
+              }
               coverImage {
                 alt
                 asset {
-                  gatsbyImageData
+                  gatsbyImageData(placeholder: BLURRED, width: 256, height: 256)
                 }
               }
             }
@@ -88,11 +92,12 @@ module.exports = {
         `,
         ref: 'id',
         index: ['title'],
-        store: ['id', 'title', 'publishedAt', 'slug', 'coverImage'],
+        store: ['id', 'title', 'category', 'publishedAt', 'slug', 'coverImage'],
         normalizer: ({ data }) =>
-          data.allSanityBlog.nodes.map((node) => ({
+          data.allSanityBlog.nodes.map(node => ({
             id: node.id,
             title: node.title,
+            category: node.category,
             publishedAt: node.publishedAt,
             slug: node.slug,
             coverImage: node.coverImage,
@@ -124,7 +129,7 @@ module.exports = {
         index: ['title'],
         store: ['id', 'title', 'slug'],
         normalizer: ({ data }) =>
-          data.allSanityCategory.nodes.map((node) => ({
+          data.allSanityCategory.nodes.map(node => ({
             id: node.id,
             title: node.title,
             slug: node.slug,
@@ -163,7 +168,7 @@ module.exports = {
         index: ['name'],
         store: ['id', 'name', 'description', 'slug', 'profileImage'],
         normalizer: ({ data }) =>
-          data.allSanityAuthor.nodes.map((node) => ({
+          data.allSanityAuthor.nodes.map(node => ({
             id: node.id,
             name: node.name,
             description: node.description,
