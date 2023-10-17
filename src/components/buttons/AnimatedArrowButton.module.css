@@ -1,0 +1,6 @@
+.animated-arrow-button svg {
+  transition: all 0.2s ease;
+}
+.animated-arrow-button:hover svg {
+  transform: rotate(45deg);
+}

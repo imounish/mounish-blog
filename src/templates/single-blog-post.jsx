@@ -1,0 +1,159 @@
+import { Link, graphql } from 'gatsby';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import React from 'react';
+import { blogImage, textContainer } from './single-blog-post.module.css';
+
+import Break from '../components/partials/Break';
+import CategoryCatalogue from '../components/categories/CategoryCatalogue';
+import Container from '../components/partials/Container';
+import ExcerptText from '../components/typography/ExcerptText';
+import MarginedContainer from '../components/partials/MarginedContainer';
+import NewsletterSection from '../components/homepage/NewsletterSection';
+import PostHeadingSection from '../components/blogs/PostHeadingSection';
+import ProgressBar from '../components/partials/ProgressBar';
+import RichText from '../components/typography/RichText';
+import SEO from '../components/seo/SEO';
+import ScrollToTop from '../components/partials/ScrollToTop';
+import Section from '../components/partials/Section';
+import SectionBottom from '../components/partials/SectionBottom';
+import SectionMiddle from '../components/partials/SectionMiddle';
+import SectionTop from '../components/partials/SectionTop';
+import TagsArray from '../components/tags/TagsArray';
+import socialShareLinks from '../components/social/SocialShareButtons';
+
+export const postQuery = graphql`
+  query SingleBlogQuery($id: String!) {
+    site {
+      siteMetadata {
+        siteURL
+      }
+    }
+    sanityBlog(id: { eq: $id }) {
+      title
+      subTitle
+      publishedAt
+      timeToRead
+      _rawBody
+      _rawExcerpt
+      coverImage {
+        alt
+        caption
+        asset {
+          gatsbyImageData
+        }
+      }
+      category {
+        _id
+        title
+        color
+        _rawDescription
+        slug {
+          current
+        }
+      }
+      tags {
+        title
+        color
+        slug {
+          current
+        }
+      }
+      author {
+        name
+        description
+        slug {
+          current
+        }
+      }
+    }
+  }
+`;
+
+function SingleBlogPost({ data, location }) {
+  const blog = data.sanityBlog;
+  return (
+    <>
+      <SEO title={blog.title} />
+      <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
+      <Container>
+        <MarginedContainer>
+          <ScrollToTop showBelow={800} />
+          <PostHeadingSection
+            postTitle={blog.title}
+            postSubHeading={blog.subTitle}
+            postPublishedAt={blog.publishedAt}
+            timeToRead={blog.timeToRead}
+            postURL={{
+              siteURL: data.site.siteMetadata.siteURL,
+              path: location.pathname,
+            }}
+          />
+        </MarginedContainer>
+        <GatsbyImage
+          image={blog.coverImage.asset.gatsbyImageData}
+          alt={blog.coverImage.alt || ''}
+          loading="lazy"
+          className={`block w-full ${blogImage}`}
+        />
+        <MarginedContainer>
+          <Section>
+            <SectionTop>
+              {blog.category && (
+                <>
+                  <CategoryCatalogue
+                    category={blog.category}
+                    pagePath={location.pathname}
+                  />
+                  <Break />
+                </>
+              )}
+            </SectionTop>
+            <SectionMiddle className={textContainer}>
+              <ExcerptText value={blog._rawExcerpt} />
+              <RichText value={blog._rawBody} />
+              <div className="grid grid-flow-col sm:grid-cols-2 gap-8 pt-6 pb-0 md:pb-2">
+                {blog.tags && (
+                  <TagsArray
+                    tags={blog.tags}
+                    className="sm:col-span-1 flex flex-row gap-2 items-center justify-start"
+                  />
+                )}
+                <ul className="sm:col-span-1 flex flex-row justify-end sm:justify-between gap-4 text-gray-700 dark:text-gray-400">
+                  {socialShareLinks.map((item) => (
+                    <li key={item.name} className="">
+                      <item.component
+                        url={data.site.siteMetadata.siteURL + location.pathname}
+                        title={blog.title}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </SectionMiddle>
+            <SectionBottom>
+              {blog.author && <div className='flex flex-col gap-1'>
+                <p className='font-lora text-base md:text-lg text-gray-700 dark:text-gray-300 '>
+                  This post was written by <Link className='hover:underline text-gray-900 dark:text-gray-100' to={`/authors/${blog.author.slug.current}`}>{blog.author.name}</Link>
+                </p> 
+                <p className='font-warnockcapt italic font-light text-base md:text-lg text-gray-500'>
+                  {blog.author.description}
+                </p>
+              </div>}
+            </SectionBottom>
+            <Break />
+          </Section>
+          <NewsletterSection
+            className="pb-8"
+            heading="want to stay in touch?"
+          />
+        </MarginedContainer>
+      </Container>
+    </>
+  );
+}
+
+export function Head({ data }) {
+  return <SEO title={data.sanityBlog.title} description={data.sanityBlog.subTitle} featuredImage={data.sanityBlog.coverImage.asset.gatsbyImageData} />
+}
+
+export default SingleBlogPost;

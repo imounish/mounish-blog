@@ -1,0 +1,50 @@
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+}
+
+.hover-underline-animation::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 0.1rem;
+  bottom: -0.1rem;
+  left: 0;
+  transform-origin: bottom right;
+  transition: transform 300ms ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  width: 100%;
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.bg-custom-green::after {
+  background-color: #41b3a3;
+}
+
+.bg-custom-maroon::after {
+  background-color: #9a1750;
+}
+
+.custom-animation-green {
+  background: linear-gradient(#41b3a3, #41b3a3) left bottom no-repeat;
+  background-size: 0% 0.12rem;
+  transition: all 500ms ease-in-out;
+}
+
+.custom-animation-green:hover {
+  background-size: 100% 0.1rem;
+}
+
+.custom-animation-maroon {
+  background: linear-gradient(#9a1750, #9a1750) left bottom no-repeat;
+  background-size: 0% 0.12rem;
+  transition: all 500ms ease-in-out;
+}
+
+.custom-animation-maroon:hover {
+  background-size: 100% 0.1rem;
+}

@@ -1,0 +1,18 @@
+.category-image {
+  height: 40vh;
+}
+
+@media only screen and (max-width: 960px) {
+  .text-container {
+    margin-right: 0;
+  }
+  .category-image {
+    height: 35vh;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .category-image {
+    height: 30vh;
+  }
+}
