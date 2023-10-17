@@ -59,13 +59,13 @@ function AuthorSearchResultItem({ author }) {
         <GatsbyImage
           image={author.profileImage.asset.gatsbyImageData}
           alt={author.profileImage.alt}
-          className="block w-1/12 rounded-full h-[45.34px]"
+          className="block w-1/6 rounded-full"
         />
-        <div className={`flex flex-col w-11/12 ${author.description ? '' : 'h-[45.34px] justify-around'}`}>
-          <h2 className="font-warnockdisp text-base md:text-lg text-gray-900 dark:text-gray-100">
+        <div className="flex flex-col w-5/6 justify-around">
+          <h2 className="font-warnockdisp text-sm sm:text-base text-gray-900 dark:text-gray-100">
             {author.name}
           </h2>
-          {author.description && <p className="font-worksans text-xs text-gray-600 dark:text-gray-400">
+          {author.description && <p className="font-worksans text-xs sm:text-sm text-gray-600 dark:text-gray-400">
             <span className="italic font-warnockcapt font-bold">{author.description}</span>
           </p>}
         </div>

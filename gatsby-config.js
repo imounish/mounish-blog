@@ -27,7 +27,6 @@ module.exports = {
         ...sanityConfig,
       },
     },
-    'gatsby-plugin-netlify',
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {

@@ -34,7 +34,7 @@ function SearchResult({ searchQuery, blogsIndexStore, categoriesIndexStore, auth
     {blogsResult.length > 0 && (
       <>
         <p className="text-sm md:text-base text-gray-500 font-lora lowercase">blogs</p>
-        <ul className='flex flex-col gap-2 py-2'>
+        <ul className='flex flex-col gap-2 pt-2 pb-4'>
           {blogsResult.map((result) => (
             <BlogSearchResultItem key={result.id} blog={result} />
           ))}
@@ -44,7 +44,7 @@ function SearchResult({ searchQuery, blogsIndexStore, categoriesIndexStore, auth
     {categoriesResult.length > 0 && (
       <>
         <p className="text-sm md:text-base text-gray-500 font-lora lowercase">categories</p>
-        <ul className='flex flex-col gap-2 py-2'>
+        <ul className='flex flex-col gap-2 pt-2 pb-4'>
           {categoriesResult.map((result) => (
               <CategorySearchResultItem key={result.id} category={result} />
           ))}
@@ -55,7 +55,7 @@ function SearchResult({ searchQuery, blogsIndexStore, categoriesIndexStore, auth
     {authorsResult.length > 0 && (
       <>
         <p className="text-sm md:text-base text-gray-500 font-lora lowercase">authors</p>
-        <ul className='flex flex-col gap-2 py-2'>
+        <ul className='flex flex-col gap-2 pt-2 pb-4'>
           {authorsResult.map((result) => (
               <AuthorSearchResultItem key={result.id} author={result} />
           ))}

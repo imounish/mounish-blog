@@ -1,16 +1,34 @@
 import { Link, graphql, useStaticQuery } from 'gatsby';
-import React, { useState } from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
-import { blogImageContainer, disabled } from './CategoryCatalogue.module.css';
-
+import React, { useState } from 'react';
 import DescriptionText from '../typography/DescriptionText';
 import Title from '../typography/Title';
+import { blogImageContainer, disabled } from './CategoryCatalogue.module.css';
+
 
 function CustomBlogItem({ blog, category, pageSlug }) {
+  if (blog.slug.current === pageSlug) {
+    return <div className={disabled}>
+      <GatsbyImage
+        image={blog.coverImage.asset.gatsbyImageData}
+        alt={blog.coverImage.alt || ''}
+        className={`block h-auto w-full rounded-md scale-100 hover:scale-105 ${blogImageContainer}`}
+        loading="lazy"
+        style={{
+          transition: '0.3s ease-in-out transform',
+        }}
+      />
+      <h2 className="pt-2 pb-1 w-full no-underline text-gray-800 dark:text-gray-200 font-lora font-normal text-base xl:text-lg">
+        <span className="font-warnockdisp text-sm xl:text-base font-light no-underline text-gray-800 dark:text-gray-200 pr-2">
+          {category.title}
+        </span>
+        {blog.title}
+      </h2>
+    </div>
+  }
   return <div className="font-worksans">
     <Link
-      to={blog.slug.current !== pageSlug ? `/posts/${blog.slug.current}` : ''}
-      className={`${blog.slug.current === pageSlug && disabled} `}
+      to={`/posts/${blog.slug.current}`}
     >
       <GatsbyImage
         image={blog.coverImage.asset.gatsbyImageData}

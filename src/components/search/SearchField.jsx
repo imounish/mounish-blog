@@ -14,7 +14,7 @@ function SearchField({ value, setValue, onFocus, closeModal, resultVisible }) {
         name="Search"
         id="search"
         placeholder="search"
-        className={`py-2 px-11 ${resultVisible ? ' rounded-t-lg' : 'rounded-lg'}`}
+        className={`py-2 px-11 ${resultVisible ? 'rounded-t-lg' : 'rounded-lg'}`}
         autoFocus
         value={value}
         onChange={(e) => setValue(e.target.value)}
