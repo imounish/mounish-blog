@@ -125,25 +125,25 @@ function Search() {
         tabIndex={0}
         aria-label="Close"
       />
-        <div className="flex flex-col">
-          <div className={`font-worksans + ${modal}`}>
-            <SearchField
-              value={searchQuery}
-              setValue={setSearchQuery}
-              onFocus={onFocusHandler}
-              closeModal={closeSearchModal}
-              resultVisible={searchQuery}
-            />
-            {
-              searchQuery && blogsIndexStore && categoriesIndexStore && authorsIndexStore && (
-                <SearchResult 
-                  searchQuery={searchQuery}
-                  blogsIndexStore={blogsIndexStore}
-                  categoriesIndexStore={categoriesIndexStore}
-                  authorsIndexStore={authorsIndexStore}
-                />
-              )
-            }
+      <div className="flex flex-col">
+        <div className={`font-worksans + ${modal}`}>
+          <SearchField
+            value={searchQuery}
+            setValue={setSearchQuery}
+            onFocus={onFocusHandler}
+            closeModal={closeSearchModal}
+            resultVisible={searchQuery}
+          />
+          {
+            searchQuery && blogsIndexStore && categoriesIndexStore && authorsIndexStore && (
+              <SearchResult 
+                searchQuery={searchQuery}
+                blogsIndexStore={blogsIndexStore}
+                categoriesIndexStore={categoriesIndexStore}
+                authorsIndexStore={authorsIndexStore}
+              />
+            )
+          }
         </div>
       </div>
     </>

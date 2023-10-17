@@ -84,6 +84,16 @@ function TagsPage({data, location}) {
           <Break />
           <SectionMiddle>
             {activeTagBlogs.length > 0 && <BlogGrid blogs={activeTagBlogs} />}
+            {activeTag && activeTagBlogs.length === 0 && (
+              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
+                  The brains are at work writing new posts for {(tags.find(tag => tag.slug.current === activeTag)).title} tag !!!
+              </p>
+            )}
+            {!activeTag && (
+              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center lowercase">
+                  select a tag to view posts
+              </p>
+            )}
           </SectionMiddle>
         </Section>
       </MarginedContainer>
