@@ -1,17 +1,18 @@
-import { getImage, getImageDimensions } from '@sanity/asset-utils';
-
-import { GatsbyImage } from 'gatsby-plugin-image';
 import { PortableText } from '@portabletext/react';
+import { getImage, getImageDimensions } from '@sanity/asset-utils';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import parse from 'html-react-parser';
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
+import sanityConfig from '../../../sanity.config';
+import { getSanityImageData } from '../../utils/getSanityImageData';
 import BulletList from './BulletList';
 import HeadingText from './HeadingText';
 import NumberedList from './NumberedList';
 import ParagraphText from './ParagraphText';
 import QuoteText from './QuoteText';
-import { getSanityImageData } from '../../utils/getSanityImageData';
-import sanityConfig from '../../../sanity.config';
+
 
 const richTextComponents = {
   block: {
@@ -80,13 +81,16 @@ const richTextComponents = {
         image,
         layout: 'constrained',
       });
-
+      const caption =
+        parse(String(value.caption)) === 'undefined'
+          ? null
+          : parse(String(value.caption));
       return (
         <div className="flex flex-col gap-1 md:gap-1.5 py-4 sm:py-8">
           <GatsbyImage image={gatsbyImageData} alt={value.alt} />
-          <p className="text-center font-worksans text-xs md:text-sm text-gray-500">
-            {value.caption}
-          </p>
+          {caption && <p className="text-center font-worksans text-xs md:text-sm text-gray-500">
+            {caption}
+          </p>}
         </div>
       );
     },
