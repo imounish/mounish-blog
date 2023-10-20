@@ -6,12 +6,13 @@ import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
 import sanityConfig from '../../../sanity.config';
-import { getSanityImageData } from '../../utils/getSanityImageData';
+import getSanityImageData from '../../utils/getSanityImageData';
 import BulletList from './BulletList';
 import HeadingText from './HeadingText';
 import NumberedList from './NumberedList';
 import ParagraphText from './ParagraphText';
 import QuoteText from './QuoteText';
+import VideoAnimation from '../partials/VideoAnimation';
 
 
 const richTextComponents = {
@@ -61,6 +62,9 @@ const richTextComponents = {
   },
   types: {
     // URL is still remaining
+    videoAnimation: ({ value }) => (
+      <VideoAnimation value={value} />
+    ),
     customCode: ({ value }) => (
       <div className="py-2 lg:py-4">
         <SyntaxHighlighter style={theme} language={value.code.language}>
