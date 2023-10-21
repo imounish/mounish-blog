@@ -7,12 +7,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
 import sanityConfig from '../../../sanity.config';
 import getSanityImageData from '../../utils/getSanityImageData';
+import VideoAnimation from '../partials/VideoAnimation';
 import BulletList from './BulletList';
 import HeadingText from './HeadingText';
 import NumberedList from './NumberedList';
 import ParagraphText from './ParagraphText';
 import QuoteText from './QuoteText';
-import VideoAnimation from '../partials/VideoAnimation';
 
 
 const richTextComponents = {
@@ -37,15 +37,28 @@ const richTextComponents = {
         {children}
       </HeadingText>
     ),
-    blockquote: ({ children }) => (
-      <QuoteText>{children}</QuoteText>
-    ),
+    blockquote: ({ children }) => <QuoteText>{children}</QuoteText>,
+  },
+  marks: {
+    link: ({ value, children }) => {
+      const target = (value?.href || '').startsWith('http')
+        ? '_blank'
+        : undefined;
+      return (
+        <a
+          className="underline underline-offset-2 hover:text-gray-800 dark:text-gray-300"
+          href={value?.href}
+          target={target}
+          rel={target === '_blank' && 'noindex nofollow'}
+        >
+          {children}
+        </a>
+      );
+    },
   },
   list: {
     bullet: ({ children }) => (
-      <BulletList
-        className="py-4 px-6 lg:px-10 font-warnock text-lg md:text-xl"
-      >
+      <BulletList className="py-4 px-6 lg:px-10 font-warnock text-lg md:text-xl">
         {children}
       </BulletList>
     ),
@@ -61,10 +74,15 @@ const richTextComponents = {
     number: ({ children }) => <li className="pl-2">{children}</li>,
   },
   types: {
-    // URL is still remaining
-    videoAnimation: ({ value }) => (
-      <VideoAnimation value={value} />
-    ),
+    customBreak: ({ value }) => {
+      if (!value.break) {
+        return null;
+      }
+      return <p className='text-xl font-warnock py-2 text-center font-light sm:font-normal text-gray-700 dark:text-gray-400'>
+        &#8277; &#160; &#160; &#160; &#8277; &#160; &#160; &#160; &#8277;
+      </p>
+    },
+    videoAnimation: ({ value }) => <VideoAnimation value={value} />,
     customCode: ({ value }) => (
       <div className="py-2 lg:py-4">
         <SyntaxHighlighter style={theme} language={value.code.language}>
@@ -92,9 +110,11 @@ const richTextComponents = {
       return (
         <div className="flex flex-col gap-1 md:gap-1.5 py-4 sm:py-8">
           <GatsbyImage image={gatsbyImageData} alt={value.alt} />
-          {caption && <p className="text-center font-worksans text-xs md:text-sm text-gray-500">
-            {caption}
-          </p>}
+          {caption && (
+            <p className="text-center font-worksans text-xs md:text-sm text-gray-500">
+              {caption}
+            </p>
+          )}
         </div>
       );
     },
