@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
 import axios from 'axios';
-import { modal, modalBackdrop } from './SearchModal.module.css';
-
-import SearchField from './SearchField';
+import { graphql, useStaticQuery } from 'gatsby';
+import React, { useContext, useEffect, useState } from 'react';
 import { SearchModalContext } from '../../context/searchModalContext';
+import SearchField from './SearchField';
+import { modal, modalBackdrop } from './SearchModal.module.css';
 import SearchResult from './SearchResult';
+
 
 const query = graphql`
   {
@@ -21,6 +21,10 @@ const query = graphql`
       publicIndexURL
       publicStoreURL
     }
+    localSearchTags {
+      publicIndexURL
+      publicStoreURL
+    }
   }
 `;
 
@@ -30,6 +34,7 @@ function Search() {
     useContext(SearchModalContext);
   const [blogsIndexStore, setBlogsIndexStore] = useState(null);
   const [categoriesIndexStore, setCategoriesIndexStore] = useState(null);
+  const [tagsIndexStore, setTagsIndexStore] = useState(null);
   const [authorsIndexStore, setAuthorsIndexStore] = useState(null);
   const data = useStaticQuery(query);
 
@@ -50,6 +55,7 @@ function Search() {
     publicStoreURL: categoriesPublicStoreURL,
     publicIndexURL: categoriesPublicIndexURL,
   } = data.localSearchCategories;
+  const { publicStoreURL: tagsPublicStoreURL, publicIndexURL: tagsPublicIndexURL } = data.localSearchTags;
   const {
     publicStoreURL: authorsPublicStoreURL,
     publicIndexURL: authorsPublicIndexURL,
@@ -78,7 +84,7 @@ function Search() {
   if (!isSearchModalOpen) return null;
 
   const onFocusHandler = async () => {
-    if (blogsIndexStore && categoriesIndexStore && authorsIndexStore) return;
+    if (blogsIndexStore && categoriesIndexStore && authorsIndexStore && tagsIndexStore) return;
 
     // fetching the index and store when not available in state
     const [
@@ -86,6 +92,8 @@ function Search() {
       { data: blogsStore },
       { data: categoriesIndex },
       { data: categoriesStore },
+      { data: tagsIndex },
+      { data: tagsStore },
       { data: authorsIndex },
       { data: authorsStore },
     ] = await Promise.all([
@@ -93,6 +101,8 @@ function Search() {
       axios.get(blogsPublicStoreURL),
       axios.get(categoriesPublicIndexURL),
       axios.get(categoriesPublicStoreURL),
+      axios.get(tagsPublicIndexURL),
+      axios.get(tagsPublicStoreURL),
       axios.get(authorsPublicIndexURL),
       axios.get(authorsPublicStoreURL),
     ]);
@@ -105,6 +115,10 @@ function Search() {
     setCategoriesIndexStore({
       index: categoriesIndex,
       store: categoriesStore
+    })
+    setTagsIndexStore({
+      index: tagsIndex,
+      store: tagsStore
     })
     setAuthorsIndexStore({
       index: authorsIndex,
@@ -135,11 +149,12 @@ function Search() {
             resultVisible={searchQuery}
           />
           {
-            searchQuery && blogsIndexStore && categoriesIndexStore && authorsIndexStore && (
+            searchQuery && blogsIndexStore && categoriesIndexStore && tagsIndexStore && authorsIndexStore && (
               <SearchResult 
                 searchQuery={searchQuery}
                 blogsIndexStore={blogsIndexStore}
                 categoriesIndexStore={categoriesIndexStore}
+                tagsIndexStore={tagsIndexStore}
                 authorsIndexStore={authorsIndexStore}
               />
             )

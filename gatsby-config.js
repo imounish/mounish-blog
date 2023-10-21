@@ -10,7 +10,7 @@ module.exports = {
     og: {
       siteName: `mounish's blog - A personal blog`,
       twitterCreator: '@imounish',
-    }
+    },
   },
   plugins: [
     'gatsby-plugin-postcss',
@@ -133,6 +133,38 @@ module.exports = {
         store: ['id', 'title', 'slug'],
         normalizer: ({ data }) =>
           data.allSanityCategory.nodes.map(node => ({
+            id: node.id,
+            title: node.title,
+            slug: node.slug,
+          })),
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-local-search',
+      options: {
+        name: `tags`,
+        engine: `flexsearch`,
+        engineOptions: {
+          tokenize: 'forward',
+        },
+        query: `
+        {
+          allSanityTag {
+            nodes {
+              id
+              title
+              slug {
+                current
+              }
+            }
+          }
+        }
+        `,
+        ref: 'id',
+        index: ['title'],
+        store: ['id', 'title', 'slug'],
+        normalizer: ({ data }) =>
+          data.allSanityTag.nodes.map(node => ({
             id: node.id,
             title: node.title,
             slug: node.slug,

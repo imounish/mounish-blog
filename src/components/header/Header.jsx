@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import { Navbar, IconButton, Collapse } from '@material-tailwind/react';
 import { HiOutlineMenu, HiX } from 'react-icons/hi';
 
-import { menu } from '../../constants/menu';
+import menu from '../../constants/menu';
 import Logo from '../logo/Logo';
 import ThemeSwitcher from '../theme/ThemeSwitcher';
 import { SearchModalContext } from '../../context/searchModalContext';
