@@ -123,7 +123,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
           >
             {category.title}
           </Title>
-          <div className='italic'>
+          <div className='italic sm:pr-2'>
             <DescriptionText value={category._rawDescription} />
           </div>
           <button

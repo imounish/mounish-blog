@@ -5,12 +5,12 @@ import { socialLinks, websiteUrl } from '../../constants/social';
 function Footer() {
   return (
     <footer className="w-full px-0 sm:px-4 dark:bg-black dark:text-gray-400 text-gray-800 font-worksans">
-      <div className="w-full mx-auto max-w-full p-4 md:flex md:items-center md:justify-between">
+      <div className="w-full mx-auto max-w-full py-4 px-4 sm:px-0 md:flex md:items-center md:justify-between">
         <span className="text-sm sm:text-center">
           &#169; {new Date().getFullYear()}{" "}
           <a href={websiteUrl} target="blank" className="hover:underline">
-            mounish.dev&#8482;.
-          </a>{" "}
+            mounish.dev
+          </a>&#8482;.{" "}
           All Rights Reserved.
         </span>
         {/* <ul className="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
@@ -39,7 +39,7 @@ function Footer() {
             ))}
           </ul>
 
-          <p className="font-worksans text-sm">
+          <p className="font-worksans text-xs md:text-sm">
             Built with <span style={{ color: "#e25555" }}>&#9829;</span> by{' '}
             <Link to='/authors/mounish-pedagandham' className='hover:underline' >Mounish</Link>
           </p>

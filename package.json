@@ -31,6 +31,8 @@
     "gatsby-source-filesystem": "^5.12.0",
     "gatsby-source-sanity": "^7.8.1",
     "gatsby-transformer-sharp": "^5.12.0",
+    "html-react-parser": "^4.2.6",
+    "lozad": "^1.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",

@@ -5,7 +5,7 @@ import {
   themeSwitch,
   fadeIn,
   fadeOut,
-  verticalShake,
+  // verticalShake,
 } from './ThemeSwitcher.module.css';
 
 // TODO: use localStorage to save the user preference and update accordingly
@@ -33,7 +33,7 @@ export default function ThemeSwitcher() {
   return (
     <ThemeToggler>
       {({ theme, toggleTheme }) => (
-        <label htmlFor='theme-checkbox' className={`h-6 w-6 sm:h-8 sm:w-8 ${themeSwitch} ${verticalShake}`}>
+        <label htmlFor='theme-checkbox' className={`h-6 w-6 sm:h-8 sm:w-8 ${themeSwitch}`}>
           <input
             type="checkbox"
             id="theme-checkbox"
@@ -41,12 +41,12 @@ export default function ThemeSwitcher() {
             checked={theme === 'dark'}
           />
           <HiSun
-            className={`w-full h-full text-gray-800 hover:text-black ${
+            className={`w-full h-full text-gray-900 ${
               theme !== 'dark' ? fadeIn : fadeOut
             }`}
           />
           <HiMoon
-            className={`w-full h-full dark:text-gray-400 dark:hover:text-gray-50 ${
+            className={`w-full h-full dark:text-gray-50 ${
               theme === 'dark' ? `${fadeIn}` : fadeOut
             }`}
           />

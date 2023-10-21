@@ -17,6 +17,7 @@ const socialShareLinks = [
     name: "email",
     component: ({ url, title }) => (
       <a
+        aria-label='email'
         href={`mailto:?to=&subject=${title.toString()}&body=${url.toString()}`}
       >
         <FaShare className="h-5 w-5 lg:h-6 lg:w-6 hover:text-gray-900 dark:hover:text-gray-200" />

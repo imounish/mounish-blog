@@ -46,7 +46,7 @@ function Header() {
           className="py-1 px-0 lg:px-1 font-normal leading-normal antialiased block"
         >
           <Link
-            className={`flex items-center ${hoverUnderlineAnimation}`}
+            className={`flex items-center w-fit ${hoverUnderlineAnimation}`}
             to={item.path}
             onClick={() => {
               if (openNav) setOpenNav(!openNav);

@@ -4,7 +4,7 @@ function urlBuilder({ baseUrl, width, height, format, options }) {
   return `${baseUrl}?w=${width}&h=${height}&fmt=${format}&q=${options.quality}`
 }
 
-export function getSanityImageData({ image, ...props }) {
+export default function getSanityImageData({ image, ...props }) {
   return  getImageData({
     baseUrl: image.url,
     sourceWidth: image.width,

@@ -32,6 +32,7 @@ function FeaturedBlogGrid({ blogs }) {
               title={blog.title}
               path={blog.slug.current}
               category={blog.category}
+              timeToRead={blog.timeToRead}
               image={{
                 imageData: blog.coverImage.asset.gatsbyImageData,
                 altText: blog.coverImage.alt,
