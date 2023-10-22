@@ -10,7 +10,7 @@ function SEO({ title, description, featuredImage }) {
         siteMetadata {
           title
           description
-          siteURL
+          siteUrl
           og {
             siteName
             twitterCreator
@@ -72,7 +72,7 @@ function SEO({ title, description, featuredImage }) {
     },
     {
       name: 'og:url',
-      content: `${site.siteMetadata.siteURL}${location.pathname}`,
+      content: `${site.siteMetadata.siteUrl}${location.pathname}`,
     },
     {
       name: 'twitter:card',
@@ -144,7 +144,7 @@ export default SEO;
  *   const og = {
     title: title || site.siteMetadata.title,
     type: 'website',
-    url: site.siteMetadata.siteURL + path,
+    url: site.siteMetadata.siteUrl + path,
     image: '' || image
   }
 

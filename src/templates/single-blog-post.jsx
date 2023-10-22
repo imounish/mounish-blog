@@ -25,7 +25,7 @@ export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
     site {
       siteMetadata {
-        siteURL
+        siteUrl
       }
     }
     sanityBlog(id: { eq: $id }) {
@@ -84,7 +84,7 @@ function SingleBlogPost({ data, location }) {
             postPublishedAt={blog.publishedAt}
             timeToRead={blog.timeToRead}
             postURL={{
-              siteURL: data.site.siteMetadata.siteURL,
+              siteUrl: data.site.siteMetadata.siteUrl,
               path: location.pathname,
             }}
           />
@@ -122,7 +122,7 @@ function SingleBlogPost({ data, location }) {
                   {socialShareLinks.map((item) => (
                     <li key={item.name} className="">
                       <item.component
-                        url={data.site.siteMetadata.siteURL + location.pathname}
+                        url={data.site.siteMetadata.siteUrl + location.pathname}
                         title={blog.title}
                       />
                     </li>

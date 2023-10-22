@@ -82,7 +82,7 @@ function PostHeadingSection({
           {socialShareLinks.map((item) => (
             <li key={item.name} className="">
               <item.component
-                url={postURL.siteURL + postURL.path}
+                url={postURL.siteUrl + postURL.path}
                 title={postTitle}
               />
             </li>

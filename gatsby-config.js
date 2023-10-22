@@ -5,7 +5,8 @@ const sanityConfig = require('./sanity.config');
 module.exports = {
   siteMetadata: {
     title: `mounish's blog`,
-    siteURL: `https://blog.mounish.dev`,
+    siteUrl: `https://blog.mounish.dev`,
+    site_url: `https://blog.mounish.dev`,
     description: `A website where you can read articles, tutorials, and updates from Mounish as he dives into depths of imagination, weaves words into captivating stories.`,
     og: {
       siteName: `mounish's blog - A personal blog`,
@@ -13,11 +14,17 @@ module.exports = {
     },
   },
   plugins: [
-    'gatsby-plugin-postcss',
-    'gatsby-plugin-dark-mode',
-    'gatsby-plugin-image',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
+    {
+      resolve: `gatsby-plugin-sitemap`,
+    },
+    {
+      resolve: `gatsby-plugin-feed`,
+    },
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-dark-mode`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -26,7 +33,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: `gatsby-source-sanity`,
       options: {
         ...sanityConfig,
       },
@@ -63,7 +70,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-local-search',
+      resolve: `gatsby-plugin-local-search`,
       options: {
         name: `blogs`,
         engine: `flexsearch`,
@@ -108,7 +115,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-local-search',
+      resolve: `gatsby-plugin-local-search`,
       options: {
         name: `categories`,
         engine: `flexsearch`,
@@ -140,7 +147,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-local-search',
+      resolve: `gatsby-plugin-local-search`,
       options: {
         name: `tags`,
         engine: `flexsearch`,
@@ -172,7 +179,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-local-search',
+      resolve: `gatsby-plugin-local-search`,
       options: {
         name: `authors`,
         engine: `flexsearch`,
