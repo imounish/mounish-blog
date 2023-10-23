@@ -26,7 +26,8 @@ module.exports = {
       options: {
         classNameDark: 'dark',
         classNameLight: 'light',
-      }
+        minify: true,
+      },
     },
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,

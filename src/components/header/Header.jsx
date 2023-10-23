@@ -39,14 +39,14 @@ function Header() {
   }, [prevScrollPos, visible]);
 
   const navList = (
-    <ul className="dark:text-gray-50 mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {menu.map((item) => (
+    <ul className="mb-4 mt-2 flex flex-col gap-2 dark:text-gray-50 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      {menu.map(item => (
         <li
           key={item.path}
-          className="py-1 px-0 lg:px-1 font-normal leading-normal antialiased block"
+          className="block px-0 py-1 font-normal leading-normal antialiased lg:px-1"
         >
           <Link
-            className={`flex items-center w-fit ${hoverUnderlineAnimation}`}
+            className={`flex w-fit items-center ${hoverUnderlineAnimation}`}
             to={item.path}
             onClick={() => {
               if (openNav) setOpenNav(!openNav);
@@ -61,24 +61,24 @@ function Header() {
 
   return (
     <Navbar
-      className="fixed top-0 z-10 transition-opacity backdrop-blur-lg opacity-100 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 border-0 dark:bg-black/75 font-worksans text-lg"
+      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-800/40 lg:px-8 lg:py-4"
       style={{
         top: visible ? '0' : '-72px',
         transition: '0.5s',
         WebkitBackdropFilter: 'blur(16px)',
       }}
     >
-      <div className="flex items-center justify-between relative text-black">
+      <div className="relative flex items-center justify-between text-black">
         <Logo />
         <div className="flex items-center gap-4">
-          <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 mr-4 hidden lg:block">
+          <div className="absolute left-2/4 top-2/4 mr-4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
             {navList}
           </div>
           <ThemeToggle />
           <SearchButton openSearchModal={openSearchModal} />
           <IconButton
             variant="text"
-            className="ml-auto h-6 w-6 sm:h-8 sm:w-8 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden dark:text-gray-50"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent dark:text-gray-50 sm:h-8 sm:w-8 lg:hidden"
             ripple={false}
             onClick={() => setOpenNav(!openNav)}
           >

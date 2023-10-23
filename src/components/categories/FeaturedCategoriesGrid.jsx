@@ -6,7 +6,7 @@ function FeaturedCategoriesGrid({ categories }) {
   return (
     <SectionRest className="flex flex-col gap-8 pb-2">
       {categories &&
-        categories.map((category) => (
+        categories.map(category => (
           <CategoryItem
             key={category.id}
             title={category.title}

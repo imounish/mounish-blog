@@ -14,12 +14,12 @@ function BlogItem({
   publishedAt,
 }) {
   return (
-    <article className="overflow-hidden font-worksans">
+    <article className="font-worksans overflow-hidden">
       <Link to={`/posts/${path}`}>
         <GatsbyImage
           image={image.imageData}
           alt={image.altText ? image.altText : ''}
-          className="block h-auto w-full rounded-md scale-100 hover:scale-105"
+          className="block h-auto w-full scale-100 rounded-md hover:scale-105"
           loading="lazy"
           style={{
             height: imageHeight,
@@ -27,10 +27,10 @@ function BlogItem({
           }}
         />
       </Link>
-      <header className="flex flex-col items-start pt-3 pb-1">
+      <header className="flex flex-col items-start pb-1 pt-3">
         <Title
           path={`/posts/${path}`}
-          className="font-lora font-semibold text-xl md:text-2xl "
+          className="font-lora text-xl font-semibold md:text-2xl "
           highLightColor="green"
           leadingText={category ? category.title : ''}
         >
@@ -39,8 +39,8 @@ function BlogItem({
       </header>
       {publishedAt && (
         <footer className="flex flex-row gap-2 py-1">
-          <p className="text-sm text-gray-600 w-full leading-4">
-            <span className="italic font-warnockcapt font-bold text-base">
+          <p className="w-full text-sm leading-4 text-gray-600">
+            <span className="font-warnockcapt text-base font-bold italic">
               On{' '}
             </span>
             {new Date(publishedAt).toLocaleDateString('en-us', {

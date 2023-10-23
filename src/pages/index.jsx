@@ -9,7 +9,8 @@ import Break from '../components/partials/Break';
 import ScrollToTop from '../components/partials/ScrollToTop';
 
 function IndexPage() {
-  return <Container>
+  return (
+    <Container>
       <MarginedContainer>
         <ScrollToTop showBelow={500} />
         <FeaturedBlogs />
@@ -19,10 +20,11 @@ function IndexPage() {
         <NewsletterSection className="pb-8" heading="stay in touch?" />
       </MarginedContainer>
     </Container>
+  );
 }
 
 export function Head() {
-  return <SEO />
+  return <SEO />;
 }
 
 export default IndexPage;

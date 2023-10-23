@@ -6,22 +6,22 @@ export const socialLinks = [
   {
     name: 'instagram',
     url: 'https://instagram.com/mounish.musings',
-    icon: <FaInstagram className="w-6 h-6" />,
+    icon: <FaInstagram className="h-6 w-6" />,
   },
   {
     name: 'threads',
     url: 'https://threads.net/imounish',
-    icon: <FaThreads className="w-6 h-6" />,
+    icon: <FaThreads className="h-6 w-6" />,
   },
   {
     name: 'medium',
     url: 'https://medium.com/@mounishp',
-    icon: <FaMedium className="w-6 h-6" />,
+    icon: <FaMedium className="h-6 w-6" />,
   },
   {
     name: 'github',
     url: 'https://github.com/imounish',
-    icon: <FaGithub className="w-6 h-6" />,
+    icon: <FaGithub className="h-6 w-6" />,
   },
 ];
 

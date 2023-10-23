@@ -6,7 +6,6 @@ import SearchField from './SearchField';
 import { modal, modalBackdrop } from './SearchModal.module.css';
 import SearchResult from './SearchResult';
 
-
 const query = graphql`
   {
     localSearchBlogs {
@@ -55,15 +54,17 @@ function Search() {
     publicStoreURL: categoriesPublicStoreURL,
     publicIndexURL: categoriesPublicIndexURL,
   } = data.localSearchCategories;
-  const { publicStoreURL: tagsPublicStoreURL, publicIndexURL: tagsPublicIndexURL } = data.localSearchTags;
+  const {
+    publicStoreURL: tagsPublicStoreURL,
+    publicIndexURL: tagsPublicIndexURL,
+  } = data.localSearchTags;
   const {
     publicStoreURL: authorsPublicStoreURL,
     publicIndexURL: authorsPublicIndexURL,
   } = data.localSearchAuthors;
-  
 
   useEffect(() => {
-    const keyDownHandler = (event) => {
+    const keyDownHandler = event => {
       if (event.key === 'Escape') {
         event.preventDefault();
         closeSearchModal();
@@ -84,7 +85,13 @@ function Search() {
   if (!isSearchModalOpen) return null;
 
   const onFocusHandler = async () => {
-    if (blogsIndexStore && categoriesIndexStore && authorsIndexStore && tagsIndexStore) return;
+    if (
+      blogsIndexStore &&
+      categoriesIndexStore &&
+      authorsIndexStore &&
+      tagsIndexStore
+    )
+      return;
 
     // fetching the index and store when not available in state
     const [
@@ -110,26 +117,26 @@ function Search() {
     // updating state after fetching the result
     setBlogsIndexStore({
       index: blogsIndex,
-      store: blogsStore
-    })
+      store: blogsStore,
+    });
     setCategoriesIndexStore({
       index: categoriesIndex,
-      store: categoriesStore
-    })
+      store: categoriesStore,
+    });
     setTagsIndexStore({
       index: tagsIndex,
-      store: tagsStore
-    })
+      store: tagsStore,
+    });
     setAuthorsIndexStore({
       index: authorsIndex,
-      store: authorsStore
-    })
+      store: authorsStore,
+    });
   };
 
   return (
     <>
       <div
-        className={`transition-opacity backdrop-blur-lg opacity-100 bg-blue-gray-600/25 ${modalBackdrop}`}
+        className={`bg-blue-gray-600/25 opacity-100 backdrop-blur-lg transition-opacity ${modalBackdrop}`}
         style={{
           WebkitBackdropFilter: 'blur(16px)',
         }}
@@ -148,17 +155,19 @@ function Search() {
             closeModal={closeSearchModal}
             resultVisible={searchQuery}
           />
-          {
-            searchQuery && blogsIndexStore && categoriesIndexStore && tagsIndexStore && authorsIndexStore && (
-              <SearchResult 
+          {searchQuery &&
+            blogsIndexStore &&
+            categoriesIndexStore &&
+            tagsIndexStore &&
+            authorsIndexStore && (
+              <SearchResult
                 searchQuery={searchQuery}
                 blogsIndexStore={blogsIndexStore}
                 categoriesIndexStore={categoriesIndexStore}
                 tagsIndexStore={tagsIndexStore}
                 authorsIndexStore={authorsIndexStore}
               />
-            )
-          }
+            )}
         </div>
       </div>
     </>

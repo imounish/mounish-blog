@@ -14,26 +14,25 @@ import NumberedList from './NumberedList';
 import ParagraphText from './ParagraphText';
 import QuoteText from './QuoteText';
 
-
 const richTextComponents = {
   block: {
     normal: ({ children }) => (
-      <ParagraphText className="text-xl font-warnock py-4">
+      <ParagraphText className="font-warnock py-4 text-xl">
         {children}
       </ParagraphText>
     ),
     h2: ({ children }) => (
-      <HeadingText className="font-warnockdisp text-4xl lg:text-5xl font-bold pt-10 pb-2">
+      <HeadingText className="font-warnockdisp pb-2 pt-10 text-4xl font-bold lg:text-5xl">
         {children}
       </HeadingText>
     ),
     h3: ({ children }) => (
-      <HeadingText className="font-warnockdisp text-3xl lg:text-4xl font-semibold pt-8 pb-2">
+      <HeadingText className="font-warnockdisp pb-2 pt-8 text-3xl font-semibold lg:text-4xl">
         {children}
       </HeadingText>
     ),
     h4: ({ children }) => (
-      <HeadingText className="font-warnockdisp text-2xl lg:text-3xl font-medium pt-6 pb-2">
+      <HeadingText className="font-warnockdisp pb-2 pt-6 text-2xl font-medium lg:text-3xl">
         {children}
       </HeadingText>
     ),
@@ -58,13 +57,13 @@ const richTextComponents = {
   },
   list: {
     bullet: ({ children }) => (
-      <BulletList className="py-4 px-6 lg:px-10 font-warnock text-lg md:text-xl">
+      <BulletList className="font-warnock px-6 py-4 text-lg md:text-xl lg:px-10">
         {children}
       </BulletList>
     ),
 
     number: ({ children }) => (
-      <NumberedList className="py-4 px-6 lg:px-10 font-warnock text-lg md:text-xl">
+      <NumberedList className="font-warnock px-6 py-4 text-lg md:text-xl lg:px-10">
         {children}
       </NumberedList>
     ),
@@ -78,9 +77,11 @@ const richTextComponents = {
       if (!value.break) {
         return null;
       }
-      return <p className='text-xl font-warnock py-2 text-center font-light sm:font-normal text-gray-700 dark:text-gray-400'>
-        &#8277; &#160; &#160; &#160; &#8277; &#160; &#160; &#160; &#8277;
-      </p>
+      return (
+        <p className="font-warnock py-2 text-center text-xl font-light text-gray-700 dark:text-gray-400 sm:font-normal">
+          &#8277; &#160; &#160; &#160; &#8277; &#160; &#160; &#160; &#8277;
+        </p>
+      );
     },
     videoAnimation: ({ value }) => <VideoAnimation value={value} />,
     customCode: ({ value }) => (
@@ -108,10 +109,10 @@ const richTextComponents = {
           ? null
           : parse(String(value.caption));
       return (
-        <div className="flex flex-col gap-1 md:gap-1.5 py-4 sm:py-8">
+        <div className="flex flex-col gap-1 py-4 sm:py-8 md:gap-1.5">
           <GatsbyImage image={gatsbyImageData} alt={value.alt} />
           {caption && (
-            <p className="text-center font-worksans text-xs md:text-sm text-gray-500">
+            <p className="font-worksans text-center text-xs text-gray-500 md:text-sm">
               {caption}
             </p>
           )}
