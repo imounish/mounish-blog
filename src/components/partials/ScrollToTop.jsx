@@ -27,7 +27,7 @@ const ScrollToTop = ({ showBelow }) => {
       <button
         type="button"
         onClick={scrollClickHandler}
-        className={`backdrop-blur-2xl right-5 md:right-8 lg:right-12 bottom-16 lg:bottom-18  bg-gray-50/80 hover:bg-gray-200/80 dark:bg-gray-800/60 dark:hover:bg-gray-600/60 shadow-xl p-3.5 rounded-full text-gray-900 dark:text-gray-100 ${scrollToTopBtn}`}
+        className={`lg:bottom-18 bottom-16 right-5 rounded-full bg-gray-50/80 p-3.5  text-gray-900 shadow-xl backdrop-blur-2xl hover:bg-gray-200/80 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-600/60 md:right-8 lg:right-12 ${scrollToTopBtn}`}
       >
         <FaChevronUp className="h-8 w-8" />
       </button>

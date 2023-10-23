@@ -25,7 +25,7 @@ export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
     site {
       siteMetadata {
-        siteURL
+        siteUrl
       }
     }
     sanityBlog(id: { eq: $id }) {
@@ -84,7 +84,7 @@ function SingleBlogPost({ data, location }) {
             postPublishedAt={blog.publishedAt}
             timeToRead={blog.timeToRead}
             postURL={{
-              siteURL: data.site.siteMetadata.siteURL,
+              siteUrl: data.site.siteMetadata.siteUrl,
               path: location.pathname,
             }}
           />
@@ -111,18 +111,18 @@ function SingleBlogPost({ data, location }) {
             <SectionMiddle className={textContainer}>
               <ExcerptText value={blog._rawExcerpt} />
               <RichText value={blog._rawBody} />
-              <div className="grid grid-flow-col sm:grid-cols-2 gap-8 pt-6 pb-0 md:pb-2">
+              <div className="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
                 {blog.tags && (
                   <TagsArray
                     tags={blog.tags}
-                    className="sm:col-span-1 flex flex-row gap-2 items-center justify-start"
+                    className="flex flex-row items-center justify-start gap-2 sm:col-span-1"
                   />
                 )}
-                <ul className="sm:col-span-1 flex flex-row justify-end sm:justify-between gap-4 text-gray-700 dark:text-gray-400">
-                  {socialShareLinks.map((item) => (
+                <ul className="flex flex-row justify-end gap-4 text-gray-700 dark:text-gray-400 sm:col-span-1 sm:justify-between">
+                  {socialShareLinks.map(item => (
                     <li key={item.name} className="">
                       <item.component
-                        url={data.site.siteMetadata.siteURL + location.pathname}
+                        url={data.site.siteMetadata.siteUrl + location.pathname}
                         title={blog.title}
                       />
                     </li>
@@ -131,14 +131,22 @@ function SingleBlogPost({ data, location }) {
               </div>
             </SectionMiddle>
             <SectionBottom>
-              {blog.author && <div className='flex flex-col gap-1'>
-                <p className='font-lora text-base md:text-lg text-gray-700 dark:text-gray-300 '>
-                  This post was written by <Link className='hover:underline text-gray-900 dark:text-gray-100' to={`/authors/${blog.author.slug.current}`}>{blog.author.name}</Link>
-                </p> 
-                <p className='font-warnockcapt italic font-light text-base md:text-lg text-gray-500'>
-                  {blog.author.description}
-                </p>
-              </div>}
+              {blog.author && (
+                <div className="flex flex-col gap-1">
+                  <p className="font-lora text-base text-gray-700 dark:text-gray-300 md:text-lg ">
+                    This post was written by{' '}
+                    <Link
+                      className="text-gray-900 hover:underline dark:text-gray-100"
+                      to={`/authors/${blog.author.slug.current}`}
+                    >
+                      {blog.author.name}
+                    </Link>
+                  </p>
+                  <p className="font-warnockcapt text-base font-light italic text-gray-500 md:text-lg">
+                    {blog.author.description}
+                  </p>
+                </div>
+              )}
             </SectionBottom>
             <Break />
           </Section>
@@ -153,7 +161,13 @@ function SingleBlogPost({ data, location }) {
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityBlog.title} description={data.sanityBlog.subTitle} featuredImage={data.sanityBlog.coverImage.asset.gatsbyImageData} />
+  return (
+    <SEO
+      title={data.sanityBlog.title}
+      description={data.sanityBlog.subTitle}
+      featuredImage={data.sanityBlog.coverImage.asset.gatsbyImageData}
+    />
+  );
 }
 
 export default SingleBlogPost;

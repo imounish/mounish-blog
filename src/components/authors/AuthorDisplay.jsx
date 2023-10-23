@@ -1,6 +1,6 @@
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
-import React from 'react'
+import React from 'react';
 
 function AuthorDisplay({ author }) {
   return (
@@ -12,7 +12,7 @@ function AuthorDisplay({ author }) {
         alt={
           author.profileImage.asset.altText
             ? author.profileImage.asset.altText
-            : ""
+            : ''
         }
         className="block rounded-full"
         image={author.profileImage.asset.gatsbyImageData}
@@ -22,4 +22,4 @@ function AuthorDisplay({ author }) {
   );
 }
 
-export default AuthorDisplay
+export default AuthorDisplay;

@@ -10,7 +10,7 @@ import Section from '../components/partials/Section';
 import SectionTop from '../components/partials/SectionTop';
 
 export const query = graphql`
-query SingleAuthorQuery($id: String!) {
+  query SingleAuthorQuery($id: String!) {
     sanityAuthor(id: { eq: $id }) {
       name
       description
@@ -61,25 +61,26 @@ function SingleAuthor({ data }) {
         <Break />
         <Section sectionHeading="recent posts">
           <SectionTop>
-            {
-              blogs && <BlogGrid blogs={blogs} />
-            }
-            {
-              blogs.length === 0 && (
-                <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
+            {blogs && <BlogGrid blogs={blogs} />}
+            {blogs.length === 0 && (
+              <p className="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
                 {author.name} is at work writing new posts !!!
               </p>
-              )
-            }
+            )}
           </SectionTop>
         </Section>
       </MarginedContainer>
     </PageSpace>
-  )
+  );
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityAuthor.name} description={data.sanityAuthor.description} />
+  return (
+    <SEO
+      title={data.sanityAuthor.name}
+      description={data.sanityAuthor.description}
+    />
+  );
 }
 
-export default SingleAuthor
+export default SingleAuthor;

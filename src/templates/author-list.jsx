@@ -1,12 +1,12 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import AuthorGrid from '../components/authors/AuthorGrid';
-import MarginedContainer from "../components/partials/MarginedContainer";
-import PageSpace from "../components/partials/PageSpace";
-import Pagination from "../components/partials/Pagination";
-import SEO from "../components/seo/SEO";
-import Section from "../components/partials/Section";
-import SectionBottom from "../components/partials/SectionBottom";
+import MarginedContainer from '../components/partials/MarginedContainer';
+import PageSpace from '../components/partials/PageSpace';
+import Pagination from '../components/partials/Pagination';
+import SEO from '../components/seo/SEO';
+import Section from '../components/partials/Section';
+import SectionBottom from '../components/partials/SectionBottom';
 
 export const AuthorsListQuery = graphql`
   query AuthorsListQuery($limit: Int!, $offset: Int!) {
@@ -54,7 +54,12 @@ function AuthorList({ data, pageContext }) {
 }
 
 export function Head() {
-  return <SEO title="all authors" description="Explore all the authors that have written articles on this website." />
+  return (
+    <SEO
+      title="all authors"
+      description="Explore all the authors that have written articles on this website."
+    />
+  );
 }
 
 export default AuthorList;

@@ -1,16 +1,18 @@
-import React from 'react'
+import React from 'react';
 
-function TimeToRead({timeToRead, separator }) {
+function TimeToRead({ timeToRead, separator }) {
   return (
     <>
-      {separator && <span className="px-2 font-bold text-sm text-gray-800 dark:text-gray-400">
-        &#124;
-      </span>}
-      <span className="font-courier font-light text-base uppercase">
+      {separator && (
+        <span className="px-2 text-sm font-bold text-gray-800 dark:text-gray-400">
+          &#124;
+        </span>
+      )}
+      <span className="font-courier text-base font-light uppercase">
         {timeToRead} MIN READ
       </span>
     </>
   );
 }
 
-export default TimeToRead
+export default TimeToRead;

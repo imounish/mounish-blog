@@ -6,9 +6,9 @@ import SectionBottom from '../partials/SectionBottom';
 function FeaturedBlogGrid({ blogs }) {
   return (
     <>
-      <SectionTop className="grid sm:grid-cols-2 gap-8">
+      <SectionTop className="grid gap-8 sm:grid-cols-2">
         {blogs &&
-          blogs.slice(0, 2).map((blog) => (
+          blogs.slice(0, 2).map(blog => (
             <BlogItem
               key={blog.title}
               title={blog.title}
@@ -24,9 +24,9 @@ function FeaturedBlogGrid({ blogs }) {
             />
           ))}
       </SectionTop>
-      <SectionBottom className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <SectionBottom className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {blogs &&
-          blogs.slice(2).map((blog) => (
+          blogs.slice(2).map(blog => (
             <BlogItem
               key={blog.title}
               title={blog.title}

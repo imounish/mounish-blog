@@ -11,13 +11,13 @@ function Pagination({ baseUrl, numberOfPages, currentPage, className }) {
   return (
     <div className="flex flex-col items-end pb-2 sm:pb-4">
       <div
-        className={`flex flex-row item-end font-worksans text-gray-900 dark:text-gray-50 text-lg ${
+        className={`item-end font-worksans flex flex-row text-lg text-gray-900 dark:text-gray-50 ${
           className || ''
         }`}
       >
         <Link
           to={`${baseUrl}/${prevPage}`}
-          className={`mr-2 flex flex-row items-center pl-2.5 pr-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 transition-colors ${
+          className={`mr-2 flex flex-row items-center rounded-md bg-gray-100 py-1.5 pl-2.5 pr-3 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${
             currentPage <= 1 && disabled
           }`}
         >
@@ -25,7 +25,7 @@ function Pagination({ baseUrl, numberOfPages, currentPage, className }) {
           Prev
         </Link>
         <Link
-          className={`ml-2 flex flex-row items-center pl-3 pr-2.5 py-1 rounded-md bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 transition-colors ${
+          className={`ml-2 flex flex-row items-center rounded-md bg-gray-100 py-1 pl-3 pr-2.5 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${
             currentPage >= numberOfPages && disabled
           }`}
           to={`${baseUrl}/${nextPage}`}
@@ -34,7 +34,7 @@ function Pagination({ baseUrl, numberOfPages, currentPage, className }) {
           <FaChevronRight />
         </Link>
       </div>
-      <p className="font-warnockcapt text-gray-600 dark:text-gray-400 text-md italic font-light tracking-wide pt-2">
+      <p className="font-warnockcapt text-md pt-2 font-light italic tracking-wide text-gray-600 dark:text-gray-400">
         page {currentPage} of {numberOfPages} page{numberOfPages > 1 ? 's' : ''}
       </p>
     </div>

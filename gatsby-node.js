@@ -1,6 +1,7 @@
 exports.createPages = async ({ graphql, actions }) => {
   const postsPerPage = parseInt(process.env.GATSBY_POSTS_PER_PAGE, 10) || 10;
-  const categoriesPerPage = parseInt(process.env.GATSBY_CATEGORIES_PER_PAGE, 10) || 6;
+  const categoriesPerPage =
+    parseInt(process.env.GATSBY_CATEGORIES_PER_PAGE, 10) || 6;
   const authorsPerPage = parseInt(process.env.GATSBY_AUTHORS_PER_PAGE, 10) || 4;
 
   // template paths
@@ -16,7 +17,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const categoryListTemplate = require.resolve(
     './src/templates/category-list.jsx'
   );
-  const singleAuthorTemplate = require.resolve('./src/templates/single-author.jsx');
+  const singleAuthorTemplate = require.resolve(
+    './src/templates/single-author.jsx'
+  );
   const authorListTemplate = require.resolve('./src/templates/author-list.jsx');
 
   const { createPage } = actions;
@@ -55,7 +58,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const authors = result.data.allSanityAuthor.nodes;
 
   // single blog pages
-  blogs.forEach((blog) => {
+  blogs.forEach(blog => {
     createPage({
       path: `/posts/${blog.slug.current}`,
       component: singleBlogTemplate,
@@ -64,7 +67,7 @@ exports.createPages = async ({ graphql, actions }) => {
   });
 
   // single category pages
-  categories.forEach((category) => {
+  categories.forEach(category => {
     createPage({
       path: `/categories/${category.slug.current}`,
       component: singleCategoryTemplate,
@@ -73,13 +76,13 @@ exports.createPages = async ({ graphql, actions }) => {
   });
 
   // single author pages
-  authors.forEach((author) => {
+  authors.forEach(author => {
     createPage({
       path: `/authors/${author.slug.current}`,
       component: singleAuthorTemplate,
       context: { id: author.id },
-    })
-  })
+    });
+  });
 
   // blog list pages
   const totalBlogListPages = Math.ceil(blogs.length / postsPerPage);

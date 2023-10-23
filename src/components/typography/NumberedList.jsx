@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 function NumberedList({ children, className }) {
-    return (
+  return (
     <ol
-      className={`list-decimal list-outside text-gray-900 dark:text-gray-200 text-justify ${
-        className || ""
+      className={`list-outside list-decimal text-justify text-gray-900 dark:text-gray-200 ${
+        className || ''
       }`}
     >
       {children}
@@ -12,4 +12,4 @@ function NumberedList({ children, className }) {
   );
 }
 
-export default NumberedList
+export default NumberedList;

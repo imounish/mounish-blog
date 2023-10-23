@@ -13,7 +13,6 @@ import SectionMiddle from '../components/partials/SectionMiddle';
 import SectionTop from '../components/partials/SectionTop';
 import { categoryImage } from './single-category.module.css';
 
-
 export const query = graphql`
   query SingleCategoryQuery($id: String!) {
     sanityCategory(id: { eq: $id }) {
@@ -80,11 +79,11 @@ function SingleCategory({ data }) {
       />
       <MarginedContainer>
         <Section>
-          <SectionHeading className="pt-2 lg:pt-4 font-medium">
+          <SectionHeading className="pt-2 font-medium lg:pt-4">
             {category.title}
           </SectionHeading>
           <SectionTop>
-            <div className='italic'>
+            <div className="italic">
               <DescriptionText value={category._rawDescription} />
             </div>
           </SectionTop>
@@ -92,7 +91,7 @@ function SingleCategory({ data }) {
           <SectionMiddle>
             {blogs && <BlogGrid blogs={blogs} />}
             {blogs.length === 0 && (
-              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
+              <p className="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
                 The brains are at work writing new posts !!!
               </p>
             )}
@@ -104,7 +103,12 @@ function SingleCategory({ data }) {
 }
 
 export function Head({ data }) {
-  return <SEO title={data.sanityCategory.title} description={`Explore all the articles written in the category ${data.sanityCategory.title} on this website.`} />
+  return (
+    <SEO
+      title={data.sanityCategory.title}
+      description={`Explore all the articles written in the category ${data.sanityCategory.title} on this website.`}
+    />
+  );
 }
 
 export default SingleCategory;
