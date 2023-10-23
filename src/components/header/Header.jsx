@@ -5,10 +5,10 @@ import { HiOutlineMenu, HiX } from 'react-icons/hi';
 
 import menu from '../../constants/menu';
 import Logo from '../logo/Logo';
-import ThemeSwitcher from '../theme/ThemeSwitcher';
 import { SearchModalContext } from '../../context/searchModalContext';
 import SearchButton from '../search/SearchButton';
 import { hoverUnderlineAnimation } from './Header.module.css';
+import ThemeToggle from '../theme/ThemeToggle';
 
 function Header() {
   // add close on click outside
@@ -74,7 +74,7 @@ function Header() {
           <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 mr-4 hidden lg:block">
             {navList}
           </div>
-          <ThemeSwitcher />
+          <ThemeToggle />
           <SearchButton openSearchModal={openSearchModal} />
           <IconButton
             variant="text"

@@ -6,6 +6,8 @@ function SearchButton({ openSearchModal }) {
   return (
     <button
       type="button"
+      aria-label='Search'
+      title="Search"
       className={zoomInOut}
       onClick={openSearchModal}
       onKeyDown={openSearchModal}

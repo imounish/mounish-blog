@@ -17,11 +17,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
     },
-    {
-      resolve: `gatsby-plugin-feed`,
-    },
+    // {
+    //   resolve: `gatsby-plugin-feed`,
+    // },
     `gatsby-plugin-postcss`,
-    `gatsby-plugin-dark-mode`,
+    `gatsby-plugin-use-dark-mode`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
