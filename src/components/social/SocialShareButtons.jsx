@@ -15,7 +15,7 @@ const socialShareLinks = [
         aria-label="email"
         href={`mailto:?to=&subject=${title.toString()}&body=${url.toString()}`}
       >
-        <FaShare className="h-5 w-5 hover:text-gray-900 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
+        <FaShare className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
       </a>
     ),
   },
@@ -23,7 +23,7 @@ const socialShareLinks = [
     name: 'whatsapp',
     component: ({ url, title }) => (
       <WhatsappShareButton url={url} title={title}>
-        <FaWhatsapp className="h-5 w-5 hover:text-gray-900 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
+        <FaWhatsapp className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
       </WhatsappShareButton>
     ),
   },
@@ -31,7 +31,7 @@ const socialShareLinks = [
     name: 'twitter',
     component: ({ url, title }) => (
       <TwitterShareButton url={url} title={title}>
-        <FaTwitter className="h-5 w-5 hover:text-gray-900 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
+        <FaTwitter className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
       </TwitterShareButton>
     ),
   },
@@ -39,7 +39,7 @@ const socialShareLinks = [
     name: 'linkedin',
     component: ({ url, title }) => (
       <LinkedinShareButton url={url} title={title}>
-        <FaLinkedin className="h-5 w-5 hover:text-gray-900 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
+        <FaLinkedin className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
       </LinkedinShareButton>
     ),
   },

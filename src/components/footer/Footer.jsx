@@ -8,7 +8,11 @@ function Footer() {
       <div className="mx-auto w-full max-w-full px-4 py-4 sm:px-0 md:flex md:items-center md:justify-between">
         <span className="text-sm sm:text-center">
           &#169; {new Date().getFullYear()}{' '}
-          <a href={websiteUrl} target="blank" className="hover:underline">
+          <a
+            href={websiteUrl}
+            target="blank"
+            className="text-gray-800 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-200"
+          >
             mounish.dev
           </a>
           &#8482;. All Rights Reserved.
@@ -41,7 +45,10 @@ function Footer() {
 
           <p className="font-worksans text-xs md:text-sm">
             Built with <span style={{ color: '#e25555' }}>&#9829;</span> by{' '}
-            <Link to="/authors/mounish-pedagandham" className="hover:underline">
+            <Link
+              to="/authors/mounish-pedagandham"
+              className="text-gray-800 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-200"
+            >
               Mounish
             </Link>
           </p>

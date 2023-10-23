@@ -12,7 +12,7 @@ function SearchButton({ openSearchModal }) {
       onClick={openSearchModal}
       onKeyDown={openSearchModal}
     >
-      <MagnifyingGlassIcon className="h-6 w-6 text-gray-900 dark:text-gray-50 sm:h-8 sm:w-8" />
+      <MagnifyingGlassIcon className="h-6 w-6 text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 sm:h-8 sm:w-8" />
     </button>
   );
 }
