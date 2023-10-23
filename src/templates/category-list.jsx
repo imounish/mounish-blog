@@ -25,7 +25,7 @@ export const CategoriesListQuery = graphql`
         coverImage {
           alt
           asset {
-            gatsbyImageData(placeholder: BLURRED, width: 128, height: 128)
+            gatsbyImageData(placeholder: BLURRED)
           }
         }
       }

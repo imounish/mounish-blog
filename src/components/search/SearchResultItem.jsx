@@ -41,11 +41,23 @@ function BlogSearchResultItem({ blog }) {
 function CategorySearchResultItem({ category }) {
   const { closeSearchModal } = useContext(SearchModalContext);
   return (
-    <li>
-      <Link to={`/categories/${category.slug.current}`} onClick={closeSearchModal}>
+    <li className='w-fit'>
+      <Link to={`/categories/${category.slug.current}`} onClick={closeSearchModal} >
         <h2 className="font-warnockdisp text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">
           {category.title}
         </h2>
+      </Link>
+    </li>
+  )
+}
+
+function TagSearchResultItem({ tag }) {
+  const { closeSearchModal } = useContext(SearchModalContext);
+  return (
+    <li>
+      <Link to={`/tags/?search=${tag.slug.current}`} onClick={closeSearchModal} 
+        className=" font-worksans font-light uppercase text-sm rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200 py-1.5 px-2">
+        {tag.title}
       </Link>
     </li>
   )
@@ -74,4 +86,4 @@ function AuthorSearchResultItem({ author }) {
   )
 }
 
-export {BlogSearchResultItem, CategorySearchResultItem, AuthorSearchResultItem};
+export {BlogSearchResultItem, CategorySearchResultItem, TagSearchResultItem, AuthorSearchResultItem};
