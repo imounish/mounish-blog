@@ -75,7 +75,12 @@ function BlogPostsList({ data, pageContext }) {
 }
 
 export function Head() {
-  return <SEO title="all posts" description="Explore all the articles written on this website." />
+  return (
+    <SEO
+      title="all posts"
+      description="Explore all the articles written on this website."
+    />
+  );
 }
 
 export default BlogPostsList;

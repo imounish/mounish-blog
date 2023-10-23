@@ -6,7 +6,7 @@ function PageSpace({ children, className, ...props }) {
     <div
       className={`${
         className || ''
-      } ${pageSpaceContainer} bg-white dark:bg-black overflow-auto`}
+      } ${pageSpaceContainer} overflow-auto bg-white dark:bg-black`}
       {...props}
     >
       {children}

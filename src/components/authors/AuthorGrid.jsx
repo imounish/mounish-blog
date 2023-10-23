@@ -4,9 +4,9 @@ import SectionTop from '../partials/SectionTop';
 
 function AuthorGrid({ authors }) {
   return (
-    <SectionTop className="grid lg:grid-cols-2 gap-8 pb-2">
+    <SectionTop className="grid gap-8 pb-2 lg:grid-cols-2">
       {authors &&
-        authors.map((author) => (
+        authors.map(author => (
           <AuthorItem
             key={author.id}
             name={author.name}

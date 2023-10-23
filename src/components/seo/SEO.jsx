@@ -2,7 +2,6 @@ import { useLocation } from '@reach/router';
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 
-
 function SEO({ title, description, featuredImage }) {
   const { defaultFeaturedImage, site } = useStaticQuery(graphql`
     {
@@ -31,8 +30,8 @@ function SEO({ title, description, featuredImage }) {
     featuredImage ?? defaultFeaturedImage?.childImageSharp?.gatsbyImageData;
 
   const seoTitle = title
-      ? `${title} | ${site.siteMetadata.title}`
-      : site.siteMetadata.title
+    ? `${title} | ${site.siteMetadata.title}`
+    : site.siteMetadata.title;
 
   const location = useLocation();
 
@@ -125,12 +124,13 @@ function SEO({ title, description, featuredImage }) {
   return (
     <>
       <html lang="en" />
-      <meta charSet='utf-8' />
-      <title>
-        {seoTitle}
-      </title>
+      <meta charSet="utf-8" />
+      <title>{seoTitle}</title>
       {iconLinks}
-      <meta name='robots' content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+      <meta
+        name="robots"
+        content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+      />
       {metas.map(meta => (
         <meta key={meta.name} name={meta.name} content={meta.content} />
       ))}

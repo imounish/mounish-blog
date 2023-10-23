@@ -9,7 +9,7 @@ import SectionMiddle from '../components/partials/SectionMiddle';
 import SectionTop from '../components/partials/SectionTop';
 import SEO from '../components/seo/SEO';
 
-import { disabled } from '../components/tags/tags.module.css'
+import { disabled } from '../components/tags/tags.module.css';
 
 export const TagsListQuery = graphql`
   query TagsListQuery {
@@ -54,26 +54,34 @@ export const TagsListQuery = graphql`
   }
 `;
 
-function TagsPage({data, location}) {
+function TagsPage({ data, location }) {
   const tags = data.allSanityTag.nodes;
   const allBlogs = data.allSanityBlog.nodes;
-  const activeTag = location.search ? location.search.replace('?', '').split('=')[1] : null;
+  const activeTag = location.search
+    ? location.search.replace('?', '').split('=')[1]
+    : null;
 
-  const activeTagBlogs = allBlogs.filter(blog => (
+  const activeTagBlogs = allBlogs.filter(blog =>
     blog.tags.find(tag => tag.slug.current === activeTag)
-  ));
-  
+  );
+
   return (
     <PageSpace>
       <MarginedContainer>
         <Section sectionHeading="all tags">
           <SectionTop>
-            <ul className='flex flex-wrap gap-2.5'>
-              {tags.map((tag) => (
+            <ul className="flex flex-wrap gap-2.5">
+              {tags.map(tag => (
                 <li key={tag.title}>
                   <Link
-                    to={tag.slug.current === activeTag ? '/tags/' : `/tags/?search=${tag.slug.current}`}
-                    className={`${tag.slug.current === activeTag && disabled} font-worksans font-light uppercase text-sm rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200 py-1.5 px-2`}
+                    to={
+                      tag.slug.current === activeTag
+                        ? '/tags/'
+                        : `/tags/?search=${tag.slug.current}`
+                    }
+                    className={`${
+                      tag.slug.current === activeTag && disabled
+                    } font-worksans rounded-md bg-gray-700 px-2 py-1.5 text-sm font-light uppercase text-gray-200 hover:bg-gray-600 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200`}
                   >
                     {tag.title}
                   </Link>
@@ -85,24 +93,30 @@ function TagsPage({data, location}) {
           <SectionMiddle>
             {activeTagBlogs.length > 0 && <BlogGrid blogs={activeTagBlogs} />}
             {activeTag && activeTagBlogs.length === 0 && (
-              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center">
-                  The brains are at work writing new posts for {(tags.find(tag => tag.slug.current === activeTag)).title} tag !!!
+              <p className="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
+                The brains are at work writing new posts for{' '}
+                {tags.find(tag => tag.slug.current === activeTag).title} tag !!!
               </p>
             )}
             {!activeTag && (
-              <p className="font-warnockcapt text-xl sm:text-2xl font-light text-gray-700 dark:text-gray-300 flex justify-center lowercase">
-                  select a tag to view posts
+              <p className="font-warnockcapt flex justify-center text-xl font-light lowercase text-gray-700 dark:text-gray-300 sm:text-2xl">
+                select a tag to view posts
               </p>
             )}
           </SectionMiddle>
         </Section>
       </MarginedContainer>
     </PageSpace>
-  )
+  );
 }
 
 export function Head() {
-  return <SEO title="tags" description="Explore the articles on this website through the tags that are used on this website." />
+  return (
+    <SEO
+      title="tags"
+      description="Explore the articles on this website through the tags that are used on this website."
+    />
+  );
 }
 
 export default TagsPage;

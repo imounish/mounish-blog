@@ -5,55 +5,56 @@ import DescriptionText from '../typography/DescriptionText';
 import Title from '../typography/Title';
 import { blogImageContainer, disabled } from './CategoryCatalogue.module.css';
 
-
 function CustomBlogItem({ blog, category, pageSlug }) {
   if (blog.slug.current === pageSlug) {
-    return <div className={disabled}>
-      <GatsbyImage
-        image={blog.coverImage.asset.gatsbyImageData}
-        alt={blog.coverImage.alt || ''}
-        className={`block h-auto w-full rounded-md scale-100 hover:scale-105 ${blogImageContainer}`}
-        loading="lazy"
-        style={{
-          transition: '0.3s ease-in-out transform',
-        }}
-      />
-      <h2 className="pt-2 pb-1 w-full no-underline text-gray-800 dark:text-gray-200 font-lora font-normal text-base xl:text-lg">
-        <span className="font-warnockdisp text-sm xl:text-base font-light no-underline text-gray-800 dark:text-gray-200 pr-2">
-          {category.title}
-        </span>
-        {blog.title}
-      </h2>
-    </div>
+    return (
+      <div className={disabled}>
+        <GatsbyImage
+          image={blog.coverImage.asset.gatsbyImageData}
+          alt={blog.coverImage.alt || ''}
+          className={`block h-auto w-full scale-100 rounded-md hover:scale-105 ${blogImageContainer}`}
+          loading="lazy"
+          style={{
+            transition: '0.3s ease-in-out transform',
+          }}
+        />
+        <h2 className="font-lora w-full pb-1 pt-2 text-base font-normal text-gray-800 no-underline dark:text-gray-200 xl:text-lg">
+          <span className="font-warnockdisp pr-2 text-sm font-light text-gray-800 no-underline dark:text-gray-200 xl:text-base">
+            {category.title}
+          </span>
+          {blog.title}
+        </h2>
+      </div>
+    );
   }
-  return <div className="font-worksans">
-    <Link
-      to={`/posts/${blog.slug.current}`}
-    >
-      <GatsbyImage
-        image={blog.coverImage.asset.gatsbyImageData}
-        alt={blog.coverImage.alt || ''}
-        className={`block h-auto w-full rounded-md scale-100 hover:scale-105 ${blogImageContainer}`}
-        loading="lazy"
-        style={{
-          transition: '0.3s ease-in-out transform',
-        }}
-      />
-      <h2 className="pt-2 pb-1 w-full no-underline text-gray-800 dark:text-gray-200 font-lora font-normal text-base xl:text-lg">
-        <span className="font-warnockdisp text-sm xl:text-base font-light no-underline text-gray-800 dark:text-gray-200 pr-2">
-          {category.title}
-        </span>
-        {blog.title}
-      </h2>
-    </Link>
-  </div>
+  return (
+    <div className="font-worksans">
+      <Link to={`/posts/${blog.slug.current}`}>
+        <GatsbyImage
+          image={blog.coverImage.asset.gatsbyImageData}
+          alt={blog.coverImage.alt || ''}
+          className={`block h-auto w-full scale-100 rounded-md hover:scale-105 ${blogImageContainer}`}
+          loading="lazy"
+          style={{
+            transition: '0.3s ease-in-out transform',
+          }}
+        />
+        <h2 className="font-lora w-full pb-1 pt-2 text-base font-normal text-gray-800 no-underline dark:text-gray-200 xl:text-lg">
+          <span className="font-warnockdisp pr-2 text-sm font-light text-gray-800 no-underline dark:text-gray-200 xl:text-base">
+            {category.title}
+          </span>
+          {blog.title}
+        </h2>
+      </Link>
+    </div>
+  );
 }
 
 function CategoryCatalogue({ category, pagePath, className }) {
   const [toggleViewAll, setToggleViewAll] = useState(false);
 
   const toggleHandler = () => {
-    setToggleViewAll((current) => !current);
+    setToggleViewAll(current => !current);
   };
 
   const { allSanityBlog } = useStaticQuery(graphql`
@@ -93,11 +94,11 @@ function CategoryCatalogue({ category, pagePath, className }) {
   `);
 
   // excluding blogs which do not have a category present
-  const cleanedBlogs = allSanityBlog.nodes.filter((blog) => blog.category);
+  const cleanedBlogs = allSanityBlog.nodes.filter(blog => blog.category);
 
   // selecting those blogs which match the given category
   const selectedBlogs = cleanedBlogs
-    .filter((blog) => blog.category._id === category._id)
+    .filter(blog => blog.category._id === category._id)
     .sort((a, b) => {
       const da = new Date(a.publishedAt);
       const db = new Date(b.publishedAt);
@@ -111,25 +112,25 @@ function CategoryCatalogue({ category, pagePath, className }) {
 
   return (
     <div
-      className={`grid lg:grid-cols-4 gap-4 pb-6 lg:pb-8 ${className || ''}`}
+      className={`grid gap-4 pb-6 lg:grid-cols-4 lg:pb-8 ${className || ''}`}
     >
       {/* category pane */}
       <div className="lg:col-span-1">
-        <div className="sm:col-span-2 sm:row-span-5 flex flex-col justify-between">
+        <div className="flex flex-col justify-between sm:col-span-2 sm:row-span-5">
           <Title
-            className="pb-1.5 pt-1 sm:pt-0 font-warnockdisp font-medium text-2xl sm:text-3xl"
+            className="font-warnockdisp pb-1.5 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
             path={`/categories/${category.slug.current}`}
             highLightColor="maroon"
           >
             {category.title}
           </Title>
-          <div className='italic sm:pr-2'>
+          <div className="italic sm:pr-2">
             <DescriptionText value={category._rawDescription} />
           </div>
           <button
             type="button"
             onClick={toggleHandler}
-            className="pt-2 sm:pt-3 w-fit font-worksans text-md text-start capitalize text-gray-800 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-300"
+            className="font-worksans text-md w-fit pt-2 text-start capitalize text-gray-800 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 sm:pt-3"
           >
             SEE {toggleViewAll ? 'LESS' : 'ALL'}
           </button>
@@ -137,11 +138,11 @@ function CategoryCatalogue({ category, pagePath, className }) {
       </div>
       {/* posts pane */}
       <div className="lg:col-span-3">
-        <div className="hidden lg:grid grid-cols-3 gap-4">
+        <div className="hidden grid-cols-3 gap-4 lg:grid">
           {selectedBlogs &&
             selectedBlogs
               .slice(0, 3)
-              .map((blog) => (
+              .map(blog => (
                 <CustomBlogItem
                   blog={blog}
                   key={blog.title}
@@ -153,7 +154,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
             selectedBlogs &&
             selectedBlogs
               .slice(3)
-              .map((blog) => (
+              .map(blog => (
                 <CustomBlogItem
                   key={blog.title}
                   blog={blog}
@@ -162,11 +163,11 @@ function CategoryCatalogue({ category, pagePath, className }) {
                 />
               ))}
         </div>
-        <div className="grid lg:hidden grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 lg:hidden">
           {selectedBlogs &&
             selectedBlogs
               .slice(0, 2)
-              .map((blog) => (
+              .map(blog => (
                 <CustomBlogItem
                   key={blog.title}
                   blog={blog}
@@ -178,7 +179,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
             selectedBlogs &&
             selectedBlogs
               .slice(2)
-              .map((blog) => (
+              .map(blog => (
                 <CustomBlogItem
                   key={blog.title}
                   blog={blog}
