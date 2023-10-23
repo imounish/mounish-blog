@@ -78,7 +78,7 @@ function PostHeadingSection({
           </div>
         )}
         {/* social share links not working correctly, check once */}
-        <ul className="hidden flex-row justify-between gap-4 align-middle text-gray-700 dark:text-gray-400 md:flex">
+        <ul className="hidden flex-row justify-between gap-4 align-middle md:flex">
           {socialShareLinks.map(item => (
             <li key={item.name} className="">
               <item.component

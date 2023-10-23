@@ -118,7 +118,7 @@ function SingleBlogPost({ data, location }) {
                     className="flex flex-row items-center justify-start gap-2 sm:col-span-1"
                   />
                 )}
-                <ul className="flex flex-row justify-end gap-4 text-gray-700 dark:text-gray-400 sm:col-span-1 sm:justify-between">
+                <ul className="flex flex-row justify-end gap-4 sm:col-span-1 sm:justify-between">
                   {socialShareLinks.map(item => (
                     <li key={item.name} className="">
                       <item.component

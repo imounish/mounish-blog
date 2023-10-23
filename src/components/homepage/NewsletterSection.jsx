@@ -55,7 +55,7 @@ function NewsletterSection({ heading, className }) {
               unmount: { scale: 0, y: 25 },
             }}
           >
-            <p className="font-warnockcapt text-md pl-1 text-base text-gray-600 underline dark:text-gray-400 sm:text-lg">
+            <p className="font-warnockcapt text-md pl-1 text-base text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 underline underline-offset-2 cursor-pointer sm:text-lg">
               More info
             </p>
           </Tooltip>
