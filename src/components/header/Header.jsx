@@ -61,7 +61,7 @@ function Header() {
 
   return (
     <Navbar
-      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-800/40 lg:px-8 lg:py-4"
+      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
       style={{
         top: visible ? '0' : '-72px',
         transition: '0.5s',
