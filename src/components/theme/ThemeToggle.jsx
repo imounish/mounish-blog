@@ -14,8 +14,8 @@ function ThemeToggle() {
       aria-label='Change theme'
       title='Change theme'
     >
-      {darkMode.value && <HiSun className="w-full h-full dark:text-gray-100" />}
-      {!darkMode.value && <HiMoon className='w-full h-full text-gray-800' />}
+      {darkMode.value && <HiSun className="w-full h-full dark:text-gray-50" />}
+      {!darkMode.value && <HiMoon className='w-full h-full text-gray-900' />}
     </button>
   )
 }
