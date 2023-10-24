@@ -9,6 +9,7 @@ function Layout({ children }) {
     const darkModeValue = localStorage.getItem('darkMode');
     if (!darkModeValue) {
       // darkMode setting doesn't exist in local storage
+      console.log("inside");
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -19,6 +20,8 @@ function Layout({ children }) {
       }
     }
   }, []);
+
+  console.log("layout is executed");
 
   return (
     <SearchModalContextProvider>
