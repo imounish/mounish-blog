@@ -1,9 +1,11 @@
 function setThemeLocal(theme) {
-  localStorage.setItem('theme', theme);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('theme', theme);
+  }
 }
 
 function getDefaultTheme() {
-  const savedTheme = localStorage.getItem('theme');
+  const savedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
   if (!savedTheme) {
     if (
       window.matchMedia &&
