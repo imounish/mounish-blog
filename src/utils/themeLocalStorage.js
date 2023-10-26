@@ -5,19 +5,22 @@ function setThemeLocal(theme) {
 }
 
 function getDefaultTheme() {
-  const savedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
-  if (!savedTheme) {
-    if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      setThemeLocal('dark');
-      return 'dark';
+  if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        setThemeLocal('dark');
+        return 'dark';
+      }
+      setThemeLocal('light');
+      return 'light';
     }
-    setThemeLocal('light');
-    return 'light';
+    return savedTheme;
   }
-  return savedTheme;
+  return null;
 }
 
 export { getDefaultTheme, setThemeLocal };
