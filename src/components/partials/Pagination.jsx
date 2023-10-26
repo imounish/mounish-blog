@@ -17,6 +17,7 @@ function Pagination({ baseUrl, numberOfPages, currentPage, className }) {
       >
         <Link
           to={`${baseUrl}/${prevPage}`}
+          title="Previous"
           className={`mr-2 flex flex-row items-center rounded-md bg-gray-100 py-1.5 pl-2.5 pr-3 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${
             currentPage <= 1 && disabled
           }`}
@@ -25,10 +26,11 @@ function Pagination({ baseUrl, numberOfPages, currentPage, className }) {
           Prev
         </Link>
         <Link
+          to={`${baseUrl}/${nextPage}`}
+          title="Next"
           className={`ml-2 flex flex-row items-center rounded-md bg-gray-100 py-1 pl-3 pr-2.5 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${
             currentPage >= numberOfPages && disabled
           }`}
-          to={`${baseUrl}/${nextPage}`}
         >
           Next
           <FaChevronRight />

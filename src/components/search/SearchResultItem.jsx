@@ -11,6 +11,7 @@ function BlogSearchResultItem({ blog }) {
         to={`/posts/${blog.slug.current}`}
         onClick={closeSearchModal}
         className="flex flex-row items-start gap-2"
+        title={blog.title}
       >
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
@@ -47,6 +48,7 @@ function CategorySearchResultItem({ category }) {
       <Link
         to={`/categories/${category.slug.current}`}
         onClick={closeSearchModal}
+        title={category.title}
       >
         <h2 className="font-warnockdisp text-base font-semibold text-gray-900 dark:text-gray-100 md:text-lg">
           {category.title}
@@ -62,8 +64,9 @@ function TagSearchResultItem({ tag }) {
     <li>
       <Link
         to={`/tags/?search=${tag.slug.current}`}
+        title={tag.title}
         onClick={closeSearchModal}
-        className=" font-worksans rounded-md bg-gray-700 px-2 py-1.5 text-sm font-light uppercase text-gray-200 hover:bg-gray-600 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200"
+        className=" font-worksans rounded-md bg-gray-700 px-2 py-1.5 text-sm font-light uppercase text-gray-200 hover:bg-gray-900 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200"
       >
         {tag.title}
       </Link>
@@ -79,6 +82,7 @@ function AuthorSearchResultItem({ author }) {
         to={`/authors/${author.slug.current}`}
         onClick={closeSearchModal}
         className="flex flex-row items-start gap-2"
+        title={author.name}
       >
         <GatsbyImage
           image={author.profileImage.asset.gatsbyImageData}

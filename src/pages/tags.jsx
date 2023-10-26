@@ -79,6 +79,7 @@ function TagsPage({ data, location }) {
                         ? '/tags/'
                         : `/tags/?search=${tag.slug.current}`
                     }
+                    title={tag.title}
                     className={`${
                       tag.slug.current === activeTag && disabled
                     } font-worksans rounded-md bg-gray-700 px-2 py-1.5 text-sm font-light uppercase text-gray-200 hover:bg-gray-900 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200`}

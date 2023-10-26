@@ -10,8 +10,8 @@ function NewsletterSection({ heading, className }) {
   return (
     <Section className={className} sectionHeading={heading}>
       <SectionRest className="flex flex-col items-center justify-center ">
-        <p className="font-warnock w-full text-center text-lg text-gray-700 dark:text-gray-300 pb-2 sm:text-xl">
-          Hit that subscribe button (<i>ofc, after entering your email</i>) to
+        <p className="font-warnock w-full pb-2 text-center text-lg text-gray-700 dark:text-gray-300 sm:text-xl">
+          Hit that subscribe button and enter your details to
           be a part of <i>not</i> so <b>exclusive</b> fam and get latest
           updates.
         </p>
@@ -29,7 +29,7 @@ function NewsletterSection({ heading, className }) {
           type="button"
           onClick={openSignUpModal}
           size="sm"
-          className="font-worksans dark:text-blue-gray-900 dark:shadow-blue-gray-500/10 dark:hover:shadow-blue-gray-500/20 my-2 w-full text-lg font-medium lowercase dark:bg-white sm:w-96"
+          className="font-worksans dark:text-blue-gray-900 hover:bg-gray-800 dark:shadow-blue-gray-500/10 dark:hover:shadow-blue-gray-500/20 my-2 w-full text-lg font-medium lowercase dark:bg-white dark:hover:bg-gray-300 sm:w-96"
         >
           subscribe
         </Button>

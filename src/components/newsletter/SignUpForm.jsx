@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import parse from 'html-react-parser';
+import { Button } from '@material-tailwind/react';
 import InputField from '../input/InputField';
 import useIsClient from '../../utils/useIsClient';
+import { SignUpModalContext } from '../../context/signUpModalContext';
 
 function SignUpForm({ status, message, onValidated }) {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const {isClient, key} = useIsClient();
+
+  const { closeSignUpModal } = useContext(SignUpModalContext);
 
   const clearFields = () => {
     setFirstName('');
@@ -66,7 +70,6 @@ function SignUpForm({ status, message, onValidated }) {
               placeholder="James"
               className="my-0.5 px-4 py-2"
               isRequired
-
             />
             <InputField
               label="Last Name"
@@ -91,12 +94,15 @@ function SignUpForm({ status, message, onValidated }) {
           </>
         ) : null}
         {status === 'success' ? (
-          <div className="flex w-full flex-col items-center">
-            <div className="mt-4 w-full text-center sm:w-96">
-              <p className="dark:shadow-blue-gray-500/10 dark:hover:shadow-blue-gray-500/20 rounded-lg bg-gray-900/80 py-2 px-4 text-lg lowercase text-gray-50 dark:bg-gray-100 dark:text-gray-900 ">
-                submitted
-              </p>
-            </div>
+          <div className="mt-4 flex w-full flex-col items-center">
+            <Button
+              type="button"
+              size="sm"
+              onClick={closeSignUpModal}
+              className="font-worksans dark:shadow-blue-gray-500/10 dark:hover:shadow-blue-gray-500/20 w-full rounded-lg bg-gray-900/80 text-lg font-medium lowercase text-gray-50 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 sm:w-96"
+            >
+              submitted
+            </Button>
           </div>
         ) : (
           <div className="mt-4 flex w-full flex-col items-center ">

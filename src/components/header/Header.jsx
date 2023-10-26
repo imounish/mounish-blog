@@ -47,6 +47,7 @@ function Header() {
         >
           <Link
             className={`flex w-fit items-center ${hoverUnderlineAnimation}`}
+            title={item.title}
             to={item.path}
             onClick={() => {
               if (openNav) setOpenNav(!openNav);

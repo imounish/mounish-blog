@@ -7,6 +7,7 @@ function AuthorDisplay({ author }) {
     <Link
       className="flex items-center text-sm text-gray-800 dark:text-gray-400"
       to={`/author/${author.slug.current}`}
+      title={author.name}
     >
       <GatsbyImage
         alt={

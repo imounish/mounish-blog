@@ -15,7 +15,7 @@ function BlogItem({
 }) {
   return (
     <article className="font-worksans overflow-hidden">
-      <Link to={`/posts/${path}`}>
+      <Link to={`/posts/${path}`} title={title}>
         <GatsbyImage
           image={image.imageData}
           alt={image.altText ? image.altText : ''}

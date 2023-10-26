@@ -5,6 +5,7 @@ function CategoryText({ category, colored, className }) {
   return (
     <Link
       to={`/categories/${category.slug.current}`}
+      title={category.title}
       className={`${className || ''}`}
       style={{
         color: `${colored ? category.color : 'inherit'}`,
