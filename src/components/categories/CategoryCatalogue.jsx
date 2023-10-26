@@ -29,7 +29,7 @@ function CustomBlogItem({ blog, category, pageSlug }) {
   }
   return (
     <div className="font-worksans">
-      <Link to={`/posts/${blog.slug.current}`}>
+      <Link to={`/posts/${blog.slug.current}`} title={blog.title}>
         <GatsbyImage
           image={blog.coverImage.asset.gatsbyImageData}
           alt={blog.coverImage.alt || ''}

@@ -12,11 +12,17 @@ module.exports = withMT({
     fontFamily: {
       worksans: ['work-sans', 'sans-serif'],
       warnock: ['warnock', 'serif'],
+      
       warnockdisp: ['warnock-disp', 'serif'],
       warnockcapt: ['warnock-capt', 'serif'],
       warnocksubh: ['warnock-subh', 'serif'],
       lora: ['lora', 'serif'],
       courier: ['courier-prime', 'monospace'],
+    },
+    extend: {
+      colors: {
+        'custom-red': '#b83854',
+      },
     },
   },
   plugins: [],

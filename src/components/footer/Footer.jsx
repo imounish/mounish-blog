@@ -48,6 +48,7 @@ function Footer() {
             <Link
               to="/authors/mounish-pedagandham"
               className="text-gray-800 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-200"
+              title='Mounish - Creator of this website'
             >
               Mounish
             </Link>

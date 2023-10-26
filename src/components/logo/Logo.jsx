@@ -1,15 +1,20 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import MBLogo from './MBLogo';
 
 function Logo() {
   return (
     <Link
       to="/"
-      title="Logo"
-      className="font-warnockdisp mr-4 py-1 text-2xl font-bold tracking-wide text-gray-900 dark:text-gray-50"
+      title="mounish's blog"
+      className=""
+      // className="font-warnockdisp text-custom-red mr-4 py-1 text-2xl font-bold tracking-wide"
     >
-      {/* mounish's blog */}
-      mounish&apos;s blog
+      {/* mounish's blog logo */}
+      <MBLogo height="40px" />
+
+      {/* mounish's blog  text */}
+      {/* // mounish&apos;s blog */}
     </Link>
   );
 }
