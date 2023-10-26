@@ -21,14 +21,6 @@ module.exports = {
     //   resolve: `gatsby-plugin-feed`,
     // },
     `gatsby-plugin-postcss`,
-    {
-      resolve: `gatsby-plugin-use-dark-mode`,
-      options: {
-        classNameDark: 'dark',
-        classNameLight: 'light',
-        minify: true,
-      },
-    },
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
