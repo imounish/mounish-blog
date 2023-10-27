@@ -47,6 +47,7 @@ function Header() {
         >
           <Link
             className={`flex w-fit items-center ${hoverUnderlineAnimation}`}
+            title={item.title}
             to={item.path}
             onClick={() => {
               if (openNav) setOpenNav(!openNav);
@@ -61,7 +62,7 @@ function Header() {
 
   return (
     <Navbar
-      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-800/40 lg:px-8 lg:py-4"
+      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
       style={{
         top: visible ? '0' : '-72px',
         transition: '0.5s',
@@ -83,9 +84,9 @@ function Header() {
             onClick={() => setOpenNav(!openNav)}
           >
             {openNav ? (
-              <HiX className="h-6 w-6 sm:h-8 sm:w-8" />
+              <HiX className="h-6 w-6 text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 sm:h-8 sm:w-8" />
             ) : (
-              <HiOutlineMenu className="h-6 w-6 sm:h-8 sm:w-8" />
+              <HiOutlineMenu className="h-6 w-6 text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 sm:h-8 sm:w-8" />
             )}
           </IconButton>
         </div>
