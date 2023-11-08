@@ -5,6 +5,7 @@ import parse from 'html-react-parser';
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
+import ReactPlayer from 'react-player';
 import sanityConfig from '../../../sanity.config';
 import getSanityImageData from '../../utils/getSanityImageData';
 import VideoAnimation from '../partials/VideoAnimation';
@@ -119,6 +120,11 @@ const richTextComponents = {
         </div>
       );
     },
+    youtube: ({ value }) => (
+      <div className="py-4 sm:py-8">
+          <ReactPlayer width='100%' height='480px' url={value.url} controls />
+      </div>
+    )
   },
 };
 

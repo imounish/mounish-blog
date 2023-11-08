@@ -7,11 +7,11 @@ import socialShareButtons from './SocialShareButtons';
 function SocialSharePane({ blogURL, blogTitle}) {
   return (
     <div
-      className={`fixed right-0 top-[50%] z-10 flex -translate-y-[50%] flex-row gap-3 py-3 mr-1 ${pane} ${slide}`}
+      className={`fixed right-0 top-[50%] z-10 flex -translate-y-[50%] flex-row gap-3 backdrop-blur-2xl py-3 ${pane} ${slide}`}
     >
       <button
         type="button"
-        className={`my-2 top-[34%] px-2 py-3 hover:cursor-pointer ${pane} ${toggle}`}
+        className={`my-2 top-[34%] px-2 py-3 hover:cursor-pointer backdrop-blur-2xl ${pane} ${toggle}`}
       >
         <HiShare className="h-4 w-4 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-5 lg:w-5" />
       </button>

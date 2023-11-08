@@ -21,7 +21,6 @@ import SectionTop from '../components/partials/SectionTop';
 import TagsArray from '../components/tags/TagsArray';
 import socialShareButtons from '../components/social/SocialShareButtons';
 import ReadNext from '../components/blogs/ReadNext';
-import SocialSharePane from '../components/social/SocialSharePane';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -100,10 +99,10 @@ function SingleBlogPost({ data, location }) {
     <>
       <SEO title={blog.title} />
       <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
-      <SocialSharePane
+      {/* <SocialSharePane
         blogURL={data.site.siteMetadata.siteUrl + location.pathname}
         blogTitle={blog.title}
-      />
+      /> */}
       <Container>
         <MarginedContainer>
           <ScrollToTop showBelow={800} />
