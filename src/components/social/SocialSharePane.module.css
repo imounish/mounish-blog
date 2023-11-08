@@ -1,0 +1,27 @@
+.slide {
+  width: 44px;
+  right: -44px;
+  transition: right 0.4s ease-in-out;
+  -o-transition: right 0.4s ease-in-out;
+  -ms-transition: right 0.4s ease-in-out;
+  -moz-transition: right 0.4s ease-in-out;
+  -webkit-transition: right 0.4s ease-in-out;
+}
+
+.pane::before,
+.pane::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: #be3569;
+}
+
+.toggle {
+  position: absolute;
+  right: 44px;
+}
+
+.slide:hover {
+  right: 0px;
+}

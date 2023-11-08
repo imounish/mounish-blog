@@ -1,7 +1,7 @@
 import { Link, graphql } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import React from 'react';
-import { blogImage, textContainer } from './single-blog-post.module.css';
+import { blogImage } from './single-blog-post.module.css';
 
 import Break from '../components/partials/Break';
 import CategoryCatalogue from '../components/categories/CategoryCatalogue';
@@ -19,7 +19,9 @@ import SectionBottom from '../components/partials/SectionBottom';
 import SectionMiddle from '../components/partials/SectionMiddle';
 import SectionTop from '../components/partials/SectionTop';
 import TagsArray from '../components/tags/TagsArray';
-import socialShareLinks from '../components/social/SocialShareButtons';
+import socialShareButtons from '../components/social/SocialShareButtons';
+import ReadNext from '../components/blogs/ReadNext';
+import SocialSharePane from '../components/social/SocialSharePane';
 
 export const postQuery = graphql`
   query SingleBlogQuery($id: String!) {
@@ -33,6 +35,9 @@ export const postQuery = graphql`
       subTitle
       publishedAt
       timeToRead
+      readNext {
+        current
+      }
       _rawBody
       _rawExcerpt
       coverImage {
@@ -66,15 +71,39 @@ export const postQuery = graphql`
         }
       }
     }
+    allSanityBlog {
+      nodes {
+        id
+        title
+        slug {
+          current
+        }
+        category {
+          title
+        }
+        coverImage {
+          alt
+          asset {
+            gatsbyImageData(placeholder: BLURRED)
+            altText
+          }
+        }
+      }
+    }
   }
 `;
 
 function SingleBlogPost({ data, location }) {
   const blog = data.sanityBlog;
+
   return (
     <>
       <SEO title={blog.title} />
       <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
+      <SocialSharePane
+        blogURL={data.site.siteMetadata.siteUrl + location.pathname}
+        blogTitle={blog.title}
+      />
       <Container>
         <MarginedContainer>
           <ScrollToTop showBelow={800} />
@@ -108,27 +137,36 @@ function SingleBlogPost({ data, location }) {
                 </>
               )}
             </SectionTop>
-            <SectionMiddle className={textContainer}>
-              <ExcerptText value={blog._rawExcerpt} />
-              <RichText value={blog._rawBody} />
-              <div className="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
-                {blog.tags && (
-                  <TagsArray
-                    tags={blog.tags}
-                    className="flex flex-row items-center justify-start gap-2 sm:col-span-1"
-                  />
-                )}
-                <ul className="flex flex-row justify-end gap-4 sm:col-span-1 sm:justify-between">
-                  {socialShareLinks.map(item => (
-                    <li key={item.name} className="">
-                      <item.component
-                        url={data.site.siteMetadata.siteUrl + location.pathname}
-                        title={blog.title}
-                      />
-                    </li>
-                  ))}
-                </ul>
+            <SectionMiddle className="gap-4 lg:grid lg:grid-cols-4">
+              <div className="lg:col-span-3">
+                <ExcerptText value={blog._rawExcerpt} />
+                <RichText value={blog._rawBody} />
+                <div className="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
+                  {blog.tags && (
+                    <TagsArray
+                      tags={blog.tags}
+                      className="flex flex-row items-center justify-start gap-2 sm:col-span-1"
+                    />
+                  )}
+                  <ul className="flex flex-row justify-end gap-4 sm:col-span-1">
+                    {socialShareButtons.map(item => (
+                      <li key={item.name} className="">
+                        <item.component
+                          url={
+                            data.site.siteMetadata.siteUrl + location.pathname
+                          }
+                          title={blog.title}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
+              {blog.readNext.length !== 0 && (
+                <div className="hidden lg:col-span-1 lg:grid">
+                  <ReadNext readNext={blog.readNext} />
+                </div>
+              )}
             </SectionMiddle>
             <SectionBottom>
               {blog.author && (

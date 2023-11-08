@@ -1,5 +1,5 @@
 import React from 'react';
-import socialShareLinks from '../social/SocialShareButtons';
+import socialShareButtons from '../social/SocialShareButtons';
 import Break from '../partials/Break';
 import TimeToRead from '../typography/TimeToRead';
 
@@ -79,7 +79,7 @@ function PostHeadingSection({
         )}
         {/* social share links not working correctly, check once */}
         <ul className="hidden flex-row justify-between gap-4 align-middle md:flex">
-          {socialShareLinks.map(item => (
+          {socialShareButtons.map(item => (
             <li key={item.name} className="">
               <item.component
                 url={postURL.siteUrl + postURL.path}

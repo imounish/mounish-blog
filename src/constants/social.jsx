@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FaInstagram, FaThreads, FaMedium, FaGithub } from 'react-icons/fa6';
+import { FaInstagram, FaThreads, FaMedium, FaXTwitter, FaGithub } from 'react-icons/fa6';
 
 export const socialLinks = [
   {
@@ -22,6 +22,13 @@ export const socialLinks = [
     url: 'https://medium.com/@mounishp',
     icon: (
       <FaMedium className="h-6 w-6 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200" />
+    ),
+  },
+  {
+    name: 'twitter',
+    url: 'https://x.com/@imounish',
+    icon: (
+      <FaXTwitter className="h-6 w-6 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200" />
     ),
   },
   {

@@ -6,7 +6,7 @@ import { SearchModalContext } from '../../context/searchModalContext';
 function BlogSearchResultItem({ blog }) {
   const { closeSearchModal } = useContext(SearchModalContext);
   return (
-    <li>
+    <li key={blog.slug.current}>
       <Link
         to={`/posts/${blog.slug.current}`}
         onClick={closeSearchModal}
@@ -44,7 +44,7 @@ function BlogSearchResultItem({ blog }) {
 function CategorySearchResultItem({ category }) {
   const { closeSearchModal } = useContext(SearchModalContext);
   return (
-    <li className="w-fit">
+    <li key={category.slug.current} className="w-fit">
       <Link
         to={`/categories/${category.slug.current}`}
         onClick={closeSearchModal}
@@ -61,7 +61,7 @@ function CategorySearchResultItem({ category }) {
 function TagSearchResultItem({ tag }) {
   const { closeSearchModal } = useContext(SearchModalContext);
   return (
-    <li>
+    <li key={tag.slug.current}>
       <Link
         to={`/tags/?search=${tag.slug.current}`}
         title={tag.title}
@@ -77,7 +77,7 @@ function TagSearchResultItem({ tag }) {
 function AuthorSearchResultItem({ author }) {
   const { closeSearchModal } = useContext(SearchModalContext);
   return (
-    <li>
+    <li key={author.slug.current}>
       <Link
         to={`/authors/${author.slug.current}`}
         onClick={closeSearchModal}

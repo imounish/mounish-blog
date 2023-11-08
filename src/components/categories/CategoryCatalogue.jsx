@@ -121,6 +121,7 @@ function CategoryCatalogue({ category, pagePath, className }) {
             className="font-warnockdisp pb-1.5 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
             path={`/categories/${category.slug.current}`}
             highLightColor="maroon"
+            title={category.title}
           >
             {category.title}
           </Title>

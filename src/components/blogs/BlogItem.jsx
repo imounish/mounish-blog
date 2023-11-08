@@ -33,6 +33,7 @@ function BlogItem({
           className="font-lora text-xl font-semibold md:text-2xl "
           highLightColor="green"
           leadingText={category ? category.title : ''}
+          title={title}
         >
           {title}
         </Title>

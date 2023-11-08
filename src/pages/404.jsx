@@ -15,15 +15,15 @@ function NotFoundPage() {
           <SectionRest className="flex flex-col lg:flex-row lg:justify-between">
             <p className="font-warnocksubh text-lg font-light text-gray-900 dark:text-gray-50 sm:text-xl">
               But the good news is you are now free to visit
-              <AnimatedArrowButton to="/" className="w-min pb-1.5">
+              <AnimatedArrowButton to="/" className="w-min pb-1.5" title="Go to home">
                 home
               </AnimatedArrowButton>
               or you can see all my
-              <AnimatedArrowButton to="/posts" className="w-min pb-1.5">
+              <AnimatedArrowButton to="/posts" className="w-min pb-1.5" title="Go to posts">
                 posts
               </AnimatedArrowButton>
               or you can explore various
-              <AnimatedArrowButton to="/categories" className="w-min pb-1.5">
+              <AnimatedArrowButton to="/categories" className="w-min pb-1.5" title="Go to categories">
                 categories
               </AnimatedArrowButton>
             </p>

@@ -23,6 +23,7 @@ function AuthorItem({ name, path, description, image, learnMoreButton }) {
             className="font-warnockdisp pb-1 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
             path={`/authors/${path}`}
             highLightColor="maroon"
+            title={name}
           >
             {name}
           </Title>
@@ -37,6 +38,7 @@ function AuthorItem({ name, path, description, image, learnMoreButton }) {
             <AnimatedArrowButton
               className="pt-2 sm:pt-0 "
               path={`/authors/${path}`}
+              title={`Know more about ${name}`}
             >
               know more
             </AnimatedArrowButton>

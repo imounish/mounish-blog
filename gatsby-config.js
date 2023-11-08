@@ -13,9 +13,9 @@ module.exports = {
       twitterCreator: '@imounish',
     },
   },
-  flags: {
-    DEV_SSR: true,
-  },
+  // flags: {
+  //   DEV_SSR: true,
+  // },
   plugins: [
     {
       resolve: `gatsby-plugin-sitemap`,

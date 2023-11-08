@@ -1,5 +1,6 @@
-import { FaTwitter, FaLinkedin, FaWhatsapp, FaShare } from 'react-icons/fa6';
+import { FaLinkedin, FaWhatsapp, FaShare, FaXTwitter } from 'react-icons/fa6';
 import {
+  EmailShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   WhatsappShareButton,
@@ -7,16 +8,13 @@ import {
 
 import React from 'react';
 
-const socialShareLinks = [
+const socialShareButtons = [
   {
-    name: 'email',
+    name: 'email-share',
     component: ({ url, title }) => (
-      <a
-        aria-label="email"
-        href={`mailto:?to=&subject=${title.toString()}&body=${url.toString()}`}
-      >
+      <EmailShareButton subject={title.toString()} body="Read this exciting article I came across at" url={url}>
         <FaShare className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
-      </a>
+      </EmailShareButton>
     ),
   },
   {
@@ -31,7 +29,7 @@ const socialShareLinks = [
     name: 'twitter',
     component: ({ url, title }) => (
       <TwitterShareButton url={url} title={title}>
-        <FaTwitter className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
+        <FaXTwitter className="h-5 w-5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 lg:h-6 lg:w-6" />
       </TwitterShareButton>
     ),
   },
@@ -45,4 +43,4 @@ const socialShareLinks = [
   },
 ];
 
-export default socialShareLinks;
+export default socialShareButtons;
