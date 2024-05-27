@@ -4,13 +4,9 @@ import axios from "axios";
 
 function FormContainer() {
   const [responseStatus, setResponseStatus] = useState(null);
-  const beehivApiUrl = process.env.GATSBY_BEEHIIV_API_URL;
-  const beehivPublicationId = process.env.GATSBY_BEEHIIV_PUBLICATION_ID;
-  const beehivApiKey = process.env.GATSBY_BEEHIIV_API_KEY;
+  const [responseMessage, setResponseMessage] = useState(null);
 
-  const postUrl = `${beehivApiUrl}/publications/${beehivPublicationId}/subscriptions`;
-
-  console.log(postUrl);
+  const postUrl = process.env.GATSBY_NETLIFY_BEEHIIV_API_URL;
 
   const handleFormSubmit = async (formData) => {
     const requestBody = {
@@ -36,28 +32,34 @@ function FormContainer() {
     try {
       const response = await axios.post(postUrl, requestBody, {
         headers: {
-          Authorization: `Bearer ${beehivApiKey}`,
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
       });
 
-      if (response.status == 200) {
+      if (response.status == 200 || response.status == 201) {
         setResponseStatus("success");
+        setResponseMessage("wohoo! you just joined my newsletter.");
         console.log("User successfully registered:", response.data);
       } else {
         setResponseStatus("error");
+        setResponseMessage("failed to subscribe.");
         console.error("Error registering user:", response.data);
       }
     } catch (error) {
       setResponseStatus("error");
+      setResponseMessage("failed to subscribe. please try again");
       console.error("Error sending request: ", error);
     }
   };
 
   return (
     <div className="">
-      <SignUpForm status={responseStatus} onValidated={handleFormSubmit} />
+      <SignUpForm
+        status={responseStatus}
+        message={responseMessage}
+        onValidated={handleFormSubmit}
+      />
     </div>
   );
 }

@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import { SignUpModalContext } from "../../context/signUpModalContext";
 import { modal, modalBackdrop } from "./SignUpModal.module.css";
-import MailchimpFormContainer from "./MailchimpFormContainer";
 import FormContainer from "./FormContainer";
 
 function SignUp() {
@@ -60,13 +59,12 @@ function SignUp() {
       >
         <div className="space-between flex flex-row items-center justify-between">
           <h1 className="font-warnockdisp text-2xl tracking-wide text-black dark:text-gray-50 md:text-3xl">
-            join the mailing list now
+            join the newsletter now
           </h1>
           <button type="button" className="" onClick={closeSignUpModal}>
             <MdClose className="h-6 w-6 md:h-8 md:w-8 text-gray-900 dark:text-gray-100" />
           </button>
         </div>
-        {/* <MailchimpFormContainer /> */}
         <FormContainer />
       </div>
     </>
