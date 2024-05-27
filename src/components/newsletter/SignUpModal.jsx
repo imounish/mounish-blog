@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
-import { MdClose } from 'react-icons/md';
-import { SignUpModalContext } from '../../context/signUpModalContext';
-import { modal, modalBackdrop } from './SignUpModal.module.css';
-import MailchimpFormContainer from './MailchimpFormContainer';
+import React, { useContext, useEffect } from "react";
+import { MdClose } from "react-icons/md";
+import { SignUpModalContext } from "../../context/signUpModalContext";
+import { modal, modalBackdrop } from "./SignUpModal.module.css";
+import FormContainer from "./FormContainer";
 
 function SignUp() {
   const { isSignUpModalOpen, closeSignUpModal } =
@@ -10,15 +10,15 @@ function SignUp() {
 
   useEffect(() => {
     if (isSignUpModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'initial';
+      document.body.style.overflow = "initial";
     }
   }, [isSignUpModalOpen]);
 
   useEffect(() => {
-    const keyDownHandler = event => {
-      if (event.key === 'Escape') {
+    const keyDownHandler = (event) => {
+      if (event.key === "Escape") {
         event.preventDefault();
         closeSignUpModal();
       }
@@ -32,9 +32,9 @@ function SignUp() {
       //   // you go ahead with search here or remove it
       // }
     };
-    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener("keydown", keyDownHandler);
     return () => {
-      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener("keydown", keyDownHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -46,7 +46,7 @@ function SignUp() {
       <div
         className={`bg-blue-gray-600/25 opacity-100 backdrop-blur-lg transition-opacity ${modalBackdrop}`}
         style={{
-          WebkitBackdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: "blur(16px)",
         }}
         onClick={closeSignUpModal}
         onKeyDown={closeSignUpModal}
@@ -59,13 +59,13 @@ function SignUp() {
       >
         <div className="space-between flex flex-row items-center justify-between">
           <h1 className="font-warnockdisp text-2xl tracking-wide text-black dark:text-gray-50 md:text-3xl">
-            join the mailing list now
+            join the newsletter now
           </h1>
           <button type="button" className="" onClick={closeSignUpModal}>
             <MdClose className="h-6 w-6 md:h-8 md:w-8 text-gray-900 dark:text-gray-100" />
           </button>
         </div>
-        <MailchimpFormContainer />
+        <FormContainer />
       </div>
     </>
   );

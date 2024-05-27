@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react'
-import parse from 'html-react-parser';
-import { Button } from '@material-tailwind/react';
-import InputField from '../input/InputField';
-import useIsClient from '../../utils/useIsClient';
-import { SignUpModalContext } from '../../context/signUpModalContext';
+import React, { useContext, useEffect, useState } from "react";
+import parse from "html-react-parser";
+import { Button } from "@material-tailwind/react";
+import InputField from "../input/InputField";
+import useIsClient from "../../utils/useIsClient";
+import { SignUpModalContext } from "../../context/signUpModalContext";
 
 function SignUpForm({ status, message, onValidated }) {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const {isClient, key} = useIsClient();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const { isClient, key } = useIsClient();
 
   const { closeSignUpModal } = useContext(SignUpModalContext);
 
   const clearFields = () => {
-    setFirstName('');
-    setLastName('');
-    setEmail('');
+    setFirstName("");
+    setLastName("");
+    setEmail("");
   };
 
   useEffect(() => {
-    if (status === 'success') clearFields();
+    if (status === "success") clearFields();
   }, [status]);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (email && firstName && lastName && email.indexOf('@') > -1) {
+    if (email && firstName && lastName && email.indexOf("@") > -1) {
       onValidated({
-        EMAIL: email,
-        MERGE1: firstName,
-        MERGE2: lastName,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
       });
     }
   };
@@ -37,29 +37,29 @@ function SignUpForm({ status, message, onValidated }) {
   if (!isClient) return null;
 
   return (
-    <form key={key} className="font-worksans" onSubmit={e => handleSubmit(e)}>
-      {status === 'sending' && (
+    <form key={key} className="font-worksans" onSubmit={(e) => handleSubmit(e)}>
+      {status === "sending" && (
         <p className="mb-2 w-full text-center text-sm lowercase text-cyan-700 sm:text-base">
           sending...
         </p>
       )}
-      {status === 'success' && (
+      {status === "success" && (
         <p className="mb-2 w-full text-center text-sm lowercase text-green-600 sm:text-base">
           successfully sent
         </p>
       )}
-      {status === 'error' && (
+      {status === "error" && (
         <p className="mb-2 w-full text-center text-base text-red-600 sm:text-lg">
           {parse(message)}
         </p>
       )}
-      {status === 'success' && (
+      {status === "success" && (
         <p className="my-2 text-lg lowercase text-gray-900 dark:text-gray-50 sm:text-xl">
           {parse(message)}
         </p>
       )}
       <div className="flex flex-col gap-1.5">
-        {status !== 'success' ? (
+        {status !== "success" ? (
           <>
             <InputField
               label="First Name"
@@ -93,7 +93,7 @@ function SignUpForm({ status, message, onValidated }) {
             />
           </>
         ) : null}
-        {status === 'success' ? (
+        {status === "success" ? (
           <div className="mt-4 flex w-full flex-col items-center">
             <Button
               type="button"
@@ -119,4 +119,4 @@ function SignUpForm({ status, message, onValidated }) {
   );
 }
 
-export default SignUpForm
+export default SignUpForm;

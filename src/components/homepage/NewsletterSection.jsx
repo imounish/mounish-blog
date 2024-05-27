@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
-import { Button, Tooltip } from '@material-tailwind/react';
-import Section from '../partials/Section';
-import SectionRest from '../partials/SectionRest';
-import { SignUpModalContext } from '../../context/signUpModalContext';
+import React, { useContext } from "react";
+import { Button, Tooltip } from "@material-tailwind/react";
+import Section from "../partials/Section";
+import SectionRest from "../partials/SectionRest";
+import { SignUpModalContext } from "../../context/signUpModalContext";
 
 function NewsletterSection({ heading, className }) {
   const { openSignUpModal } = useContext(SignUpModalContext);
-  
+
   return (
     <Section className={className} sectionHeading={heading}>
       <SectionRest className="flex flex-col items-center justify-center ">
         <p className="font-warnock w-full pb-2 text-center text-lg text-gray-700 dark:text-gray-300 sm:text-xl">
-          Hit that subscribe button and enter your details to
-          be a part of <i>not</i> so <b>exclusive</b> fam and get latest
-          updates.
+          Hit that subscribe button and get latest updates from me right to your
+          inbox.
         </p>
         {/* <p className="font-warnockcapt text-xl sm:text-xl text-gray-800 dark:text-gray-100 mt-2 sm:mt-4">
           enter you email here
@@ -39,10 +38,10 @@ function NewsletterSection({ heading, className }) {
           </p>
           <Tooltip
             styles={{
-              bg: 'bg-gray-700',
-              fontFamily: 'font-lora',
-              fontSize: 'text-sm',
-              fontWeight: 'font-medium',
+              bg: "bg-gray-700",
+              fontFamily: "font-lora",
+              fontSize: "text-sm",
+              fontWeight: "font-medium",
             }}
             content={
               <p className="font-worksans w-auto px-1 py-1 text-center">
