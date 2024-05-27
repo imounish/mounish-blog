@@ -45,7 +45,7 @@ function SignUpForm({ status, message, onValidated }) {
       )}
       {status === "success" && (
         <p className="mb-2 w-full text-center text-sm lowercase text-green-600 sm:text-base">
-          successfully sent
+          sent successfully
         </p>
       )}
       {status === "error" && (

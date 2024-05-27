@@ -30,6 +30,7 @@ function FormContainer() {
     };
 
     try {
+      setResponseStatus("sending");
       const response = await axios.post(postUrl, requestBody, {
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ function FormContainer() {
       }
     } catch (error) {
       setResponseStatus("error");
-      setResponseMessage("failed to subscribe. please try again");
+      setResponseMessage("failed to subscribe. please try again.");
       console.error("Error sending request: ", error);
     }
   };
