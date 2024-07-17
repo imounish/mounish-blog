@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'gatsby';
-import { Navbar, IconButton, Collapse } from '@material-tailwind/react';
-import { HiOutlineMenu, HiX } from 'react-icons/hi';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "gatsby";
+import { Navbar, IconButton, Collapse } from "@material-tailwind/react";
+import { HiOutlineMenu, HiX } from "react-icons/hi";
 
-import menu from '../../constants/menu';
-import Logo from '../logo/Logo';
-import { SearchModalContext } from '../../context/searchModalContext';
-import SearchButton from '../search/SearchButton';
-import { hoverUnderlineAnimation } from './Header.module.css';
-import ThemeToggle from '../theme/ThemeToggle';
+import menu from "../../constants/menu";
+import Logo from "../logo/Logo";
+import { SearchModalContext } from "../../context/searchModalContext";
+import SearchButton from "../search/SearchButton";
+import { hoverUnderlineAnimation } from "./Header.module.css";
+import ThemeToggle from "../theme/ThemeToggle";
 
 function Header() {
   // add close on click outside
@@ -21,7 +21,7 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener(
-      'resize',
+      "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
@@ -33,14 +33,14 @@ function Header() {
       setPrevScrollPos(currentScrollPos);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos, visible]);
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 dark:text-gray-50 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {menu.map(item => (
+      {menu.map((item) => (
         <li
           key={item.path}
           className="block px-0 py-1 font-normal leading-normal antialiased lg:px-1"
@@ -62,11 +62,11 @@ function Header() {
 
   return (
     <Navbar
-      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-4 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
+      className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-6 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
       style={{
-        top: visible ? '0' : '-72px',
-        transition: '0.5s',
-        WebkitBackdropFilter: 'blur(16px)',
+        top: visible ? "0" : "-72px",
+        transition: "0.5s",
+        WebkitBackdropFilter: "blur(16px)",
       }}
     >
       <div className="relative flex items-center justify-between text-black">

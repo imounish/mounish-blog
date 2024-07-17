@@ -1,7 +1,7 @@
-import React from 'react';
-import socialShareLinks from '../social/SocialShareButtons';
-import Break from '../partials/Break';
-import TimeToRead from '../typography/TimeToRead';
+import React from "react";
+import socialShareLinks from "../social/SocialShareButtons";
+import Break from "../partials/Break";
+import TimeToRead from "../typography/TimeToRead";
 
 function PostHeadingSection({
   postTitle,
@@ -11,7 +11,7 @@ function PostHeadingSection({
   timeToRead,
 }) {
   return (
-    <div className="px-4 py-4">
+    <div className="px-6 py-4">
       <div className="flex flex-col items-center justify-center py-2 text-center lg:py-4">
         <h1 className="font-warnockdisp py-2 text-4xl font-semibold text-gray-900 dark:text-gray-100 md:text-5xl lg:py-4 lg:text-6xl">
           {postTitle}
@@ -30,11 +30,11 @@ function PostHeadingSection({
                   published on
                 </span>
                 <span className="text-base">
-                  {new Date(postPublishedAt).toLocaleDateString('en-us', {
+                  {new Date(postPublishedAt).toLocaleDateString("en-us", {
                     // weekday: 'short',
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
                   })}
                 </span>
               </p>
@@ -49,11 +49,11 @@ function PostHeadingSection({
                   published on
                 </span>
                 <span className="text-base">
-                  {new Date(postPublishedAt).toLocaleDateString('en-us', {
+                  {new Date(postPublishedAt).toLocaleDateString("en-us", {
                     // weekday: 'short',
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
                   })}
                 </span>
               </p>
@@ -67,11 +67,11 @@ function PostHeadingSection({
                 published on
               </span>
               <span className="text-base">
-                {new Date(postPublishedAt).toLocaleDateString('en-us', {
+                {new Date(postPublishedAt).toLocaleDateString("en-us", {
                   // weekday: 'short',
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
                 })}
               </span>
             </p>
@@ -79,7 +79,7 @@ function PostHeadingSection({
         )}
         {/* social share links not working correctly, check once */}
         <ul className="hidden flex-row justify-between gap-4 align-middle md:flex">
-          {socialShareLinks.map(item => (
+          {socialShareLinks.map((item) => (
             <li key={item.name} className="">
               <item.component
                 url={postURL.siteUrl + postURL.path}
