@@ -16,7 +16,7 @@ Each task below has its own implementation-plan file. Work through them roughly 
 | ID | Task | Priority | Depends on | Status |
 |---|---|---|---|---|
 | [T1](01-scaffold-and-preview-pipeline.md) | Scaffold `/astro` + prove the Netlify branch-preview pipeline | P0 | — | Done (repo-side work verified: scaffold, `netlify.toml`, local build all pass; pushed to `origin/astro-migration` — confirming the Netlify branch-preview + main-unaffected deploy live is the only outstanding manual step) |
-| [T2](02-sanity-content-layer.md) | Sanity content layer (`@sanity/astro`, GROQ queries) | P0 | T1 | Not started |
+| [T2](02-sanity-content-layer.md) | Sanity content layer (`@sanity/astro`, GROQ queries) | P0 | T1 | Done (verified independently: fresh `npm run build` + `npx astro check` pass in `/astro`, fetching real data from the same Sanity project as Gatsby's `.env` (`jmp9mq48`/`production`); GROQ field sets match `gatsby-node.js`/`single-blog-post.jsx` field-for-field; `@sanity/image-url` produces a real CDN URL + width/height. Outstanding manual step, same as T1: a live Netlify branch-preview build was not confirmed — no Netlify credentials in this environment. Minor issue found: a code comment in `astro/src/pages/debug/sanity.astro` cites a "T2 implementation report" that does not exist in the repo — didn't block sign-off since parity was re-verified directly against the query source.) |
 | [T3](03-design-system-and-layout.md) | Design system & shared layout (Tailwind, fonts, dark mode, GA) | P0 | T1 | Not started |
 | [T4](04-static-asset-parity.md) | Static asset parity (favicons, manifest, new `robots.txt`) | P1 | T1 | Not started |
 | [T5](05-seo-and-json-ld.md) | SEO component port + JSON-LD structured data | P1 | T2, T3 | Not started |
