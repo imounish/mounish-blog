@@ -1,6 +1,13 @@
 .animated-arrow-button svg {
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
+
 .animated-arrow-button:hover svg {
   transform: rotate(45deg);
+}
+
+.animated-arrow-button:focus-visible {
+  outline: 2px solid;
+  outline-offset: 2px;
+  border-radius: 2px;
 }

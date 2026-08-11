@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React, { useContext, useEffect, useState } from 'react';
 import { SearchModalContext } from '../../context/searchModalContext';
 import SearchField from './SearchField';
-import { modal, modalBackdrop } from './SearchModal.module.css';
+import { modal, modalBackdrop, modalClosing, modalBackdropClosing } from './SearchModal.module.css';
 import SearchResult from './SearchResult';
 
 const query = graphql`
@@ -29,6 +29,7 @@ const query = graphql`
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isClosing, setIsClosing] = useState(false);
   const { isSearchModalOpen, closeSearchModal } =
     useContext(SearchModalContext);
   const [blogsIndexStore, setBlogsIndexStore] = useState(null);
@@ -41,6 +42,7 @@ function Search() {
     if (isSearchModalOpen) {
       document.body.style.overflow = 'hidden';
       setSearchQuery('');
+      setIsClosing(false);
     } else {
       document.body.style.overflow = 'initial';
     }
@@ -67,12 +69,11 @@ function Search() {
     const keyDownHandler = event => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        closeSearchModal();
+        handleClose();
       }
 
       if (event.key === 'Enter') {
         event.preventDefault();
-        // you go ahead with search here or remove it
       }
     };
     document.addEventListener('keydown', keyDownHandler);
@@ -81,6 +82,16 @@ function Search() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+  };
+
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      closeSearchModal();
+    }
+  };
 
   if (!isSearchModalOpen) return null;
 
@@ -93,7 +104,6 @@ function Search() {
     )
       return;
 
-    // fetching the index and store when not available in state
     const [
       { data: blogsIndex },
       { data: blogsStore },
@@ -114,45 +124,34 @@ function Search() {
       axios.get(authorsPublicStoreURL),
     ]);
 
-    // updating state after fetching the result
-    setBlogsIndexStore({
-      index: blogsIndex,
-      store: blogsStore,
-    });
-    setCategoriesIndexStore({
-      index: categoriesIndex,
-      store: categoriesStore,
-    });
-    setTagsIndexStore({
-      index: tagsIndex,
-      store: tagsStore,
-    });
-    setAuthorsIndexStore({
-      index: authorsIndex,
-      store: authorsStore,
-    });
+    setBlogsIndexStore({ index: blogsIndex, store: blogsStore });
+    setCategoriesIndexStore({ index: categoriesIndex, store: categoriesStore });
+    setTagsIndexStore({ index: tagsIndex, store: tagsStore });
+    setAuthorsIndexStore({ index: authorsIndex, store: authorsStore });
   };
 
   return (
     <>
       <div
-        className={`bg-blue-gray-600/25 opacity-100 backdrop-blur-lg transition-opacity ${modalBackdrop}`}
-        style={{
-          WebkitBackdropFilter: 'blur(16px)',
-        }}
-        onClick={closeSearchModal}
-        onKeyDown={closeSearchModal}
+        className={`bg-gray-800/20 backdrop-blur-md dark:bg-black/30 ${modalBackdrop} ${isClosing ? modalBackdropClosing : ''}`}
+        style={{ WebkitBackdropFilter: 'blur(12px)' }}
+        onClick={handleClose}
+        onKeyDown={handleClose}
         role="button"
         tabIndex={0}
         aria-label="Close"
+        onAnimationEnd={handleAnimationEnd}
       />
       <div className="flex flex-col">
-        <div className={`font-worksans + ${modal}`}>
+        <div
+          className={`font-worksans ${isClosing ? modalClosing : modal}`}
+          onAnimationEnd={handleAnimationEnd}
+        >
           <SearchField
             value={searchQuery}
             setValue={setSearchQuery}
             onFocus={onFocusHandler}
-            closeModal={closeSearchModal}
+            closeModal={handleClose}
             resultVisible={searchQuery}
           />
           {searchQuery &&

@@ -32,7 +32,7 @@ function SearchField({ value, setValue, onFocus, closeModal, resultVisible }) {
       />
       <button
         type="button"
-        className="absolute right-0 mr-3 flex items-center"
+        className="absolute right-0 mr-3 flex items-center rounded focus-visible:ring-2 focus-visible:ring-gray-800 focus-visible:ring-offset-1 dark:focus-visible:ring-gray-100"
         onClick={closeModal}
       >
         <MdClose className="h-6 w-6 text-gray-900 dark:text-gray-100" />

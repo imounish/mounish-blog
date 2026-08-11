@@ -22,7 +22,7 @@ function Input({
       autoFocus={autoFocus || false}
       className={`${
         className || ''
-      } block w-full border-0 bg-gray-100 text-gray-900 placeholder:text-gray-600 focus:outline-none dark:bg-gray-800 dark:text-gray-50 dark:placeholder:text-gray-400`}
+      } block w-full border-0 bg-gray-100 text-gray-900 placeholder:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gray-800 dark:bg-gray-800 dark:text-gray-50 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-100`}
       value={value}
       onChange={onChange}
       onFocus={onFocus}

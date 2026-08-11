@@ -17,22 +17,22 @@ import QuoteText from './QuoteText';
 const richTextComponents = {
   block: {
     normal: ({ children }) => (
-      <ParagraphText className="font-warnock py-4 text-xl">
+      <ParagraphText className="font-warnock py-4 text-xl leading-relaxed">
         {children}
       </ParagraphText>
     ),
     h2: ({ children }) => (
-      <HeadingText className="font-warnockdisp pb-2 pt-10 text-4xl font-bold lg:text-5xl">
+      <HeadingText className="font-warnockdisp pb-2 pt-10 text-4xl font-bold leading-[1.1] tracking-tight lg:text-5xl">
         {children}
       </HeadingText>
     ),
     h3: ({ children }) => (
-      <HeadingText className="font-warnockdisp pb-2 pt-8 text-3xl font-semibold lg:text-4xl">
+      <HeadingText className="font-warnockdisp pb-2 pt-8 text-3xl font-semibold leading-[1.15] tracking-tight lg:text-4xl">
         {children}
       </HeadingText>
     ),
     h4: ({ children }) => (
-      <HeadingText className="font-warnockdisp pb-2 pt-6 text-2xl font-medium lg:text-3xl">
+      <HeadingText className="font-warnockdisp pb-2 pt-6 text-2xl font-medium leading-snug lg:text-3xl">
         {children}
       </HeadingText>
     ),

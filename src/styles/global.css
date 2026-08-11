@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-body * {
-  -webkit-transition: background-color 200ms linear;
-  -ms-transition: background-color 200ms linear;
-  transition: background-color 200ms linear;
+/* Scope background-color transitions to elements that visually change on theme toggle */
+body,
+header,
+nav,
+.modal,
+.modal-backdrop,
+[class*="bg-white"],
+[class*="bg-black"],
+[class*="bg-gray"] {
+  transition: background-color 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* work sans font */

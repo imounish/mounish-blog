@@ -74,7 +74,7 @@ function SingleBlogPost({ data, location }) {
   return (
     <>
       <SEO title={blog.title} />
-      <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
+      <ProgressBar height="2" duration="0.3" bgColor="#b83854" />
       <Container>
         <MarginedContainer>
           <ScrollToTop showBelow={800} />

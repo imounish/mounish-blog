@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 const scrollStyle = (
   width,
   height = '3',
-  bgColor = '#bf4c65',
-  duration = '1'
+  bgColor = '#b83854',
+  duration = '0.3'
 ) => ({
   margin: 0,
   padding: 0,
@@ -17,7 +17,8 @@ const scrollStyle = (
   width: `${width}`,
   transitionProperty: 'width',
   transitionDuration: `${duration}s`,
-  transitionTimingFunction: `ease-out`,
+  transitionTimingFunction: 'ease-out',
+  willChange: 'width',
 });
 
 class ProgressBar extends Component {
@@ -26,12 +27,14 @@ class ProgressBar extends Component {
     this.state = {
       width: null,
     };
+    this.rafId = null;
     this.Scrolling = this.Scrolling.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     try {
-      window.addEventListener('scroll', this.Scrolling);
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
     } catch (oError) {
       console.log(oError);
     }
@@ -39,10 +42,19 @@ class ProgressBar extends Component {
 
   componentWillUnmount() {
     try {
-      window.removeEventListener('scroll', this.Scrolling);
+      window.removeEventListener('scroll', this.handleScroll);
+      if (this.rafId) cancelAnimationFrame(this.rafId);
     } catch (oError) {
       console.log(oError);
     }
+  }
+
+  handleScroll() {
+    if (this.rafId) return;
+    this.rafId = requestAnimationFrame(() => {
+      this.Scrolling();
+      this.rafId = null;
+    });
   }
 
   Scrolling() {
@@ -64,7 +76,6 @@ class ProgressBar extends Component {
     const { height, bgColor, duration } = this.props;
     return (
       <div
-        className="box-shadow-xl"
         style={scrollStyle(width, height, bgColor, duration)}
       />
     );

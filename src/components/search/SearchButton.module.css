@@ -1,6 +1,5 @@
 .zoom-in-out:hover {
-  animation: zoom-in-zoom-out 0.5s;
-  animation-duration: 500ms;
+  animation: zoom-in-zoom-out 0.5s ease-out;
 }
 
 @keyframes zoom-in-zoom-out {

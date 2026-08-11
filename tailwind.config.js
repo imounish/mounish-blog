@@ -22,6 +22,8 @@ module.exports = withMT({
     extend: {
       colors: {
         'custom-red': '#b83854',
+        brand: '#b83854',
+        'brand-teal': '#41b3a3',
       },
     },
   },

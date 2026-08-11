@@ -5,6 +5,11 @@
   min-height: 100vh;
   width: 100%;
   z-index: 20;
+  animation: backdropFadeIn 200ms ease-out forwards;
+}
+
+.modal-backdrop-closing {
+  animation: backdropFadeOut 200ms ease-in forwards;
 }
 
 .modal {
@@ -16,8 +21,13 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
+.modal-closing {
+  animation: slide-up 200ms ease-in forwards;
+}
+
 @media only screen and (min-width: 720px) {
-  .modal {
+  .modal,
+  .modal-closing {
     top: 20vh;
     width: 40rem;
     left: calc(50% - 20rem);
@@ -33,4 +43,25 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes backdropFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

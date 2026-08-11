@@ -12,7 +12,7 @@
   bottom: -0.1rem;
   left: 0;
   transform-origin: bottom right;
-  transition: transform 300ms ease-out;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover-underline-animation:hover::after {
@@ -32,7 +32,7 @@
 .custom-animation-green {
   background: linear-gradient(#41b3a3, #41b3a3) left bottom no-repeat;
   background-size: 0% 0.12rem;
-  transition: all 500ms ease-in-out;
+  transition: background-size 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .custom-animation-green:hover {
@@ -42,7 +42,7 @@
 .custom-animation-maroon {
   background: linear-gradient(#9a1750, #9a1750) left bottom no-repeat;
   background-size: 0% 0.12rem;
-  transition: all 500ms ease-in-out;
+  transition: background-size 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .custom-animation-maroon:hover {

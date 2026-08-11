@@ -27,15 +27,23 @@ function Header() {
   }, []);
 
   useEffect(() => {
+    let rafId = null;
     const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const currentScrollPos = window.pageYOffset;
+        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+        setPrevScrollPos(currentScrollPos);
+        rafId = null;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [prevScrollPos, visible]);
 
   const navList = (
@@ -65,7 +73,7 @@ function Header() {
       className="font-worksans fixed top-0 z-10 h-max max-w-full rounded-none border-0 px-6 py-2 text-lg opacity-100 backdrop-blur-lg transition-opacity dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
       style={{
         top: visible ? "0" : "-72px",
-        transition: "0.5s",
+        transition: "top 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
         WebkitBackdropFilter: "blur(16px)",
       }}
     >
