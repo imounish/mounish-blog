@@ -1,7 +1,8 @@
 node_modules/
 .cache/
-public
+/public
 .env
+.claude/
 
 # Local Netlify folder
 .netlify
