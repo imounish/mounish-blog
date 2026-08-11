@@ -1,0 +1,114 @@
+---
+// Throwaway debug page for T2 (Sanity content layer).
+//
+// Not part of the site's real route tree — exists only to prove, inside an
+// actual Astro build, that:
+//   1. @sanity/astro is wired up and can query the real Sanity project.
+//   2. The GROQ queries in ../../lib/sanity.ts reproduce the field sets
+//      Gatsby's GraphQL queries pull today (see field-parity check below).
+//   3. @sanity/image-url can build a CDN URL + width/height pair from a
+//      GROQ-fetched coverImage.asset reference.
+//
+// Delete this page (and this comment) once T6 builds the real single-post
+// template against these same queries.
+import {
+  getAuthorList,
+  getBlogList,
+  getBlogPostBySlug,
+  getCategoryList,
+} from '../../lib/sanity';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+
+const [blogs, categories, authors] = await Promise.all([
+  getBlogList(),
+  getCategoryList(),
+  getAuthorList(),
+]);
+
+const firstSlug = blogs[0]?.slug?.current;
+const post = firstSlug ? await getBlogPostBySlug(firstSlug) : null;
+
+const image = post ? buildSanityImageUrl(post.coverImage.asset, { width: 800 }) : null;
+const imageOriginal = post ? buildSanityImageUrl(post.coverImage.asset) : null;
+
+// Field-parity check: every field single-blog-post.jsx's `postQuery` pulls,
+// asserted present on the GROQ result. See the T2 implementation report for
+// a full byte-for-byte comparison against a live Gatsby GraphQL query for
+// this same post (title/subTitle/publishedAt/timeToRead/_rawBody/
+// _rawExcerpt/coverImage/category/tags/author all matched exactly).
+const expectedFields = [
+  'title',
+  'subTitle',
+  'publishedAt',
+  'timeToRead',
+  '_rawBody',
+  '_rawExcerpt',
+  'coverImage',
+  'category',
+  'tags',
+  'author',
+];
+
+const parity = post
+  ? expectedFields.map(field => ({
+      field,
+      present: Object.prototype.hasOwnProperty.call(post, field) && (post as any)[field] != null,
+    }))
+  : [];
+
+console.log('[T2 debug] blogs:', blogs.length, 'categories:', categories.length, 'authors:', authors.length);
+console.log('[T2 debug] single post slug:', firstSlug);
+console.log('[T2 debug] field parity:', JSON.stringify(parity));
+console.log('[T2 debug] image url (w=800):', image?.src, image?.width, image?.height);
+console.log('[T2 debug] image url (source dims):', imageOriginal?.src, imageOriginal?.width, imageOriginal?.height);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <title>T2 debug: Sanity content layer</title>
+  </head>
+  <body>
+    <h1>T2 debug: Sanity content layer</h1>
+    <p>Throwaway page — proves @sanity/astro + GROQ + @sanity/image-url work end to end. Delete before shipping real pages.</p>
+
+    <h2>Lists</h2>
+    <ul>
+      <li>Blogs: {blogs.length}</li>
+      <li>Categories: {categories.length}</li>
+      <li>Authors: {authors.length}</li>
+    </ul>
+
+    <h2>Single post: {post?.title}</h2>
+    {post && (
+      <ul>
+        <li>subTitle: {post.subTitle}</li>
+        <li>publishedAt: {post.publishedAt}</li>
+        <li>timeToRead: {post.timeToRead}</li>
+        <li>category: {post.category?.title}</li>
+        <li>tags: {post.tags?.map(t => t.title).join(', ')}</li>
+        <li>author: {post.author?.name}</li>
+      </ul>
+    )}
+
+    <h2>Field parity vs Gatsby postQuery</h2>
+    <ul>
+      {parity.map(p => (
+        <li>{p.field}: {p.present ? 'present' : 'MISSING'}</li>
+      ))}
+    </ul>
+
+    <h2>Image URL (@sanity/image-url)</h2>
+    {image && (
+      <div>
+        <p>width=800 request: {image.src} ({image.width}x{image.height})</p>
+        <img src={image.src} width={image.width} height={image.height} alt={post?.coverImage.alt || ''} />
+      </div>
+    )}
+    {imageOriginal && (
+      <p>source dimensions: {imageOriginal.width}x{imageOriginal.height}</p>
+    )}
+  </body>
+</html>
