@@ -15,7 +15,7 @@ Each task below has its own implementation-plan file. Work through them roughly 
 
 | ID | Task | Priority | Depends on | Status |
 |---|---|---|---|---|
-| [T1](01-scaffold-and-preview-pipeline.md) | Scaffold `/astro` + prove the Netlify branch-preview pipeline | P0 | — | In progress (scaffold + build verified locally; Netlify branch-preview + main-unaffected deploy not yet confirmed live) |
+| [T1](01-scaffold-and-preview-pipeline.md) | Scaffold `/astro` + prove the Netlify branch-preview pipeline | P0 | — | Done (repo-side work verified: scaffold, `netlify.toml`, local build all pass; pushed to `origin/astro-migration` — confirming the Netlify branch-preview + main-unaffected deploy live is the only outstanding manual step) |
 | [T2](02-sanity-content-layer.md) | Sanity content layer (`@sanity/astro`, GROQ queries) | P0 | T1 | Not started |
 | [T3](03-design-system-and-layout.md) | Design system & shared layout (Tailwind, fonts, dark mode, GA) | P0 | T1 | Not started |
 | [T4](04-static-asset-parity.md) | Static asset parity (favicons, manifest, new `robots.txt`) | P1 | T1 | Not started |
