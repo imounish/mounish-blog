@@ -45,7 +45,7 @@ Site search runs entirely client-side via `gatsby-plugin-local-search`. Four ind
 
 ### Newsletter signup
 
-`react-mailchimp-subscribe` on the frontend (`src/components/newsletter/`) posts to a Netlify serverless function at `netlify/functions/subscribe-user/`, rather than calling Mailchimp directly from the browser.
+The signup form (`src/components/newsletter/FormContainer.jsx`) posts to a Netlify serverless function at `netlify/functions/subscribe-user/`, which forwards to Beehiiv (`BEEHIIV_API_URL`/`BEEHIIV_API_KEY`/`BEEHIIV_PUBLICATION_ID`), rather than calling Beehiiv directly from the browser. `MailchimpFormContainer.jsx` and the `react-mailchimp-subscribe` dependency are unused dead code from an earlier, already-abandoned integration — nothing imports them.
 
 ### Styling
 

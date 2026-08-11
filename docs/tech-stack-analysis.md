@@ -1,11 +1,11 @@
 # Tech stack assessment & migration analysis
 
-**Date:** 2026-08-11
-**Scope:** Gatsby 5 + Sanity + Netlify + Mailchimp, evaluated for speed, weight, writing UX, SEO, cost, and email/subscriber reach.
+**Date:** 2026-08-11 (corrected 2026-08-11: newsletter backend was misidentified as Mailchimp in the original version — see Email section)
+**Scope:** Gatsby 5 + Sanity + Netlify + Beehiiv, evaluated for speed, weight, writing UX, SEO, cost, and email/subscriber reach.
 
 ## Executive summary
 
-The current stack (Gatsby 5, Sanity, Netlify, Netlify Function → Mailchimp) is competently built — image optimization, dark-mode handling, and OG/Twitter meta are all done correctly — but it's built on a framework that is now effectively in maintenance mode, and it's leaving real distribution/SEO value on the table for free (RSS is installed but disabled; there's no structured data; Mailchimp's free tier no longer fits a growing list). **Recommended target: Astro + Sanity (kept as-is, via Astro's official native integration) + Kit for email, with RSS and JSON-LD turned on.** This keeps the highest-risk, highest-effort part of the stack — the content model and editorial workflow in Sanity — completely untouched, while replacing the framework layer that is actually the source of the maintenance risk and JS-weight problem. Hosting (Netlify vs Cloudflare Pages) and CMS (Sanity vs git-based) are separable decisions with lower stakes, covered below. A handful of "quick wins" are worth doing this week regardless of any migration timeline.
+The current stack (Gatsby 5, Sanity, Netlify, Netlify Function → Beehiiv) is competently built — image optimization, dark-mode handling, and OG/Twitter meta are all done correctly — but it's built on a framework that is now effectively in maintenance mode, and it's leaving real distribution/SEO value on the table for free (RSS is installed but disabled; there's no structured data). **Recommended target: Astro + Sanity (kept as-is, via Astro's official native integration) + Beehiiv (kept as-is), with RSS and JSON-LD turned on.** This keeps the highest-risk, highest-effort parts of the stack — the content model/editorial workflow in Sanity and the already-working newsletter backend — completely untouched, while replacing the framework layer that is actually the source of the maintenance risk and JS-weight problem. Hosting (Netlify vs Cloudflare Pages) and CMS (Sanity vs git-based) are separable decisions with lower stakes, covered below. A handful of "quick wins" are worth doing this week regardless of any migration timeline.
 
 ## Current stack scorecard
 
@@ -17,8 +17,8 @@ Grounded in this repo, not generic framework claims:
 | **Lightweight** | Middling | Same as above — `@material-tailwind/react`, `lozad` (redundant with `gatsby-plugin-image`'s own lazy loading), and 4 bundled search indices add up |
 | **Writing experience** | Genuinely good today | Sanity Studio gives a real-time, structured editing UI with references between blog/author/category/tag — not something to give up lightly |
 | **SEO** | Solid meta, missing structured data | `SEO.jsx` correctly sets OG/Twitter tags, canonical-ish `robots` meta, and a sitemap ships via `gatsby-plugin-sitemap` — but there's no JSON-LD `Article`/`BlogPosting` schema, so the site isn't eligible for rich results |
-| **Cost** | Currently $0 | Netlify free tier + Sanity free tier + Mailchimp free tier |
-| **Email/subscriber reach** | Functional but capped, and RSS is silently off | Signup form → first-party Netlify Function → Mailchimp is a clean, portable pattern, but Mailchimp's free plan now caps at 250 contacts/500 sends per month. Separately, `gatsby-plugin-feed` is installed in `package.json` but **commented out** in `gatsby-config.js` — no RSS/Atom feed ships today at all |
+| **Cost** | Currently $0 | Netlify free tier + Sanity free tier + Beehiiv free tier |
+| **Email/subscriber reach** | Good on email, but RSS is silently off | Signup form → first-party Netlify Function → Beehiiv (`netlify/functions/subscribe-user`, confirmed by reading the actual handler) is a clean, portable pattern, and Beehiiv's free plan (2,500 subscribers, unlimited sends) is generous at this blog's scale. Separately, `gatsby-plugin-feed` is installed in `package.json` but **commented out** in `gatsby-config.js` — no RSS/Atom feed ships today at all |
 | **Maintenance risk** | Real, already experienced | `300b173 Fix Node 24 compatibility: override msgpackr and ordered-binary` — this is not a hypothetical risk, it already happened |
 
 ## Framework alternatives
@@ -61,19 +61,21 @@ Cloudflare's unlimited free bandwidth is a genuine structural advantage for an i
 
 ## Email / subscriber reach
 
-| | Mailchimp (current) | Kit (formerly ConvertKit) | beehiiv | Buttondown | Resend | listmonk (self-hosted) |
-|---|---|---|---|---|---|---|
-| Free tier | 250 contacts / 500 sends per month | **10,000 subscribers**, full features | 2,500 subscribers, unlimited sends | 100 subscribers | Not a broadcast tool — $49/mo at 1,000 subscribers | Free software; ~$8/mo infra (Fly.io + AWS SES) |
-| Fit | Already cramped, and shrinking | Best free ceiling by a wide margin | Also very generous, includes its own publishing platform (out of scope here since the custom blog stays) | Worse than Mailchimp now | Priced for transactional/product email, not newsletters | Most control, but breaks the "stay free" requirement and adds real ops burden |
-| Migration effort | — | Low — swap the Mailchimp API call inside the existing `netlify/functions/subscribe-user` function for Kit's API; the frontend form and serverless-function architecture don't change | Same pattern, low effort | Same pattern, but free tier too small to be worth it | Not a fit at any list size for a broadcast newsletter | Meaningfully higher effort (server, SMTP relay, ops) |
+**Correction:** the original version of this doc misidentified the current newsletter backend as Mailchimp, inferred from an unused `react-mailchimp-subscribe` dependency and a `MailchimpFormContainer.jsx` component that nothing imports. Reading the actual code (`netlify/functions/subscribe-user/subscribe-user.js`, `src/components/newsletter/FormContainer.jsx`) confirms the live integration already posts to **Beehiiv** (`BEEHIIV_API_URL`/`BEEHIIV_API_KEY`/`BEEHIIV_PUBLICATION_ID`), and git history (`a6d00bb beehiiv api test`, `ff49340 UI POST call, netlify function backend implemented`) shows this was a deliberate, already-completed migration. The Mailchimp code is dead weight left over from before that switch.
 
-Mailchimp's free plan has been cut to 250 contacts, which is a real ceiling for a growing blog. **Kit's free tier (10,000 subscribers, full features)** is the clear replacement — and because the signup flow already goes through a first-party serverless function rather than a vendor embed, switching providers means rewriting one function, not the frontend or the architecture. This is worth doing independent of any framework decision.
+| | Beehiiv (current) | Kit (formerly ConvertKit) | Buttondown | Resend | listmonk (self-hosted) |
+|---|---|---|---|---|---|
+| Free tier | 2,500 subscribers, unlimited sends | 10,000 subscribers, full features | 100 subscribers | Not a broadcast tool — $49/mo at 1,000 subscribers | Free software; ~$8/mo infra (Fly.io + AWS SES) |
+| Fit | Already generous at this blog's scale, and already working | Larger free ceiling, but built around creator marketing/sales automation (paid products, funnels) rather than a simple content newsletter | Free tier too small to be worth switching to | Priced for transactional/product email, not newsletters | Most control, but breaks the "stay free" requirement and adds real ops burden |
+| Recommendation | **Keep** | Not a better fit for this use case despite the larger free tier | — | — | — |
+
+Beehiiv is already the right tool for this job: a straightforward content newsletter with no need for marketing-automation features, at a free-tier size (2,500 subscribers) this blog isn't close to outgrowing. There's no rationale to switch providers. The actual work here is cleanup, not migration: **delete the dead Mailchimp code** (`src/components/newsletter/MailchimpFormContainer.jsx`, the `react-mailchimp-subscribe` dependency, and any stale Mailchimp env vars) and carry the working Beehiiv integration forward as-is into the new stack.
 
 Separately: **RSS is a zero-cost second reach channel that's already half-wired.** `gatsby-plugin-feed` is an installed dependency, just commented out in `gatsby-config.js`. Re-enabling it (or, post-Astro-migration, using `@astrojs/rss`) costs nothing and reaches readers who prefer feed readers over email/algorithmic discovery.
 
 ## Recommended target stack
 
-**Primary recommendation: Astro + Sanity (unchanged) + Kit + RSS + JSON-LD, hosted on Netlify initially.**
+**Primary recommendation: Astro + Sanity (unchanged) + Beehiiv (unchanged) + RSS + JSON-LD, hosted on Netlify initially.**
 
 - **Migration effort: Medium.** The content layer (the highest-risk, highest-effort part of any CMS-attached blog migration) doesn't move at all. The actual work is: rewriting `gatsby-node.js`'s page-generation as Astro Content Collections/`getStaticPaths`; converting GraphQL queries to GROQ/Sanity-client calls; converting components to Astro components, deciding per-component whether it needs to be a hydrated island (theme toggle, search, newsletter form, mobile nav) or can ship as zero-JS static markup (most blog-listing, typography, and layout components); replacing the 4-index `flexsearch` setup with Pagefind; and porting `SEO.jsx` to Astro's head pattern. For a site of this size (6 templates, ~15 component groups), this is realistically a solo weekend-to-two-weeks effort depending on how much visual polish is preserved exactly vs. rebuilt.
 - **Risk:** Low on the content/CMS side (nothing changes), medium on the "does the new site look and behave identically" side (normal for any framework swap) — mitigated by porting templates one at a time and diffing against the live site.
@@ -83,7 +85,7 @@ Separately: **RSS is a zero-cost second reach channel that's already half-wired.
 ## Quick wins (do regardless of any migration decision)
 
 1. **Re-enable `gatsby-plugin-feed`** in `gatsby-config.js` — it's already a dependency, just commented out. Near-zero effort, immediate second distribution channel.
-2. **Switch the newsletter backend from Mailchimp to Kit** inside `netlify/functions/subscribe-user` — the free-tier ceiling (250 vs. 10,000 contacts) makes this urgent regardless of framework plans; the frontend and function architecture don't need to change.
+2. **Delete the dead Mailchimp code** — `src/components/newsletter/MailchimpFormContainer.jsx`, the `react-mailchimp-subscribe` dependency, and any stale Mailchimp env vars. The live newsletter integration is already Beehiiv and doesn't need to change; this is pure cleanup.
 3. **Add JSON-LD `Article`/`BlogPosting` structured data** to `SEO.jsx` — closes a real, currently-missing SEO gap for very little code.
 4. **Evaluate dropping `@material-tailwind/react`** in favor of hand-rolled Tailwind components for the handful of UI primitives actually used (modals, buttons) — cuts a full component-library dependency from the bundle.
 5. **Consider Pagefind over the 4 bundled `flexsearch` indices** even if staying on Gatsby — it moves search indexing to build time and out of the client bundle entirely.
