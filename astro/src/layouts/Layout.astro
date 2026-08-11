@@ -1,0 +1,137 @@
+---
+// T3: equivalent of src/components/layout/Layout.jsx (Gatsby app), plus the
+// pre-hydration dark-mode script (gatsby-ssr.jsx) and the GA4 tag
+// (gatsby-config.js's gatsby-plugin-google-gtag block), since Astro has no
+// separate SSR-hooks file the way Gatsby does — it all lives in one shared
+// layout here.
+//
+// Not ported here (out of T3's scope, per 03-design-system-and-layout.md
+// step 3 — only header/footer/slot): the search modal
+// (SearchModalContextProvider/<Search />) and the newsletter signup modal
+// (SignUpModalContextProvider/<SignUp />) that Layout.jsx also wraps pages
+// in. Those belong to the search (T13) and newsletter (T12) tasks.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ThemeToggle from '../components/theme/ThemeToggle.jsx';
+import { matchesExcludedPath } from '../utils/gaExclude';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "mounish's blog" } = Astro.props;
+
+// GA4 tracking ID from gatsby-config.js's gatsby-plugin-google-gtag block.
+const GA_TRACKING_ID = 'G-YF4936QF3P';
+
+// Same `exclude` list as gatsby-config.js's pluginConfig.exclude.
+const GA_EXCLUDED_PATHS = ['/preview/**', '/do-not-track/me/too/'];
+const isExcludedFromTracking = matchesExcludedPath(
+  Astro.url.pathname,
+  GA_EXCLUDED_PATHS
+);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+
+    <!--
+      T3: pre-hydration dark-mode script — the Astro equivalent of
+      gatsby-ssr.jsx's onRenderBody/setPreBodyComponents script, which reads
+      localStorage.theme (falling back to prefers-color-scheme) and adds
+      .light/.dark *before* the page paints, avoiding a flash of the wrong
+      theme.
+
+      Deliberate adaptation: gatsby-ssr.jsx sets the class on
+      `document.body`, because Gatsby injects that script as the first thing
+      *inside* <body> (setPreBodyComponents), where document.body already
+      exists. This script instead runs inside <head> (per this task's
+      instructions, `<script is:inline>` in `<head>`), where `document.body`
+      does not exist yet during parsing — only `document.documentElement`
+      (<html>) is guaranteed to exist that early. So this sets the class on
+      <html> instead of <body>. Tailwind's `dark:` variant (see the
+      `@custom-variant` in global.css) matches a `.dark` class on *any*
+      ancestor, so this is behavior-equivalent, just one element higher up.
+      ThemeToggle.jsx is updated to match (toggles `documentElement`, not
+      `body`).
+    -->
+    <script is:inline>
+      (function () {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.documentElement.classList.add(savedTheme);
+        } else if (
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        ) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+
+    <!--
+      T3: GA4, adapted from gatsby-config.js's gatsby-plugin-google-gtag
+      block (trackingIds: ['G-YF4936QF3P'], head: true, respectDNT: true,
+      exclude: ['/preview/**', '/do-not-track/me/too/']).
+
+      There's no direct Astro/Vite plugin equivalent of that Gatsby plugin,
+      so this is a small hand-written replacement:
+        - `exclude`: this is a fully static multi-page build (no client
+          router firing pageviews on navigation the way Gatsby's plugin
+          does) — so the closest equivalent is deciding at build time, per
+          page, whether to emit the tag at all. See gaExclude.js.
+        - `respectDNT`: reproduced as a runtime check of
+          navigator.doNotTrack (and legacy vendor-prefixed variants) that
+          skips loading GA *at all* when set — same "don't even make the
+          network request" behavior as the original plugin, not just "load
+          but don't send data".
+        - off-main-thread execution: gatsby-plugin-google-gtag already
+          offloads the gtag.js vendor script to Partytown today (visible as
+          `public/~partytown/` in current Gatsby build output); @astrojs/
+          partytown (wired up in astro.config.mjs) is the direct equivalent
+          here — the vendor script tag below carries
+          `type="text/partytown"`, and only the tiny dataLayer/gtag() shim
+          that queues commands runs on the main thread.
+    -->
+    {!isExcludedFromTracking && (
+      <script define:vars={{ GA_TRACKING_ID }} is:inline>
+        (function () {
+          var dnt =
+            navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+          var hasDNT = dnt === '1' || dnt === 'yes';
+          if (hasDNT) return; // respectDNT: don't load GA at all
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            window.dataLayer.push(arguments);
+          }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_TRACKING_ID);
+
+          var gtagScript = document.createElement('script');
+          gtagScript.type = 'text/partytown';
+          gtagScript.src =
+            'https://www.googletagmanager.com/gtag/js?id=' + GA_TRACKING_ID;
+          document.head.appendChild(gtagScript);
+        })();
+      </script>
+    )}
+  </head>
+  <body class="dark:bg-black">
+    <Header>
+      <ThemeToggle client:load slot="theme-toggle" />
+    </Header>
+    <slot />
+    <Footer />
+  </body>
+</html>

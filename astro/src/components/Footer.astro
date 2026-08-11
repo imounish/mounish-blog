@@ -1,0 +1,56 @@
+---
+// T3: ported from src/components/footer/Footer.jsx (Gatsby app).
+// `<Link>` -> `<a>` (no client router in this static Astro app); the
+// commented-out About/Privacy Policy list from the original is dropped
+// rather than ported dead code forward.
+import { socialLinks, websiteUrl } from '../constants/social';
+
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="font-worksans w-full px-0 text-gray-800 dark:bg-black dark:text-gray-400 sm:px-6"
+>
+  <div
+    class="mx-auto w-full max-w-full px-6 py-4 sm:px-0 md:flex md:items-center md:justify-between"
+  >
+    <span class="text-sm sm:text-center">
+      &#169; {year}{' '}
+      <a
+        href={websiteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-800 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-200"
+      >
+        mounish.dev
+      </a>
+      &#8482;. All Rights Reserved.
+    </span>
+
+    <div class="flex flex-row items-end justify-between gap-4 md:justify-start">
+      <ul class="mt-3 flex flex-wrap items-center gap-4 md:mt-0">
+        {socialLinks.map(({ url, Icon }) => (
+          <li>
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              <Icon
+                className="h-6 w-6 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="font-worksans text-xs md:text-sm">
+        Built in <span>🇮🇳</span> with{' '}
+        <span style="color: #e25555">&#9829;</span> by{' '}
+        <a
+          href="/authors/mounish-pedagandham"
+          class="text-gray-800 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-200"
+          title="Mounish - Creator of this website"
+        >
+          Mounish
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

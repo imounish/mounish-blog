@@ -1,18 +1,13 @@
 ---
-import '../styles/global.css';
+// T1 scaffolded this page as a trivial pipeline check; T3 wires it through
+// the new shared Layout (header/footer/dark-mode/GA) so that integration is
+// visible on a real route without waiting for T6-T9's actual templates.
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro migration scaffold</title>
-	</head>
-	<body>
-		<h1 class="text-3xl font-bold underline">Astro migration scaffold: T1 pipeline check</h1>
-		<p>This trivial page exists only to prove the /astro build + Netlify branch-preview pipeline works.</p>
-	</body>
-</html>
+<Layout title="Astro migration scaffold">
+	<main class="mx-auto max-w-3xl px-6 pt-32 pb-16">
+		<h1 class="font-worksans text-3xl font-bold text-black dark:text-gray-50">Astro migration scaffold: T1 pipeline check</h1>
+		<p class="font-worksans mt-4 text-black dark:text-gray-300">This trivial page exists only to prove the /astro build + Netlify branch-preview pipeline works, now rendered through the shared Layout built in T3.</p>
+	</main>
+</Layout>

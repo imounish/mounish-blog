@@ -1,0 +1,160 @@
+---
+// T3: ported from src/components/header/Header.jsx (Gatsby app).
+//
+// Keep-vs-drop decision on @material-tailwind/react (see the T3 report for
+// full rationale): dropped. `Navbar`, `IconButton`, and `Collapse` are
+// hand-rolled below as plain elements + Tailwind classes + a small vanilla
+// <script> — Header's interactivity (scroll show/hide, mobile nav
+// open/close) doesn't need a React tree or a component library at all, and
+// avoiding both keeps this out of the client JS bundle entirely except for
+// the one component that's genuinely interactive (ThemeToggle, hydrated
+// separately in Layout.astro).
+//
+// ThemeToggle itself is NOT rendered here — Astro islands (`client:*`) are
+// wired up from the page/layout that owns the framework integration, so
+// Layout.astro renders <Header /> and <ThemeToggle client:load /> as
+// siblings inside the same nav bar markup, keeping this file framework-free.
+import menu from '../constants/menu';
+import Logo from './Logo.astro';
+import styles from './Header.module.css';
+---
+
+<header
+  id="site-header"
+  class="font-worksans fixed top-0 z-10 h-max max-w-full px-6 py-2 text-lg opacity-100 backdrop-blur-lg transition-[top] duration-500 dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
+>
+  <div class="relative flex items-center justify-between text-black dark:text-gray-50">
+    <Logo />
+    <div class="flex items-center gap-4">
+      <div
+        class="absolute left-2/4 top-2/4 mr-4 hidden -translate-x-2/4 -translate-y-2/4 lg:block"
+      >
+        <ul
+          class="mb-4 mt-2 flex flex-col gap-2 dark:text-gray-50 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6"
+        >
+          {menu.map((item) => (
+            <li class="block px-0 py-1 font-normal leading-normal antialiased lg:px-1">
+              <a
+                class={`flex w-fit items-center ${styles.hoverUnderlineAnimation}`}
+                title={item.title}
+                href={item.path}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <slot name="theme-toggle" />
+
+      <slot name="search-button" />
+
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+        class="ml-auto flex h-6 w-6 items-center justify-center text-inherit sm:h-8 sm:w-8 lg:hidden"
+      >
+        <svg
+          id="menu-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-6 w-6 text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 sm:h-8 sm:w-8"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 5A.75.75 0 012.75 9h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 9.75zM2 14.75a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <svg
+          id="close-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="hidden h-6 w-6 text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 sm:h-8 sm:w-8"
+        >
+          <path
+            d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="mobile-nav">
+    <ul
+      class="mb-4 mt-2 flex flex-col gap-2 text-black dark:text-gray-50 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6"
+    >
+      {menu.map((item) => (
+        <li class="block px-0 py-1 font-normal leading-normal antialiased lg:px-1">
+          <a
+            class={`flex w-fit items-center ${styles.hoverUnderlineAnimation}`}
+            title={item.title}
+            href={item.path}
+          >
+            {item.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  // T3: hand-rolled replacement for material-tailwind's Navbar scroll
+  // behavior (hide on scroll-down, show on scroll-up/near-top) and its
+  // Collapse-driven mobile nav — same thresholds as the ported Header.jsx
+  // (`prevScrollPos > currentScrollPos || currentScrollPos < 10`).
+  const header = document.getElementById('site-header');
+  const toggleButton = document.getElementById('mobile-nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  let prevScrollPos = window.pageYOffset;
+
+  function handleScroll() {
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+    if (header) {
+      header.style.top = visible ? '0' : '-72px';
+    }
+    prevScrollPos = currentScrollPos;
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  function closeMobileNav() {
+    toggleButton?.setAttribute('aria-expanded', 'false');
+    mobileNav?.classList.remove('mobile-nav-open');
+    menuIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+  }
+
+  toggleButton?.addEventListener('click', () => {
+    const isOpen = toggleButton.getAttribute('aria-expanded') === 'true';
+    if (isOpen) {
+      closeMobileNav();
+    } else {
+      toggleButton.setAttribute('aria-expanded', 'true');
+      mobileNav?.classList.add('mobile-nav-open');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+    }
+  });
+
+  // close the mobile nav automatically at desktop widths, same as
+  // Header.jsx's `resize` listener (`window.innerWidth >= 960`).
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 960) closeMobileNav();
+  });
+
+  // close on nav-link click, same as Header.jsx's onClick on each <Link>.
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMobileNav);
+  });
+</script>
