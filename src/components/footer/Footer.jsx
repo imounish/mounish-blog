@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "gatsby";
 import { socialLinks, websiteUrl } from "../../constants/social";
+import useIsClient from "../../utils/useIsClient";
 
 function Footer() {
+  const { isClient } = useIsClient();
+
   return (
     <footer className="font-worksans w-full px-0 text-gray-800 dark:bg-black dark:text-gray-400 sm:px-6">
       <div className="mx-auto w-full max-w-full px-6 py-4 sm:px-0 md:flex md:items-center md:justify-between">
         <span className="text-sm sm:text-center">
-          &#169; {new Date().getFullYear()}{" "}
+          &#169; {isClient ? new Date().getFullYear() : null}{" "}
           <a
             href={websiteUrl}
             target="blank"
