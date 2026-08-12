@@ -1,0 +1,83 @@
+---
+// T6: port of src/components/blogs/PostHeadingSection.jsx.
+import Break from '../partials/Break.astro';
+import TimeToRead from '../typography/TimeToRead.astro';
+import SocialShareRow from '../social/SocialShareRow.astro';
+
+interface Props {
+  postTitle: string;
+  postSubHeading?: string | null;
+  postPublishedAt: string;
+  timeToRead?: number | null;
+  postUrl: string;
+}
+const { postTitle, postSubHeading, postPublishedAt, timeToRead, postUrl } = Astro.props;
+
+const publishedDate = new Date(postPublishedAt).toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<div class="px-6 py-4">
+  <div class="flex flex-col items-center justify-center py-2 text-center lg:py-4">
+    <h1
+      class="font-warnockdisp py-2 text-4xl font-semibold text-gray-900 dark:text-gray-100 md:text-5xl lg:py-4 lg:text-6xl"
+    >
+      {postTitle}
+    </h1>
+    {
+      postSubHeading && (
+        <h3 class="font-warnocksubh px-2 py-1 text-xl font-light text-gray-700 dark:text-gray-400 md:text-2xl lg:py-2 lg:text-3xl">
+          {postSubHeading}
+        </h3>
+      )
+    }
+  </div>
+  <Break />
+  <div
+    class="font-worksans flex flex-row items-center justify-between py-2 text-gray-700 dark:text-gray-400 lg:py-4"
+  >
+    {
+      timeToRead ? (
+        <>
+          <div class="flex w-full flex-row items-center justify-between md:hidden">
+            <p>
+              <span class="font-warnockcapt pl-0.5 pr-1.5 text-base font-bold lowercase italic">
+                published on
+              </span>
+              <span class="text-base">{publishedDate}</span>
+            </p>
+            <p>
+              <TimeToRead timeToRead={timeToRead} />
+            </p>
+          </div>
+          <div class="hidden md:flex md:flex-col md:items-start">
+            <TimeToRead timeToRead={timeToRead} />
+            <p>
+              <span class="font-warnockcapt pl-0.5 pr-1.5 text-base font-bold lowercase italic">
+                published on
+              </span>
+              <span class="text-base">{publishedDate}</span>
+            </p>
+          </div>
+        </>
+      ) : (
+        <div class="flex flex-col items-start">
+          <p>
+            <span class="font-warnockcapt pl-0.5 pr-1.5 text-base font-bold lowercase italic">
+              published on
+            </span>
+            <span class="text-base">{publishedDate}</span>
+          </p>
+        </div>
+      )
+    }
+    <SocialShareRow
+      url={postUrl}
+      title={postTitle}
+      class="hidden flex-row justify-between gap-4 align-middle md:flex"
+    />
+  </div>
+</div>

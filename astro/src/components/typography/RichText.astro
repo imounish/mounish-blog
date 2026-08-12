@@ -1,0 +1,18 @@
+---
+// T6: Astro equivalent of src/components/typography/RichText.jsx.
+//
+// Renders Portable Text to a static HTML string at build time (see
+// ../../lib/portableText.tsx for the actual @portabletext/react component
+// map + ReactDOMServer.renderToStaticMarkup call) and drops it in with
+// `set:html`. No `client:*` directive anywhere in this chain — zero JS ships
+// to the browser for the rendered body content.
+import { renderPortableTextBody } from '../../lib/portableText';
+
+interface Props {
+  value: unknown;
+}
+const { value } = Astro.props;
+const html = renderPortableTextBody(value);
+---
+
+<Fragment set:html={html} />

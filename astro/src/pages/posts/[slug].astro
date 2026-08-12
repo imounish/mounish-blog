@@ -1,0 +1,167 @@
+---
+// T6: single blog post template — Astro equivalent of
+// src/templates/single-blog-post.jsx.
+//
+// getStaticPaths mirrors gatsby-node.js's `blogs.forEach(blog =>
+// createPage({ path: `/posts/${slug}` ... }))` loop, sourced from the same
+// blog-list GROQ query (getBlogList, T2) used to build every other route
+// that lists posts.
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/partials/Container.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import ScrollToTop from '../../components/partials/ScrollToTop.astro';
+import ProgressBar from '../../components/partials/ProgressBar.astro';
+import PostHeadingSection from '../../components/blogs/PostHeadingSection.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionTop from '../../components/partials/SectionTop.astro';
+import SectionMiddle from '../../components/partials/SectionMiddle.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import Break from '../../components/partials/Break.astro';
+import CategoryCatalogue from '../../components/categories/CategoryCatalogue.astro';
+import ExcerptText from '../../components/typography/ExcerptText.astro';
+import RichText from '../../components/typography/RichText.astro';
+import TagsArray from '../../components/tags/TagsArray.astro';
+import SocialShareRow from '../../components/social/SocialShareRow.astro';
+import NewsletterSection from '../../components/homepage/NewsletterSection.astro';
+import { getBlogList, getBlogPostBySlug } from '../../lib/sanity';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+import { siteConfig } from '../../lib/siteConfig';
+
+export async function getStaticPaths() {
+  const blogs = await getBlogList();
+  return blogs.map((blog) => ({
+    params: { slug: blog.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = await getBlogPostBySlug(slug as string);
+
+// getStaticPaths (above) sources slugs from the same getBlogList() query, so
+// this should be unreachable for any path Astro actually builds — fail the
+// build loudly rather than silently emitting an empty page if the content
+// changed between the two fetches.
+if (!post) {
+  throw new Error(`[posts/[slug].astro] No blog post found for slug "${slug}"`);
+}
+
+const cover = buildSanityImageUrl(post.coverImage.asset, { width: 1600 });
+const canonicalUrl = `${siteConfig.siteUrl}/posts/${slug}/`;
+---
+
+<Layout
+  title={post.title}
+  description={post.subTitle ?? undefined}
+  imageUrl={cover.src}
+  imageWidth={cover.width}
+  imageHeight={cover.height}
+  isPost={true}
+  publishedAt={post.publishedAt}
+  author={post.author ?? undefined}
+  canonicalUrl={canonicalUrl}
+>
+  <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
+  <Container>
+    <MarginedContainer>
+      <ScrollToTop showBelow={800} />
+      <PostHeadingSection
+        postTitle={post.title}
+        postSubHeading={post.subTitle}
+        postPublishedAt={post.publishedAt}
+        timeToRead={post.timeToRead}
+        postUrl={canonicalUrl}
+      />
+    </MarginedContainer>
+
+    <img
+      src={cover.src}
+      width={cover.width}
+      height={cover.height}
+      alt={post.coverImage.alt || ''}
+      loading="lazy"
+      class="cover-image block w-full"
+    />
+
+    <MarginedContainer>
+      <Section>
+        <SectionTop>
+          {
+            post.category && (
+              <>
+                <CategoryCatalogue category={post.category} currentSlug={slug as string} />
+                <Break />
+              </>
+            )
+          }
+        </SectionTop>
+        <SectionMiddle class="text-container">
+          <ExcerptText value={post._rawExcerpt} />
+          <RichText value={post._rawBody} />
+          <div class="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
+            {
+              post.tags && post.tags.length > 0 && (
+                <TagsArray
+                  tags={post.tags}
+                  class="flex flex-row items-center justify-start gap-2 sm:col-span-1"
+                />
+              )
+            }
+            <SocialShareRow
+              url={canonicalUrl}
+              title={post.title}
+              class="flex flex-row justify-end gap-4 sm:col-span-1 sm:justify-between"
+            />
+          </div>
+        </SectionMiddle>
+        <SectionBottom>
+          {
+            post.author && (
+              <div class="flex flex-col gap-1">
+                <p class="font-lora text-base text-gray-700 dark:text-gray-300 md:text-lg">
+                  This post was written by{' '}
+                  <a
+                    class="text-gray-900 hover:underline dark:text-gray-100"
+                    href={`/authors/${post.author.slug.current}`}
+                  >
+                    {post.author.name}
+                  </a>
+                </p>
+                {post.author.description && (
+                  <p class="font-warnockcapt text-base font-light italic text-gray-500 md:text-lg">
+                    {post.author.description}
+                  </p>
+                )}
+              </div>
+            )
+          }
+        </SectionBottom>
+        <Break />
+      </Section>
+      <NewsletterSection class="pb-8" heading="want to stay in touch?" />
+    </MarginedContainer>
+  </Container>
+</Layout>
+
+<style>
+  /* T6: port of single-blog-post.module.css. */
+  .text-container {
+    margin-right: 25vw;
+  }
+  .cover-image {
+    height: 70vh;
+    object-fit: cover;
+  }
+  @media only screen and (max-width: 960px) {
+    .text-container {
+      margin-right: 0;
+    }
+    .cover-image {
+      height: 55vh;
+    }
+  }
+  @media only screen and (max-width: 720px) {
+    .cover-image {
+      height: 40vh;
+    }
+  }
+</style>

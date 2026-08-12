@@ -1,0 +1,13 @@
+---
+// T6: port of src/components/typography/SectionHeading.jsx.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<h2
+  class={`font-warnockdisp text-3xl tracking-wide text-black dark:text-gray-50 md:text-4xl ${className || ''}`}
+>
+  <slot />
+</h2>

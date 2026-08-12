@@ -1,0 +1,14 @@
+---
+// T6: Astro equivalent of src/components/typography/DescriptionText.jsx.
+// Same build-time Portable Text render strategy as RichText.astro. Used by
+// CategoryCatalogue.astro to render a category's `_rawDescription`.
+import { renderDescription } from '../../lib/portableText';
+
+interface Props {
+  value: unknown;
+}
+const { value } = Astro.props;
+const html = renderDescription(value);
+---
+
+<Fragment set:html={html} />

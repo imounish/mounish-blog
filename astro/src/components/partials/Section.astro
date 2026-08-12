@@ -1,0 +1,21 @@
+---
+// T6: port of src/components/partials/Section.jsx.
+import SectionHeading from '../typography/SectionHeading.astro';
+
+interface Props {
+  class?: string;
+  sectionHeading?: string;
+}
+const { class: className, sectionHeading } = Astro.props;
+---
+
+<div class={`px-6 py-2 ${className || ''}`}>
+  {
+    sectionHeading && (
+      <SectionHeading class="pt-2 font-semibold lowercase lg:pt-4">
+        {sectionHeading}
+      </SectionHeading>
+    )
+  }
+  <slot />
+</div>

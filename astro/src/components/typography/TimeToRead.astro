@@ -1,0 +1,15 @@
+---
+// T6: port of src/components/typography/TimeToRead.jsx.
+interface Props {
+  timeToRead: number;
+  separator?: boolean;
+}
+const { timeToRead, separator } = Astro.props;
+---
+
+{
+  separator && (
+    <span class="px-2 text-sm font-bold text-gray-800 dark:text-gray-400">&#124;</span>
+  )
+}
+<span class="font-courier text-base font-light uppercase">{timeToRead} MIN READ</span>

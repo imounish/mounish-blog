@@ -1,0 +1,13 @@
+---
+// T6: Astro equivalent of src/components/typography/ExcerptText.jsx.
+// Same build-time Portable Text render strategy as RichText.astro.
+import { renderExcerpt } from '../../lib/portableText';
+
+interface Props {
+  value: unknown;
+}
+const { value } = Astro.props;
+const html = renderExcerpt(value);
+---
+
+<Fragment set:html={html} />

@@ -1,0 +1,71 @@
+---
+// T6: Astro equivalent of src/components/categories/CategoryCatalogue.jsx.
+//
+// Deliberate simplification vs. the Gatsby version: that component holds a
+// `useState` "SEE ALL / SEE LESS" toggle that expands the grid client-side.
+// The task brief classifies this component as "presentational, no
+// interactivity" for the Astro port, and a static site has a natural
+// zero-JS equivalent — link to the category's own page (built in T8) instead
+// of expanding inline. So "SEE ALL" here is a plain <a href="/categories/...">
+// rather than a stateful toggle button.
+import Title from '../typography/Title.astro';
+import DescriptionText from '../typography/DescriptionText.astro';
+import CategoryCatalogueItem from './CategoryCatalogueItem.astro';
+import { getBlogsByCategory } from '../../lib/sanity';
+import type { CategoryRef } from '../../lib/sanity';
+
+interface Props {
+  category: CategoryRef;
+  currentSlug: string;
+  class?: string;
+}
+const { category, currentSlug, class: className } = Astro.props;
+
+const allBlogs = await getBlogsByCategory(category._id);
+const otherBlogs = allBlogs.filter((blog) => blog.slug.current !== currentSlug);
+const desktopBlogs = otherBlogs.slice(0, 3);
+const mobileBlogs = otherBlogs.slice(0, 2);
+---
+
+<div class={`grid gap-4 pb-6 lg:grid-cols-4 lg:pb-8 ${className || ''}`}>
+  <div class="lg:col-span-1">
+    <div class="flex flex-col justify-between sm:col-span-2 sm:row-span-5">
+      <Title
+        class="font-warnockdisp pb-1.5 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
+        path={`/categories/${category.slug.current}`}
+        highlightColor="maroon"
+      >
+        {category.title}
+      </Title>
+      {
+        category._rawDescription != null && (
+          <div class="italic sm:pr-2">
+            <DescriptionText value={category._rawDescription} />
+          </div>
+        )
+      }
+      <a
+        href={`/categories/${category.slug.current}`}
+        class="font-worksans text-md w-fit pt-2 text-start capitalize text-gray-800 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 sm:pt-3"
+      >
+        SEE ALL
+      </a>
+    </div>
+  </div>
+  <div class="lg:col-span-3">
+    <div class="hidden grid-cols-3 gap-4 lg:grid">
+      {
+        desktopBlogs.map((blog) => (
+          <CategoryCatalogueItem blog={blog} categoryTitle={category.title} />
+        ))
+      }
+    </div>
+    <div class="grid grid-cols-2 gap-4 lg:hidden">
+      {
+        mobileBlogs.map((blog) => (
+          <CategoryCatalogueItem blog={blog} categoryTitle={category.title} />
+        ))
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+---
+// T6: port of src/components/partials/SectionMiddle.jsx.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class={`my-8 ${className || ''}`}>
+  <slot />
+</div>

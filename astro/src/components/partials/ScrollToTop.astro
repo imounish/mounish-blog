@@ -1,0 +1,54 @@
+---
+// T6: port of src/components/partials/ScrollToTop.jsx.
+//
+// This is page chrome (like Header.astro's scroll-driven show/hide), not
+// rendered body content — so, following the same precedent T3 set for
+// Header.astro's scroll listener and mobile-nav toggle, this ships a small
+// hand-written <script> instead of a hydrated React island. It is NOT part
+// of the Portable Text / body-content render path this task's "zero client
+// JS" requirement targets.
+interface Props {
+  showBelow?: number;
+}
+const { showBelow = 800 } = Astro.props;
+---
+
+<button
+  type="button"
+  id="scroll-to-top-btn"
+  aria-label="Scroll to top"
+  data-show-below={showBelow}
+  class="fixed bottom-16 right-5 z-[4] hidden rounded-full bg-gray-50/80 p-3.5 text-gray-900 shadow-xl backdrop-blur-2xl hover:bg-gray-200/80 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-600/60 md:right-8 lg:bottom-20 lg:right-12"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-8 w-8">
+    <path
+      fill-rule="evenodd"
+      d="M10 3a.75.75 0 01.53.22l6 6a.75.75 0 01-1.06 1.06L10.75 5.56V16.5a.75.75 0 01-1.5 0V5.56L4.53 10.28a.75.75 0 01-1.06-1.06l6-6A.75.75 0 0110 3z"
+      clip-rule="evenodd"></path>
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('scroll-to-top-btn') as HTMLButtonElement | null;
+
+  if (btn) {
+    const showBelow = Number(btn.dataset.showBelow || 0);
+
+    const updateVisibility = () => {
+      if (window.pageYOffset > showBelow) {
+        btn.classList.remove('hidden');
+      } else {
+        btn.classList.add('hidden');
+      }
+    };
+
+    if (showBelow) {
+      window.addEventListener('scroll', updateVisibility, { passive: true });
+      updateVisibility();
+    }
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>

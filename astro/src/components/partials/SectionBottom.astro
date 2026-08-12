@@ -1,0 +1,11 @@
+---
+// T6: port of src/components/partials/SectionBottom.jsx.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class={`mb-3 mt-8 lg:mb-4 ${className || ''}`}>
+  <slot />
+</div>

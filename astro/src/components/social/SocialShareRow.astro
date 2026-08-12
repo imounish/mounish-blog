@@ -1,0 +1,27 @@
+---
+// T6: Astro equivalent of the socialShareLinks.map(...) rows in
+// single-blog-post.jsx / PostHeadingSection.jsx. See ../../lib/socialShare.tsx
+// for why these are plain <a> links (built-time rendered icons included) with
+// no client:* directive.
+import { buildSocialShareLinks } from '../../lib/socialShare';
+
+interface Props {
+  url: string;
+  title: string;
+  class?: string;
+}
+const { url, title, class: className } = Astro.props;
+const links = buildSocialShareLinks({ url, title });
+---
+
+<ul class={className}>
+  {
+    links.map((item) => (
+      <li>
+        <a href={item.href} target={item.target} rel={item.rel} aria-label={item.name}>
+          <Fragment set:html={item.iconSvg} />
+        </a>
+      </li>
+    ))
+  }
+</ul>

@@ -32,8 +32,8 @@ None specific beyond what T1–T3 already established.
 
 ## Definition of done
 
-- [ ] A real blog post renders at `/posts/:slug` on the branch-preview site with visual/structural parity to the same post on the live Gatsby site (heading, cover image, category, tags, author byline, body content, social share row).
-- [ ] Portable Text (including any code blocks) renders correctly with zero added client JS for that content (verify via browser dev tools — no JS bundle should be attributable to the rendered body content itself).
-- [ ] Cover image loads with correct dimensions and no visible layout shift.
-- [ ] JSON-LD from T5 validates against a real post.
-- [ ] No automated tests required — verify by comparing 2–3 real posts (including at least one with a code block, if any exist) side by side with the live site.
+- [x] A real blog post renders at `/posts/:slug` on the branch-preview site with visual/structural parity to the same post on the live Gatsby site (heading, cover image, category, tags, author byline, body content, social share row).
+- [x] Portable Text (including any code blocks) renders correctly with zero added client JS for that content (verify via browser dev tools — no JS bundle should be attributable to the rendered body content itself).
+- [x] Cover image loads with correct dimensions and no visible layout shift.
+- [x] JSON-LD from T5 validates against a real post.
+- [x] No automated tests required — verify by comparing 2–3 real posts (including at least one with a code block, if any exist) side by side with the live site.

@@ -13,6 +13,7 @@
  * needing `astro:assets`/Sharp at all.
  */
 import { createImageUrlBuilder } from '@sanity/image-url';
+import { getImageDimensions } from '@sanity/asset-utils';
 import { sanityClient } from 'sanity:client';
 import type { SanityImageAssetRef } from './sanity';
 
@@ -59,4 +60,35 @@ export function buildSanityImageUrl(
     width: outWidth,
     height: outHeight,
   };
+}
+
+/**
+ * Build a CDN URL + intrinsic width/height pair for an *inline* Portable Text
+ * image block (T6's `customImage` type in RichText.jsx), where the asset
+ * reference comes straight off the raw `_rawBody` JSON and is never
+ * dereferenced by GROQ (no `metadata.dimensions` fetched for it, unlike
+ * `coverImage`).
+ *
+ * `@sanity/asset-utils`'s `getImageDimensions` parses width/height/aspect
+ * ratio directly out of the asset ID string itself (Sanity image asset IDs
+ * encode their dimensions, e.g. `image-<hash>-800x600-jpg`), so no extra
+ * network round-trip is needed — same approach RichText.jsx takes via
+ * `getImage()`/`getImageDimensions()` from the same package.
+ */
+export function buildInlineImageUrl(
+  source: unknown,
+  { width, quality = 80 }: { width?: number; quality?: number } = {}
+): SanityImageDimensions {
+  const dims = getImageDimensions(source as never);
+  const targetWidth = width ? Math.min(width, dims.width) : dims.width;
+  const targetHeight = Math.round(targetWidth / dims.aspectRatio);
+
+  const src = builder
+    .image(source as never)
+    .auto('format')
+    .quality(quality)
+    .width(targetWidth)
+    .url();
+
+  return { src, width: targetWidth, height: targetHeight };
 }

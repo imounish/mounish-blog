@@ -1,0 +1,9 @@
+---
+// T6: port of src/components/partials/Break.jsx.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<hr class={`border-gray-300 dark:border-gray-800 ${className || ''}`} />

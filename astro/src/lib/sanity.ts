@@ -177,3 +177,61 @@ export async function getBlogPostById(
     { id }
   );
 }
+
+// ---------------------------------------------------------------------------
+// Blogs by category — T6's CategoryCatalogue (src/components/categories/
+// CategoryCatalogue.jsx in the Gatsby app), which filters the full blog list
+// down to posts sharing the current post's category. Field set mirrors that
+// component's `useStaticQuery` (id/title/publishedAt/slug/category/
+// coverImage/author).
+// ---------------------------------------------------------------------------
+
+export interface CategoryCatalogueBlog {
+  id: string;
+  title: string;
+  publishedAt: string;
+  slug: SlugRef;
+  category: {
+    _id: string;
+    title: string;
+    color: string | null;
+    slug: SlugRef;
+  } | null;
+  coverImage: CoverImage;
+  author: { name: string; slug: SlugRef } | null;
+}
+
+const CATEGORY_CATALOGUE_BLOG_FIELDS = /* groq */ `
+  "id": _id,
+  title,
+  publishedAt,
+  slug { current },
+  category -> {
+    _id,
+    title,
+    color,
+    slug { current }
+  },
+  coverImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  },
+  author -> {
+    name,
+    slug { current }
+  }
+`;
+
+export async function getBlogsByCategory(
+  categoryId: string
+): Promise<CategoryCatalogueBlog[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog" && category._ref == $categoryId] | order(publishedAt desc) { ${CATEGORY_CATALOGUE_BLOG_FIELDS} }`,
+    { categoryId }
+  );
+}

@@ -1,0 +1,47 @@
+---
+// T6: port of src/components/typography/Title.jsx (used by CategoryCatalogue
+// for the category-name heading/link). The hover-fill-underline effect
+// (Title.module.css's .custom-animation-maroon/-green) is reproduced as a
+// scoped <style> block below instead of a CSS module import.
+interface Props {
+  class?: string;
+  path: string;
+  highlightColor?: 'maroon' | 'green';
+}
+const { class: className, path, highlightColor } = Astro.props;
+---
+
+<h3 class={className || ''}>
+  <a class="text-gray-900 no-underline dark:text-gray-50" href={path}>
+    <span
+      class={
+        highlightColor === 'maroon'
+          ? 'custom-animation-maroon'
+          : highlightColor === 'green'
+            ? 'custom-animation-green'
+            : ''
+      }
+    >
+      <slot />
+    </span>
+  </a>
+</h3>
+
+<style>
+  .custom-animation-green {
+    background: linear-gradient(#41b3a3, #41b3a3) left bottom no-repeat;
+    background-size: 0% 0.12rem;
+    transition: all 500ms ease-in-out;
+  }
+  .custom-animation-green:hover {
+    background-size: 100% 0.1rem;
+  }
+  .custom-animation-maroon {
+    background: linear-gradient(#9a1750, #9a1750) left bottom no-repeat;
+    background-size: 0% 0.12rem;
+    transition: all 500ms ease-in-out;
+  }
+  .custom-animation-maroon:hover {
+    background-size: 100% 0.1rem;
+  }
+</style>

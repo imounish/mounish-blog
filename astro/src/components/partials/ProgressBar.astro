@@ -1,0 +1,31 @@
+---
+// T6: port of src/components/partials/ProgressBar.jsx (reading-progress bar
+// at the top of a post). Page chrome, not body content — same "small
+// hand-written <script>" precedent as ScrollToTop.astro/Header.astro.
+interface Props {
+  height?: string;
+  bgColor?: string;
+  duration?: string;
+}
+const { height = '3', bgColor = '#bf4c65', duration = '1' } = Astro.props;
+---
+
+<div
+  id="reading-progress-bar"
+  style={`margin:0;padding:0;position:fixed;top:0;left:0;z-index:99;background-color:${bgColor};height:${height}px;width:0%;transition-property:width;transition-duration:${duration}s;transition-timing-function:ease-out;`}
+>
+</div>
+
+<script>
+  const bar = document.getElementById('reading-progress-bar') as HTMLDivElement | null;
+
+  function updateProgress() {
+    if (!bar) return;
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    bar.style.width = height > 0 ? `${scrolled}%` : '0%';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
