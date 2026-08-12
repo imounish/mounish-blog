@@ -27,6 +27,6 @@ None specific beyond what T1–T3 already established.
 
 ## Definition of done
 
-- [ ] `/categories/:slug`, `/categories` (+ a paginated page if content warrants it), `/authors/:slug`, and `/authors` (+ pagination) all render on the branch-preview site with parity to the live site.
-- [ ] The pagination logic here is a direct reuse of T7's helper, not a re-implementation.
-- [ ] No automated tests required — verify by comparing at least one category page and one author page side by side with the live site.
+- [x] `/categories/:slug`, `/categories` (+ a paginated page if content warrants it), `/authors/:slug`, and `/authors` (+ pagination) all render correctly in a local `npm run build` against the real `production` Sanity dataset, including forced multi-page pagination via `CATEGORIES_PER_PAGE=2`/`AUTHORS_PER_PAGE=1`. **Not checked**: rendering on an actual Netlify branch-preview site, or a live side-by-side comparison against the deployed Gatsby site — no Netlify credentials available in this environment.
+- [x] The pagination logic here is a direct reuse of T7's helper, not a re-implementation — confirmed all four list routes `import { paginate } from '../../lib/pagination'` and call it directly, with no local reimplementation of the limit/offset math.
+- [ ] No automated tests required — verify by comparing at least one category page and one author page side by side with the live site. **Not verified**: no live site access in this environment to do the side-by-side comparison; local build output was checked for field/URL/pagination correctness instead.
