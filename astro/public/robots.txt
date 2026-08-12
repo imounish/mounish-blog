@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# NOTE (T4): the live Gatsby site has never shipped a robots.txt, so this is a
+# net-new file rather than a ported one. The sitemap path below is a
+# best-guess placeholder based on @astrojs/sitemap's default output
+# (sitemap-index.xml at the site root). T11 (sitemap) hasn't landed yet —
+# confirm this URL once T11 is implemented and update it here if the actual
+# output path differs.
+Sitemap: https://blog.mounish.dev/sitemap-index.xml
