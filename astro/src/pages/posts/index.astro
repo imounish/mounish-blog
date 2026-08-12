@@ -1,0 +1,47 @@
+---
+// T7: page 1 of the blog listing — Astro equivalent of
+// src/templates/blog-post-list.jsx, sourced via gatsby-node.js's
+// `index === 0 ? '/posts' : ...` branch. Page 2+ lives in ./[page].astro;
+// this route deliberately owns only `/posts` (no `/1` suffix) so the URL
+// scheme matches the live site exactly.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import BlogGrid from '../../components/blogs/BlogGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate } from '../../lib/pagination';
+import { getBlogCount, getBlogListPage } from '../../lib/sanity';
+
+// Server-only env var (no PUBLIC_ prefix — read only here at build time,
+// never shipped to the client), matching gatsby-node.js's
+// `GATSBY_POSTS_PER_PAGE` (default 10), renamed per the tracker's env var
+// table.
+const PAGE_SIZE = Number(import.meta.env.POSTS_PER_PAGE) || 10;
+
+const totalBlogs = await getBlogCount();
+const { numberOfPages, pageConfigs } = paginate(totalBlogs, PAGE_SIZE);
+const page1 = pageConfigs[0];
+const blogs = page1 ? await getBlogListPage(page1.offset, page1.limit) : [];
+---
+
+<Layout
+  title="all posts"
+  description="Explore all the articles written on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all posts">
+        <BlogGrid blogs={blogs} />
+        <SectionBottom>
+          {
+            numberOfPages > 1 && (
+              <Pagination currentPage={1} numberOfPages={numberOfPages} baseUrl="/posts" />
+            )
+          }
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

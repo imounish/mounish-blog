@@ -1,0 +1,76 @@
+---
+// T7: port of src/components/blogs/BlogItem.jsx.
+//
+// Image: the Gatsby version renders a `gatsby-plugin-image` <GatsbyImage>
+// (local Sharp-generated responsive image + blur placeholder). Per T2/T6's
+// established approach for this repo, Astro renders a plain <img> against a
+// direct Sanity CDN URL via `buildSanityImageUrl` instead (no astro:assets /
+// Sharp) — same approach single-blog-post's cover image and
+// CategoryCatalogueItem's thumbnails already use.
+//
+// `imageHeight` was always called with the same literal "256px" at every
+// call site in the Gatsby app (BlogGrid and FeaturedBlogGrid both hardcode
+// it), so it's inlined as a fixed CSS height here rather than kept as a prop.
+import Title from '../typography/Title.astro';
+import TimeToRead from '../typography/TimeToRead.astro';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+import type { BlogListItem } from '../../lib/sanity';
+
+interface Props {
+  title: string;
+  path: string;
+  timeToRead: BlogListItem['timeToRead'];
+  category: BlogListItem['category'];
+  coverImage: BlogListItem['coverImage'];
+  publishedAt: string;
+}
+
+const { title, path, timeToRead, category, coverImage, publishedAt } = Astro.props;
+const image = buildSanityImageUrl(coverImage.asset, { width: 700 });
+const formattedDate = new Date(publishedAt).toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="font-worksans overflow-hidden">
+  <a href={`/posts/${path}/`} title={title}>
+    <img
+      src={image.src}
+      width={image.width}
+      height={image.height}
+      alt={coverImage.alt || ''}
+      loading="lazy"
+      class="blog-item-image block h-auto w-full scale-100 rounded-md hover:scale-105"
+    />
+  </a>
+  <header class="flex flex-col items-start pb-1 pt-3">
+    <Title
+      path={`/posts/${path}/`}
+      class="font-lora text-xl font-semibold md:text-2xl"
+      highlightColor="green"
+      leadingText={category ? category.title : ''}
+    >
+      {title}
+    </Title>
+  </header>
+  {
+    publishedAt && (
+      <footer class="flex flex-row gap-2 py-1">
+        <p class="w-full text-sm leading-4 text-gray-600">
+          <span class="font-warnockcapt text-base font-bold italic">On </span>
+          {formattedDate}
+          {timeToRead && <TimeToRead separator timeToRead={timeToRead} />}
+        </p>
+      </footer>
+    )
+  }
+</article>
+
+<style>
+  .blog-item-image {
+    height: 256px;
+    transition: 0.3s ease-in-out transform;
+  }
+</style>

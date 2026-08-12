@@ -1,0 +1,48 @@
+---
+// T7: port of src/components/blogs/FeaturedBlogGrid.jsx.
+//
+// Not wired into any page yet — the Gatsby version is used on the homepage
+// (src/pages/index.jsx), which is T9's scope. Ported here per this task's
+// brief ("Port BlogGrid/BlogItem/FeaturedBlogGrid ... as Astro components")
+// so T9 can import it directly instead of re-deriving the split-grid layout.
+import BlogItem from './BlogItem.astro';
+import SectionTop from '../partials/SectionTop.astro';
+import SectionBottom from '../partials/SectionBottom.astro';
+import type { BlogListItem } from '../../lib/sanity';
+
+interface Props {
+  blogs: BlogListItem[];
+}
+const { blogs } = Astro.props;
+const featured = blogs ? blogs.slice(0, 2) : [];
+const rest = blogs ? blogs.slice(2) : [];
+---
+
+<SectionTop class="grid gap-8 sm:grid-cols-2">
+  {
+    featured.map((blog) => (
+      <BlogItem
+        title={blog.title}
+        path={blog.slug.current}
+        category={blog.category}
+        timeToRead={blog.timeToRead}
+        coverImage={blog.coverImage}
+        publishedAt={blog.publishedAt}
+      />
+    ))
+  }
+</SectionTop>
+<SectionBottom class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    rest.map((blog) => (
+      <BlogItem
+        title={blog.title}
+        path={blog.slug.current}
+        category={blog.category}
+        timeToRead={blog.timeToRead}
+        coverImage={blog.coverImage}
+        publishedAt={blog.publishedAt}
+      />
+    ))
+  }
+</SectionBottom>

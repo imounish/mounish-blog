@@ -1,0 +1,27 @@
+---
+// T7: port of src/components/blogs/BlogGrid.jsx.
+import BlogItem from './BlogItem.astro';
+import SectionTop from '../partials/SectionTop.astro';
+import type { BlogListItem } from '../../lib/sanity';
+
+interface Props {
+  blogs: BlogListItem[];
+}
+const { blogs } = Astro.props;
+---
+
+<SectionTop class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    blogs &&
+      blogs.map((blog) => (
+        <BlogItem
+          title={blog.title}
+          path={blog.slug.current}
+          category={blog.category}
+          timeToRead={blog.timeToRead}
+          coverImage={blog.coverImage}
+          publishedAt={blog.publishedAt}
+        />
+      ))
+  }
+</SectionTop>

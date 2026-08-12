@@ -28,7 +28,7 @@ None specific beyond what T1–T3 already established.
 
 ## Definition of done
 
-- [ ] `/posts` and at least one paginated page (`/posts/2` or later, if enough content exists) render on the branch-preview site with the same card layout and pagination controls as the live site.
-- [ ] The pagination helper from step 1 is written generically enough to be reused as-is in T8, not posts-specific.
-- [ ] URL scheme matches exactly (`/posts` for page 1, `/posts/N` for page N≥2).
-- [ ] No automated tests required — verify by comparing the listing page(s) side by side with the live site, including at the last page (checking the "remainder" page renders correctly when post count doesn't divide evenly by page size).
+- [x] `/posts` and at least one paginated page (`/posts/2` or later, if enough content exists) render on the branch-preview site with the same card layout and pagination controls as the live site.
+- [x] The pagination helper from step 1 is written generically enough to be reused as-is in T8, not posts-specific.
+- [x] URL scheme matches exactly (`/posts` for page 1, `/posts/N` for page N≥2).
+- [x] No automated tests required — verify by comparing the listing page(s) side by side with the live site, including at the last page (checking the "remainder" page renders correctly when post count doesn't divide evenly by page size).

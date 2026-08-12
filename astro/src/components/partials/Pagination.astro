@@ -1,0 +1,73 @@
+---
+// T7: port of src/components/partials/Pagination.jsx.
+//
+// Icons: FontAwesome 6's solid chevron-left/chevron-right, hand-inlined as
+// SVG paths — same "no react-icons/React shipped for a static icon"
+// precedent ScrollToTop.astro already set, simpler here than
+// SocialShareRow.astro's renderToStaticMarkup approach since there are only
+// two icons and no shared icon-set config to reuse.
+//
+// Disabled state: the Gatsby version's `${currentPage <= 1 && disabled}`
+// template-literal trick inserts the literal string "false" into the
+// className when NOT disabled (a latent bug — `false` stringifies inside a
+// template literal). Reproduced here as a clean boolean check instead, since
+// that "false" text has no visible effect (not a real CSS class) and isn't
+// worth preserving byte-for-byte.
+import { pageUrl } from '../../lib/pagination';
+
+interface Props {
+  baseUrl: string;
+  numberOfPages: number;
+  currentPage: number;
+  class?: string;
+}
+const { baseUrl, numberOfPages, currentPage, class: className } = Astro.props;
+
+const isFirstPage = currentPage <= 1;
+const isLastPage = currentPage >= numberOfPages;
+const prevHref = pageUrl(baseUrl, currentPage - 1);
+const nextHref = pageUrl(baseUrl, currentPage + 1);
+---
+
+<div class="flex flex-col items-end pb-2 sm:pb-4">
+  <div
+    class={`item-end font-worksans flex flex-row text-lg text-gray-900 dark:text-gray-50 ${className || ''}`}
+  >
+    <a
+      href={prevHref}
+      title="Previous"
+      aria-disabled={isFirstPage}
+      tabindex={isFirstPage ? -1 : undefined}
+      class={`mr-2 flex flex-row items-center rounded-md bg-gray-100 py-1.5 pl-2.5 pr-3 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${isFirstPage ? 'pagination-disabled' : ''}`}
+    >
+      <svg viewBox="0 0 320 512" fill="currentColor" class="mr-1.5 h-3 w-3" aria-hidden="true">
+        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+        ></path>
+      </svg>
+      Prev
+    </a>
+    <a
+      href={nextHref}
+      title="Next"
+      aria-disabled={isLastPage}
+      tabindex={isLastPage ? -1 : undefined}
+      class={`ml-2 flex flex-row items-center rounded-md bg-gray-100 py-1 pl-3 pr-2.5 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 ${isLastPage ? 'pagination-disabled' : ''}`}
+    >
+      Next
+      <svg viewBox="0 0 320 512" fill="currentColor" class="ml-1.5 h-3 w-3" aria-hidden="true">
+        <path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l192-192c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L77.3 256l169.4 169.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-192-192z"
+        ></path>
+      </svg>
+    </a>
+  </div>
+  <p class="font-warnockcapt text-md pt-2 font-light italic tracking-wide text-gray-600 dark:text-gray-400">
+    page {currentPage} of {numberOfPages} page{numberOfPages > 1 ? 's' : ''}
+  </p>
+</div>
+
+<style>
+  .pagination-disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+</style>

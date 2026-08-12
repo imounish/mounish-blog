@@ -1,0 +1,32 @@
+---
+// T7: port of src/components/partials/PageSpace.jsx (+ PageSpace.module.css).
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class={`${className || ''} page-space-container overflow-auto bg-white dark:bg-black`}>
+  <slot />
+</div>
+
+<style>
+  .page-space-container {
+    width: 100vw;
+    height: calc(100vh - 92px);
+    padding-top: 56px;
+  }
+
+  @media only screen and (min-width: 720px) {
+    .page-space-container {
+      padding-top: 56px;
+      height: calc(100vh - 56px);
+    }
+  }
+
+  @media only screen and (min-width: 960px) {
+    .page-space-container {
+      padding-top: 72px;
+    }
+  }
+</style>

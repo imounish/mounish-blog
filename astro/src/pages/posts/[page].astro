@@ -1,0 +1,59 @@
+---
+// T7: pages 2+ of the blog listing (`/posts/2`, `/posts/3`, ...) — the
+// counterpart to ./index.astro, which owns page 1 at `/posts` with no
+// numeric suffix. getStaticPaths mirrors gatsby-node.js's
+// `totalBlogListPages` loop, but built on T7's generic `paginate()` helper
+// (src/lib/pagination.ts) instead of re-deriving the limit/offset math here.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import BlogGrid from '../../components/blogs/BlogGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate, type PageConfig } from '../../lib/pagination';
+import { getBlogCount, getBlogListPage } from '../../lib/sanity';
+
+interface PageProps {
+  pageConfig: PageConfig;
+  numberOfPages: number;
+}
+
+export async function getStaticPaths() {
+  const pageSize = Number(import.meta.env.POSTS_PER_PAGE) || 10;
+  const totalBlogs = await getBlogCount();
+  const { numberOfPages, pageConfigs } = paginate(totalBlogs, pageSize);
+
+  // Page 1 is served by ./index.astro at `/posts` (no numeric suffix) — this
+  // route covers page 2 onward only.
+  return pageConfigs
+    .filter((pageConfig) => pageConfig.pageNumber > 1)
+    .map((pageConfig) => ({
+      params: { page: String(pageConfig.pageNumber) },
+      props: { pageConfig, numberOfPages } satisfies PageProps,
+    }));
+}
+
+const { pageConfig, numberOfPages } = Astro.props as PageProps;
+const blogs = await getBlogListPage(pageConfig.offset, pageConfig.limit);
+---
+
+<Layout
+  title="all posts"
+  description="Explore all the articles written on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all posts">
+        <BlogGrid blogs={blogs} />
+        <SectionBottom>
+          <Pagination
+            currentPage={pageConfig.currentPage}
+            numberOfPages={numberOfPages}
+            baseUrl="/posts"
+          />
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

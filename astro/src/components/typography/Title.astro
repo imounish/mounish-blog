@@ -3,16 +3,28 @@
 // for the category-name heading/link). The hover-fill-underline effect
 // (Title.module.css's .custom-animation-maroon/-green) is reproduced as a
 // scoped <style> block below instead of a CSS module import.
+//
+// T7: added `leadingText` (Title.jsx's `leadingText` prop) — BlogItem.astro
+// uses it to show the post's category name ahead of the title, same as
+// CategoryCatalogueItem.astro's own hand-rolled version of this leading span.
 interface Props {
   class?: string;
   path: string;
   highlightColor?: 'maroon' | 'green';
+  leadingText?: string | null;
 }
-const { class: className, path, highlightColor } = Astro.props;
+const { class: className, path, highlightColor, leadingText } = Astro.props;
 ---
 
 <h3 class={className || ''}>
   <a class="text-gray-900 no-underline dark:text-gray-50" href={path}>
+    {
+      leadingText && (
+        <span class="font-warnockdisp pr-3 text-lg font-light text-gray-800 no-underline dark:text-gray-200 md:text-xl">
+          {leadingText}
+        </span>
+      )
+    }
     <span
       class={
         highlightColor === 'maroon'

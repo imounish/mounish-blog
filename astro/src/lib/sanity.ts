@@ -235,3 +235,71 @@ export async function getBlogsByCategory(
     { categoryId }
   );
 }
+
+// ---------------------------------------------------------------------------
+// Blog list (paginated) — T7's `/posts` + `/posts/N` listing pages. Field set
+// mirrors `blog-post-list.jsx`'s `BlogsListQuery` (the fields `BlogGrid`/
+// `BlogItem` actually render: title/timeToRead/publishedAt/slug/category/
+// coverImage — that query also fetches `author`, but neither BlogGrid nor
+// BlogItem ever reads it, so it's left out here).
+// ---------------------------------------------------------------------------
+
+export interface BlogListItem {
+  id: string;
+  title: string;
+  timeToRead: number | null;
+  publishedAt: string;
+  slug: SlugRef;
+  category: {
+    title: string;
+    color: string | null;
+    slug: SlugRef;
+  } | null;
+  coverImage: CoverImage;
+}
+
+const BLOG_GRID_FIELDS = /* groq */ `
+  "id": _id,
+  title,
+  timeToRead,
+  publishedAt,
+  slug { current },
+  category -> {
+    title,
+    color,
+    slug { current }
+  },
+  coverImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  }
+`;
+
+/** Total number of published blog posts — drives `paginate()`'s `totalItems`. */
+let cachedBlogCount: Promise<number> | null = null;
+export function getBlogCount(): Promise<number> {
+  // Memoized so every call within a single build resolves to the same count
+  // (guarding against a race between /posts/index.astro and
+  // /posts/[page].astro's getStaticPaths otherwise seeing different totals
+  // if content changed mid-build) and to avoid redundant round-trips.
+  if (!cachedBlogCount) {
+    cachedBlogCount = sanityClient.fetch(`count(*[_type == "blog"])`);
+  }
+  return cachedBlogCount;
+}
+
+/** One page of the blog list, newest first — pair with `paginate()`'s per-page `offset`/`limit`. */
+export async function getBlogListPage(
+  offset: number,
+  limit: number
+): Promise<BlogListItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog"] | order(publishedAt desc) [$offset...$end] { ${BLOG_GRID_FIELDS} }`,
+    { offset, end: offset + limit }
+  );
+}
