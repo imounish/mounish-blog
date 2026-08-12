@@ -1,0 +1,26 @@
+---
+// T8: port of src/components/categories/FeaturedCategoriesGrid.jsx.
+import CategoryItem from './CategoryItem.astro';
+import SectionRest from '../partials/SectionRest.astro';
+import type { CategoryListItem } from '../../lib/sanity';
+
+interface Props {
+  categories: CategoryListItem[];
+}
+const { categories } = Astro.props;
+---
+
+<SectionRest class="flex flex-col gap-8 pb-2">
+  {
+    categories &&
+      categories.map((category) => (
+        <CategoryItem
+          title={category.title}
+          path={category.slug.current}
+          description={category._rawDescription}
+          coverImage={category.coverImage}
+          exploreBtnDisplay
+        />
+      ))
+  }
+</SectionRest>

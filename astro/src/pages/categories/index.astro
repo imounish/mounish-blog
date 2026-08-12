@@ -1,0 +1,48 @@
+---
+// T8: page 1 of the category listing — Astro equivalent of
+// src/templates/category-list.jsx, sourced via gatsby-node.js's
+// `index === 0 ? '/categories' : ...` branch. Page 2+ lives in ./[page].astro;
+// this route deliberately owns only `/categories` (no `/1` suffix) so the
+// URL scheme matches the live site exactly.
+//
+// Reuses T7's `paginate()` helper directly (per T8's brief) — no
+// re-implementation of the limit/offset math.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import FeaturedCategoriesGrid from '../../components/categories/FeaturedCategoriesGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate } from '../../lib/pagination';
+import { getCategoryCount, getCategoryListPage } from '../../lib/sanity';
+
+// Server-only env var (no PUBLIC_ prefix), matching gatsby-node.js's
+// `GATSBY_CATEGORIES_PER_PAGE` (default 6).
+const PAGE_SIZE = Number(import.meta.env.CATEGORIES_PER_PAGE) || 6;
+
+const totalCategories = await getCategoryCount();
+const { numberOfPages, pageConfigs } = paginate(totalCategories, PAGE_SIZE);
+const page1 = pageConfigs[0];
+const categories = page1 ? await getCategoryListPage(page1.offset, page1.limit) : [];
+---
+
+<Layout
+  title="all categories"
+  description="Explore all the categories in which articles have been written on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all categories">
+        <FeaturedCategoriesGrid categories={categories} />
+        <SectionBottom>
+          {
+            numberOfPages > 1 && (
+              <Pagination currentPage={1} numberOfPages={numberOfPages} baseUrl="/categories" />
+            )
+          }
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

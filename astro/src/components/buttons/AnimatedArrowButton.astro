@@ -1,0 +1,33 @@
+---
+// T8: port of src/components/buttons/AnimatedArrowButton.jsx, used by the
+// ported CategoryItem/AuthorItem cards for the "explore"/"know more" links.
+//
+// Icon: same "hand-inline SVG, no react-icons" approach Pagination.astro
+// (T7) already established for static icons in Astro components — this is
+// react-icons' `HiArrowUpRight` (Heroicons 2 outline, "arrow-up-right")
+// traced to an inline path instead of shipping the React icon component.
+interface Props {
+  path: string;
+  class?: string;
+}
+const { path, class: className } = Astro.props;
+---
+
+<a
+  class={`font-worksans animated-arrow-button flex items-center gap-2 text-lg font-medium text-gray-800 hover:text-black dark:text-gray-400 hover:dark:text-gray-50 ${className || ''}`}
+  href={path}
+>
+  <slot />
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-semibold h-6 w-6" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M7 7h10v10" />
+  </svg>
+</a>
+
+<style>
+  .animated-arrow-button svg {
+    transition: all 0.2s ease;
+  }
+  .animated-arrow-button:hover svg {
+    transform: rotate(45deg);
+  }
+</style>

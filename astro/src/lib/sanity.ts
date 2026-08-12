@@ -303,3 +303,191 @@ export async function getBlogListPage(
     { offset, end: offset + limit }
   );
 }
+
+// ---------------------------------------------------------------------------
+// T8 — single category / author pages + paginated category/author lists.
+//
+// Field sets mirror the four Gatsby templates being ported:
+//   - src/templates/single-category.jsx (SingleCategoryQuery)
+//   - src/templates/category-list.jsx (CategoriesListQuery)
+//   - src/templates/single-author.jsx (SingleAuthorQuery)
+//   - src/templates/author-list.jsx (AuthorsListQuery)
+// ---------------------------------------------------------------------------
+
+/** Full field set for a single category page (single-category.jsx's `sanityCategory`). */
+export interface SingleCategory {
+  _id: string;
+  title: string;
+  color: string | null;
+  _rawDescription: unknown;
+  coverImage: CoverImage;
+}
+
+const SINGLE_CATEGORY_FIELDS = /* groq */ `
+  "_id": _id,
+  title,
+  color,
+  "_rawDescription": description,
+  coverImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  }
+`;
+
+export async function getCategoryBySlug(slug: string): Promise<SingleCategory | null> {
+  return sanityClient.fetch(
+    `*[_type == "category" && slug.current == $slug][0]{ ${SINGLE_CATEGORY_FIELDS} }`,
+    { slug }
+  );
+}
+
+/**
+ * Blogs belonging to a category, for the single-category page's grid
+ * (single-category.jsx's `allSanityBlog(filter: { category: { id: { eq: $id } } })`).
+ * Reuses `BLOG_GRID_FIELDS` (same field set `BlogGrid`/`BlogItem` render
+ * elsewhere) rather than defining a near-duplicate query — distinct from
+ * `getBlogsByCategory` above, which powers T6's `CategoryCatalogue` "other
+ * posts in this category" strip and deliberately fetches a smaller field set
+ * (no `timeToRead`, plus `author`) for that different use case.
+ */
+export async function getCategoryPageBlogs(categoryId: string): Promise<BlogListItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog" && category._ref == $categoryId] | order(publishedAt desc) { ${BLOG_GRID_FIELDS} }`,
+    { categoryId }
+  );
+}
+
+/** Full field set for a single author page (single-author.jsx's `sanityAuthor`). */
+export interface SingleAuthor {
+  _id: string;
+  name: string;
+  description: string | null;
+  _rawBio: unknown;
+  profileImage: CoverImage;
+}
+
+const SINGLE_AUTHOR_FIELDS = /* groq */ `
+  "_id": _id,
+  name,
+  description,
+  "_rawBio": bio,
+  profileImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  }
+`;
+
+export async function getAuthorBySlug(slug: string): Promise<SingleAuthor | null> {
+  return sanityClient.fetch(
+    `*[_type == "author" && slug.current == $slug][0]{ ${SINGLE_AUTHOR_FIELDS} }`,
+    { slug }
+  );
+}
+
+/** Blogs written by an author, for the single-author page's grid (single-author.jsx's `allSanityBlog(filter: { author: { id: { eq: $id } } })`). */
+export async function getAuthorPageBlogs(authorId: string): Promise<BlogListItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog" && author._ref == $authorId] | order(publishedAt desc) { ${BLOG_GRID_FIELDS} }`,
+    { authorId }
+  );
+}
+
+/** One category list item — category-list.jsx's `CategoriesListQuery` field set. */
+export interface CategoryListItem {
+  id: string;
+  title: string;
+  slug: SlugRef;
+  _rawDescription: unknown;
+  coverImage: CoverImage;
+}
+
+const CATEGORY_GRID_FIELDS = /* groq */ `
+  "id": _id,
+  title,
+  slug { current },
+  "_rawDescription": description,
+  coverImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  }
+`;
+
+/** Total number of categories — drives `paginate()`'s `totalItems` for `/categories`. */
+let cachedCategoryCount: Promise<number> | null = null;
+export function getCategoryCount(): Promise<number> {
+  if (!cachedCategoryCount) {
+    cachedCategoryCount = sanityClient.fetch(`count(*[_type == "category"])`);
+  }
+  return cachedCategoryCount;
+}
+
+/** One page of the category list, matching Gatsby's `sort: { _createdAt: DESC }`. */
+export async function getCategoryListPage(
+  offset: number,
+  limit: number
+): Promise<CategoryListItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "category"] | order(_createdAt desc) [$offset...$end] { ${CATEGORY_GRID_FIELDS} }`,
+    { offset, end: offset + limit }
+  );
+}
+
+/** One author list item — author-list.jsx's `AuthorsListQuery` field set. */
+export interface AuthorListItem {
+  id: string;
+  name: string;
+  description: string | null;
+  slug: SlugRef;
+  profileImage: CoverImage;
+}
+
+const AUTHOR_GRID_FIELDS = /* groq */ `
+  "id": _id,
+  name,
+  description,
+  slug { current },
+  profileImage {
+    alt,
+    caption,
+    asset -> {
+      _id,
+      url,
+      metadata { dimensions { width, height } }
+    }
+  }
+`;
+
+/** Total number of authors — drives `paginate()`'s `totalItems` for `/authors`. */
+let cachedAuthorCount: Promise<number> | null = null;
+export function getAuthorCount(): Promise<number> {
+  if (!cachedAuthorCount) {
+    cachedAuthorCount = sanityClient.fetch(`count(*[_type == "author"])`);
+  }
+  return cachedAuthorCount;
+}
+
+/** One page of the author list, matching Gatsby's `sort: { name: DESC }`. */
+export async function getAuthorListPage(
+  offset: number,
+  limit: number
+): Promise<AuthorListItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "author"] | order(name desc) [$offset...$end] { ${AUTHOR_GRID_FIELDS} }`,
+    { offset, end: offset + limit }
+  );
+}

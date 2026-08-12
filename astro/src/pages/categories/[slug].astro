@@ -1,0 +1,98 @@
+---
+// T8: single category page — Astro equivalent of
+// src/templates/single-category.jsx.
+//
+// getStaticPaths mirrors gatsby-node.js's `categories.forEach(category =>
+// createPage({ path: `/categories/${slug}` ... }))` loop, sourced from the
+// same category-list GROQ query (getCategoryList, T2) used to build every
+// other route that lists categories.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionHeading from '../../components/typography/SectionHeading.astro';
+import SectionTop from '../../components/partials/SectionTop.astro';
+import SectionMiddle from '../../components/partials/SectionMiddle.astro';
+import DescriptionText from '../../components/typography/DescriptionText.astro';
+import Break from '../../components/partials/Break.astro';
+import BlogGrid from '../../components/blogs/BlogGrid.astro';
+import { getCategoryList, getCategoryBySlug, getCategoryPageBlogs } from '../../lib/sanity';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+
+export async function getStaticPaths() {
+  const categories = await getCategoryList();
+  return categories.map((category) => ({
+    params: { slug: category.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const category = await getCategoryBySlug(slug as string);
+
+// getStaticPaths (above) sources slugs from the same getCategoryList() query,
+// so this should be unreachable for any path Astro actually builds — fail
+// the build loudly rather than silently emitting an empty page if the
+// content changed between the two fetches.
+if (!category) {
+  throw new Error(`[categories/[slug].astro] No category found for slug "${slug}"`);
+}
+
+const blogs = await getCategoryPageBlogs(category._id);
+const cover = buildSanityImageUrl(category.coverImage.asset, { width: 1600 });
+---
+
+<Layout
+  title={category.title}
+  description={`Explore all the articles written in the category ${category.title} on this website.`}
+>
+  <PageSpace>
+    <img
+      src={cover.src}
+      width={cover.width}
+      height={cover.height}
+      alt={category.coverImage.alt || ''}
+      loading="lazy"
+      class="category-image block w-full"
+    />
+    <MarginedContainer>
+      <Section>
+        <SectionHeading class="pt-2 font-medium lg:pt-4">
+          {category.title}
+        </SectionHeading>
+        <SectionTop>
+          <div class="italic">
+            <DescriptionText value={category._rawDescription} />
+          </div>
+        </SectionTop>
+        <Break />
+        <SectionMiddle>
+          {blogs.length > 0 && <BlogGrid blogs={blogs} />}
+          {
+            blogs.length === 0 && (
+              <p class="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
+                The brains are at work writing new posts !!!
+              </p>
+            )
+          }
+        </SectionMiddle>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>
+
+<style>
+  /* T8: port of single-category.module.css. */
+  .category-image {
+    height: 40vh;
+  }
+  @media only screen and (max-width: 960px) {
+    .category-image {
+      height: 35vh;
+    }
+  }
+  @media only screen and (max-width: 720px) {
+    .category-image {
+      height: 30vh;
+    }
+  }
+</style>

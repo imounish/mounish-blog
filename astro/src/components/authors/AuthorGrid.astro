@@ -1,0 +1,26 @@
+---
+// T8: port of src/components/authors/AuthorGrid.jsx.
+import AuthorItem from './AuthorItem.astro';
+import SectionTop from '../partials/SectionTop.astro';
+import type { AuthorListItem } from '../../lib/sanity';
+
+interface Props {
+  authors: AuthorListItem[];
+}
+const { authors } = Astro.props;
+---
+
+<SectionTop class="grid gap-8 pb-2 lg:grid-cols-2">
+  {
+    authors &&
+      authors.map((author) => (
+        <AuthorItem
+          name={author.name}
+          description={author.description ?? null}
+          path={author.slug.current}
+          profileImage={author.profileImage}
+          learnMoreButton
+        />
+      ))
+  }
+</SectionTop>

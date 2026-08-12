@@ -1,0 +1,60 @@
+---
+// T8: pages 2+ of the category listing (`/categories/2`, `/categories/3`,
+// ...) — the counterpart to ./index.astro, which owns page 1 at
+// `/categories` with no numeric suffix. getStaticPaths mirrors
+// gatsby-node.js's `totalCategoryListPages` loop, built on T7's generic
+// `paginate()` helper (src/lib/pagination.ts) rather than re-deriving the
+// limit/offset math here.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import FeaturedCategoriesGrid from '../../components/categories/FeaturedCategoriesGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate, type PageConfig } from '../../lib/pagination';
+import { getCategoryCount, getCategoryListPage } from '../../lib/sanity';
+
+interface PageProps {
+  pageConfig: PageConfig;
+  numberOfPages: number;
+}
+
+export async function getStaticPaths() {
+  const pageSize = Number(import.meta.env.CATEGORIES_PER_PAGE) || 6;
+  const totalCategories = await getCategoryCount();
+  const { numberOfPages, pageConfigs } = paginate(totalCategories, pageSize);
+
+  // Page 1 is served by ./index.astro at `/categories` (no numeric suffix) —
+  // this route covers page 2 onward only.
+  return pageConfigs
+    .filter((pageConfig) => pageConfig.pageNumber > 1)
+    .map((pageConfig) => ({
+      params: { page: String(pageConfig.pageNumber) },
+      props: { pageConfig, numberOfPages } satisfies PageProps,
+    }));
+}
+
+const { pageConfig, numberOfPages } = Astro.props as PageProps;
+const categories = await getCategoryListPage(pageConfig.offset, pageConfig.limit);
+---
+
+<Layout
+  title="all categories"
+  description="Explore all the categories in which articles have been written on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all categories">
+        <FeaturedCategoriesGrid categories={categories} />
+        <SectionBottom>
+          <Pagination
+            currentPage={pageConfig.currentPage}
+            numberOfPages={numberOfPages}
+            baseUrl="/categories"
+          />
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

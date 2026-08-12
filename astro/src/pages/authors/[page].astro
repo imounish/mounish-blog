@@ -1,0 +1,59 @@
+---
+// T8: pages 2+ of the author listing (`/authors/2`, `/authors/3`, ...) — the
+// counterpart to ./index.astro, which owns page 1 at `/authors` with no
+// numeric suffix. getStaticPaths mirrors gatsby-node.js's
+// `totalAuthorListPages` loop, built on T7's generic `paginate()` helper
+// (src/lib/pagination.ts) rather than re-deriving the limit/offset math here.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import AuthorGrid from '../../components/authors/AuthorGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate, type PageConfig } from '../../lib/pagination';
+import { getAuthorCount, getAuthorListPage } from '../../lib/sanity';
+
+interface PageProps {
+  pageConfig: PageConfig;
+  numberOfPages: number;
+}
+
+export async function getStaticPaths() {
+  const pageSize = Number(import.meta.env.AUTHORS_PER_PAGE) || 4;
+  const totalAuthors = await getAuthorCount();
+  const { numberOfPages, pageConfigs } = paginate(totalAuthors, pageSize);
+
+  // Page 1 is served by ./index.astro at `/authors` (no numeric suffix) —
+  // this route covers page 2 onward only.
+  return pageConfigs
+    .filter((pageConfig) => pageConfig.pageNumber > 1)
+    .map((pageConfig) => ({
+      params: { page: String(pageConfig.pageNumber) },
+      props: { pageConfig, numberOfPages } satisfies PageProps,
+    }));
+}
+
+const { pageConfig, numberOfPages } = Astro.props as PageProps;
+const authors = await getAuthorListPage(pageConfig.offset, pageConfig.limit);
+---
+
+<Layout
+  title="all authors"
+  description="Explore all the authors that have written articles on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all authors">
+        <AuthorGrid authors={authors} />
+        <SectionBottom>
+          <Pagination
+            currentPage={pageConfig.currentPage}
+            numberOfPages={numberOfPages}
+            baseUrl="/authors"
+          />
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

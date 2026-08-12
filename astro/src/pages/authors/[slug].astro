@@ -1,0 +1,59 @@
+---
+// T8: single author page — Astro equivalent of
+// src/templates/single-author.jsx.
+//
+// getStaticPaths mirrors gatsby-node.js's `authors.forEach(author =>
+// createPage({ path: `/authors/${slug}` ... }))` loop, sourced from the same
+// author-list GROQ query (getAuthorList, T2) used to build every other route
+// that lists authors.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import AuthorHero from '../../components/authors/AuthorHero.astro';
+import Break from '../../components/partials/Break.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionTop from '../../components/partials/SectionTop.astro';
+import BlogGrid from '../../components/blogs/BlogGrid.astro';
+import { getAuthorList, getAuthorBySlug, getAuthorPageBlogs } from '../../lib/sanity';
+
+export async function getStaticPaths() {
+  const authors = await getAuthorList();
+  return authors.map((author) => ({
+    params: { slug: author.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const author = await getAuthorBySlug(slug as string);
+
+// getStaticPaths (above) sources slugs from the same getAuthorList() query,
+// so this should be unreachable for any path Astro actually builds — fail
+// the build loudly rather than silently emitting an empty page if the
+// content changed between the two fetches.
+if (!author) {
+  throw new Error(`[authors/[slug].astro] No author found for slug "${slug}"`);
+}
+
+const blogs = await getAuthorPageBlogs(author._id);
+---
+
+<Layout title={author.name} description={author.description ?? undefined}>
+  <PageSpace>
+    <MarginedContainer>
+      <AuthorHero author={author} />
+      <Break />
+      <Section sectionHeading="recent posts">
+        <SectionTop>
+          {blogs.length > 0 && <BlogGrid blogs={blogs} />}
+          {
+            blogs.length === 0 && (
+              <p class="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
+                {author.name} is at work writing new posts !!!
+              </p>
+            )
+          }
+        </SectionTop>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

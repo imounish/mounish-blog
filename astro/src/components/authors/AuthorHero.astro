@@ -1,0 +1,36 @@
+---
+// T8: port of src/components/authors/AuthorHero.jsx, used by the single
+// author page (/authors/[slug].astro) for the profile header + bio.
+import RichText from '../typography/RichText.astro';
+import Section from '../partials/Section.astro';
+import SectionHeading from '../typography/SectionHeading.astro';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+import type { SingleAuthor } from '../../lib/sanity';
+
+interface Props {
+  author: SingleAuthor;
+}
+const { author } = Astro.props;
+const image = buildSanityImageUrl(author.profileImage.asset, { width: 512, height: 512 });
+---
+
+<Section>
+  <div class="flex flex-col items-center gap-8 pb-2 pt-4">
+    <img
+      src={image.src}
+      width={image.width}
+      height={image.height}
+      alt={author.profileImage.alt || ''}
+      loading="lazy"
+      class="block h-32 w-32 rounded-full md:h-48 md:w-48 xl:h-64 xl:w-64"
+    />
+    <div>
+      <SectionHeading class="w-full text-center">
+        {author.name}
+      </SectionHeading>
+      <div>
+        <RichText value={author._rawBio} />
+      </div>
+    </div>
+  </div>
+</Section>

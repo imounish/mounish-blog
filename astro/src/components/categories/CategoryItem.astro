@@ -1,0 +1,57 @@
+---
+// T8: port of src/components/categories/CategoryItem.jsx, used by
+// FeaturedCategoriesGrid.astro to render one card in the /categories list.
+import Title from '../typography/Title.astro';
+import DescriptionText from '../typography/DescriptionText.astro';
+import AnimatedArrowButton from '../buttons/AnimatedArrowButton.astro';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+import type { CategoryListItem } from '../../lib/sanity';
+
+interface Props {
+  title: string;
+  path: string;
+  description: unknown;
+  coverImage: CategoryListItem['coverImage'];
+  exploreBtnDisplay?: boolean;
+}
+const { title, path, description, coverImage, exploreBtnDisplay } = Astro.props;
+const image = buildSanityImageUrl(coverImage.asset, { width: 480 });
+---
+
+<div class="grid sm:grid-cols-4 sm:grid-rows-3">
+  <img
+    src={image.src}
+    width={image.width}
+    height={image.height}
+    alt={coverImage.alt || ''}
+    loading="lazy"
+    class="mr-0 w-auto rounded-md hover:scale-105 sm:col-span-1 sm:row-span-6 sm:mr-2 category-item-image"
+  />
+  <div class="ml-0 mt-2 flex flex-col justify-between sm:col-span-3 sm:row-span-5 sm:ml-2 sm:mt-0">
+    <div>
+      <Title
+        class="font-warnockdisp pb-1 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
+        path={`/categories/${path}`}
+        highlightColor="maroon"
+      >
+        {title}
+      </Title>
+      <div class="italic">
+        <DescriptionText value={description} />
+      </div>
+    </div>
+    {
+      exploreBtnDisplay && (
+        <AnimatedArrowButton class="w-min pt-2 sm:pt-0" path={`/categories/${path}`}>
+          explore
+        </AnimatedArrowButton>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .category-item-image {
+    transition: 0.3s ease-in-out transform;
+  }
+</style>

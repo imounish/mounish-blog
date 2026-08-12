@@ -1,0 +1,48 @@
+---
+// T8: page 1 of the author listing — Astro equivalent of
+// src/templates/author-list.jsx, sourced via gatsby-node.js's
+// `index === 0 ? '/authors' : ...` branch. Page 2+ lives in ./[page].astro;
+// this route deliberately owns only `/authors` (no `/1` suffix) so the URL
+// scheme matches the live site exactly.
+//
+// Reuses T7's `paginate()` helper directly (per T8's brief) — no
+// re-implementation of the limit/offset math.
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionBottom from '../../components/partials/SectionBottom.astro';
+import AuthorGrid from '../../components/authors/AuthorGrid.astro';
+import Pagination from '../../components/partials/Pagination.astro';
+import { paginate } from '../../lib/pagination';
+import { getAuthorCount, getAuthorListPage } from '../../lib/sanity';
+
+// Server-only env var (no PUBLIC_ prefix), matching gatsby-node.js's
+// `GATSBY_AUTHORS_PER_PAGE` (default 4).
+const PAGE_SIZE = Number(import.meta.env.AUTHORS_PER_PAGE) || 4;
+
+const totalAuthors = await getAuthorCount();
+const { numberOfPages, pageConfigs } = paginate(totalAuthors, PAGE_SIZE);
+const page1 = pageConfigs[0];
+const authors = page1 ? await getAuthorListPage(page1.offset, page1.limit) : [];
+---
+
+<Layout
+  title="all authors"
+  description="Explore all the authors that have written articles on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all authors">
+        <AuthorGrid authors={authors} />
+        <SectionBottom>
+          {
+            numberOfPages > 1 && (
+              <Pagination currentPage={1} numberOfPages={numberOfPages} baseUrl="/authors" />
+            )
+          }
+        </SectionBottom>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

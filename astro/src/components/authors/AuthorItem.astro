@@ -1,0 +1,62 @@
+---
+// T8: port of src/components/authors/AuthorItem.jsx, used by AuthorGrid.astro
+// to render one card in the /authors list.
+import Title from '../typography/Title.astro';
+import AnimatedArrowButton from '../buttons/AnimatedArrowButton.astro';
+import { buildSanityImageUrl } from '../../lib/sanityImage';
+import type { AuthorListItem } from '../../lib/sanity';
+
+interface Props {
+  name: string;
+  path: string;
+  description: string | null;
+  profileImage: AuthorListItem['profileImage'];
+  learnMoreButton?: boolean;
+}
+const { name, path, description, profileImage, learnMoreButton } = Astro.props;
+const image = buildSanityImageUrl(profileImage.asset, { width: 256, height: 256 });
+---
+
+<div class="flex flex-row justify-start gap-6 md:gap-8">
+  <img
+    src={image.src}
+    width={image.width}
+    height={image.height}
+    alt={profileImage.alt || ''}
+    loading="lazy"
+    class="mr-0 w-24 rounded-full hover:scale-105 sm:mr-2 sm:w-32 md:w-48 lg:w-64 author-item-image"
+  />
+  <div class="flex flex-col justify-center">
+    <div>
+      <Title
+        class="font-warnockdisp pb-1 pt-1 text-2xl font-medium sm:pt-0 sm:text-3xl"
+        path={`/authors/${path}`}
+        highlightColor="maroon"
+      >
+        {name}
+      </Title>
+      {
+        description && (
+          <p class="font-warnockcapt pb-2 text-base text-gray-900 dark:text-gray-100 md:text-lg">
+            {description}
+          </p>
+        )
+      }
+    </div>
+    {
+      learnMoreButton && (
+        <div class="w-full">
+          <AnimatedArrowButton class="pt-2 sm:pt-0" path={`/authors/${path}`}>
+            know more
+          </AnimatedArrowButton>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .author-item-image {
+    transition: 0.3s ease-in-out transform;
+  }
+</style>
