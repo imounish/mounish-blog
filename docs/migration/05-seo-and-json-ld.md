@@ -28,7 +28,7 @@ None specific to this task.
 
 ## Definition of done
 
-- [ ] Every page on the branch-preview site has the same `<title>`/meta/OG/Twitter tags it has today (spot-check a few pages' rendered `<head>` against the live site).
-- [ ] Blog post pages emit valid JSON-LD `BlogPosting` structured data.
-- [ ] Google's [Rich Results Test](https://search.google.com/test/rich-results) (or an equivalent JSON-LD validator) passes with no errors against a branch-preview post URL once one exists (T6) — this check can be deferred until T6 is done, but the JSON-LD template itself should be finished here.
-- [ ] No automated tests required.
+- [x] Every page on the branch-preview site has the same `<title>`/meta/OG/Twitter tags it has today (spot-check a few pages' rendered `<head>` against the live site).
+- [x] Blog post pages emit valid JSON-LD `BlogPosting` structured data.
+- [x] Google's [Rich Results Test](https://search.google.com/test/rich-results) (or an equivalent JSON-LD validator) passes with no errors against a branch-preview post URL once one exists (T6) — this check can be deferred until T6 is done, but the JSON-LD template itself should be finished here.
+- [x] No automated tests required.
