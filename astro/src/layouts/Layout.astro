@@ -14,13 +14,32 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/theme/ThemeToggle.jsx';
+import SEO from '../components/SEO.astro';
 import { matchesExcludedPath } from '../utils/gaExclude';
 
 interface Props {
   title?: string;
+  description?: string;
+  imageUrl?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  isPost?: boolean;
+  publishedAt?: string;
+  author?: { name: string };
+  canonicalUrl?: string;
 }
 
-const { title = "mounish's blog" } = Astro.props;
+const {
+  title,
+  description,
+  imageUrl,
+  imageWidth,
+  imageHeight,
+  isPost,
+  publishedAt,
+  author,
+  canonicalUrl,
+} = Astro.props;
 
 // GA4 tracking ID from gatsby-config.js's gatsby-plugin-google-gtag block.
 const GA_TRACKING_ID = 'G-YF4936QF3P';
@@ -40,7 +59,17 @@ const isExcludedFromTracking = matchesExcludedPath(
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <title>{title}</title>
+    <SEO
+      title={title}
+      description={description}
+      imageUrl={imageUrl}
+      imageWidth={imageWidth}
+      imageHeight={imageHeight}
+      isPost={isPost}
+      publishedAt={publishedAt}
+      author={author}
+      canonicalUrl={canonicalUrl}
+    />
 
     <!--
       T3: pre-hydration dark-mode script — the Astro equivalent of

@@ -1,0 +1,104 @@
+---
+/**
+ * T5: SEO component — Astro equivalent of src/components/seo/SEO.jsx (Gatsby app).
+ *
+ * Accepts props: title, description, imageUrl, imageWidth, imageHeight, isPost,
+ * publishedAt, author, canonicalUrl. Falls back to siteConfig defaults when not
+ * provided. For blog posts (isPost=true), emits JSON-LD BlogPosting schema.
+ *
+ * Usage:
+ *   <SEO
+ *     title="My Post"
+ *     description="Post summary"
+ *     imageUrl="https://example.com/image.jpg"
+ *     isPost={true}
+ *     publishedAt="2024-08-12T00:00:00Z"
+ *     author={{ name: "Author Name" }}
+ *   />
+ */
+
+import { siteConfig } from '../lib/siteConfig';
+
+interface Props {
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  isPost?: boolean;
+  publishedAt?: string;
+  author?: { name: string };
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description,
+  imageUrl,
+  imageWidth = 1200,
+  imageHeight = 630,
+  isPost = false,
+  publishedAt,
+  author,
+  canonicalUrl,
+} = Astro.props;
+
+// Construct the page's canonical URL from siteConfig.siteUrl + current pathname if not provided
+const pageCanonicalUrl = canonicalUrl || `${siteConfig.siteUrl}${Astro.url.pathname}`;
+
+// SEO title: "{title} | {siteConfig.title}" if title is provided, else just siteConfig.title
+const seoTitle = title
+  ? `${title} | ${siteConfig.title}`
+  : siteConfig.title;
+
+// Use provided values or fall back to siteConfig defaults
+const seoDescription = description || siteConfig.description;
+const seoImageUrl = imageUrl;
+
+// Generate JSON-LD BlogPosting schema for blog posts
+let jsonLdScript = '';
+if (isPost && title && publishedAt && author?.name && seoImageUrl) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description: seoDescription,
+    image: seoImageUrl,
+    datePublished: publishedAt,
+    author: {
+      '@type': 'Person',
+      name: author.name,
+    },
+    url: pageCanonicalUrl,
+  };
+  jsonLdScript = JSON.stringify(jsonLd);
+}
+---
+
+<title>{seoTitle}</title>
+<meta name="description" content={seoDescription} />
+{seoImageUrl && (
+  <>
+    <meta name="og:image" content={seoImageUrl} />
+    <meta name="og:image:width" content={String(imageWidth)} />
+    <meta name="og:image:height" content={String(imageHeight)} />
+  </>
+)}
+<meta name="og:type" content="website" />
+{title && <meta name="og:title" content={title} />}
+<meta name="og:description" content={seoDescription} />
+<meta name="og:site_name" content={siteConfig.og.siteName} />
+<meta name="og:url" content={pageCanonicalUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content={seoDescription} />
+{title && <meta name="twitter:title" content={title} />}
+{seoImageUrl && <meta name="twitter:image" content={seoImageUrl} />}
+<meta name="twitter:creator" content={siteConfig.og.twitterCreator} />
+<meta
+  name="robots"
+  content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+/>
+
+{jsonLdScript && (
+  <script type="application/ld+json" is:inline set:html={jsonLdScript} />
+)}
