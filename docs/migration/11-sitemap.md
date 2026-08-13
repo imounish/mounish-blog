@@ -26,7 +26,7 @@ None specific to this task.
 
 ## Definition of done
 
-- [ ] A sitemap is reachable on the branch-preview site and includes every route type the live site has.
-- [ ] `robots.txt` references the correct sitemap path.
-- [ ] The sitemap validates (well-formed XML, correct `<loc>` values using the production domain even when generated from a preview build).
-- [ ] No automated tests required.
+- [ ] A sitemap is reachable on the branch-preview site and includes every route type the live site has. (Local build confirms every route type present in `dist/sitemap-0.xml` — homepage, `/authors/` + author detail, `/categories/` + category detail, `/posts/` + post detail, `/tags/`. Live branch-preview reachability not confirmed — no Netlify credentials in this environment.)
+- [x] `robots.txt` references the correct sitemap path. (`https://blog.mounish.dev/sitemap-index.xml` matches the actual generated `dist/sitemap-index.xml` filename/path.)
+- [x] The sitemap validates (well-formed XML, correct `<loc>` values using the production domain even when generated from a preview build). (`xmllint --noout` passes on both `sitemap-index.xml` and `sitemap-0.xml`; all `<loc>` values are absolute `https://blog.mounish.dev/...` URLs, confirming `site` in `astro.config.mjs` is wired correctly.)
+- [x] No automated tests required.
