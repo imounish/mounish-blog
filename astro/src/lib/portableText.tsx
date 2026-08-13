@@ -187,6 +187,30 @@ export function renderExcerpt(value: unknown): string {
   return renderToStaticMarkup(<PortableText value={value as any} components={excerptComponents} />);
 }
 
+/**
+ * Plain-text excerpt for contexts that can't carry markup (RSS feed
+ * `<description>`, meta tags). Walks the raw Portable Text block JSON and
+ * concatenates span text directly — deliberately *not* implemented as
+ * `renderToStaticMarkup(...).replace(/<[^>]+>/g, '')`: React's HTML
+ * serializer escapes quote/apostrophe characters in text nodes to
+ * `&quot;`/`&#x27;` entities, which `@astrojs/rss` would then escape a
+ * *second* time (`&amp;quot;`) when it XML-escapes the description string
+ * it's given — reading the raw text straight from the Portable Text JSON
+ * avoids that double-escaping entirely.
+ */
+export function renderExcerptPlainText(value: unknown): string {
+  if (!Array.isArray(value)) return '';
+  return value
+    .map((block: any) => {
+      if (!block || !Array.isArray(block.children)) return '';
+      return block.children.map((span: any) => span?.text ?? '').join('');
+    })
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // ---------------------------------------------------------------------------
 // Category description renderer (_rawDescription) — ports DescriptionText.jsx.
 // Used by CategoryCatalogue.

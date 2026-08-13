@@ -16,6 +16,7 @@ import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/theme/ThemeToggle.jsx';
 import SEO from '../components/SEO.astro';
 import { matchesExcludedPath } from '../utils/gaExclude';
+import { siteConfig } from '../lib/siteConfig';
 
 interface Props {
   title?: string;
@@ -59,6 +60,13 @@ const isExcludedFromTracking = matchesExcludedPath(
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <!-- T10: feed auto-discovery — src/pages/rss.xml.ts -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${siteConfig.title} — RSS feed`}
+      href="/rss.xml"
+    />
     <SEO
       title={title}
       description={description}

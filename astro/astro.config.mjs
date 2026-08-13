@@ -16,6 +16,10 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, SANITY_TOKEN } =
 
 // https://astro.build/config
 export default defineConfig({
+  // T10: required by @astrojs/rss to build absolute <link>/<guid> URLs in
+  // the feed (src/pages/rss.xml.ts) — same origin as siteConfig.ts's
+  // siteUrl (ported from gatsby-config.js's siteMetadata.siteUrl).
+  site: 'https://blog.mounish.dev',
   vite: {
     plugins: [tailwindcss()]
   },

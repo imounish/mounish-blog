@@ -564,3 +564,35 @@ export async function getAllBlogsWithTags(): Promise<BlogWithTags[]> {
     `*[_type == "blog"] | order(publishedAt desc) { ${BLOG_WITH_TAGS_FIELDS} }`
   );
 }
+
+// ---------------------------------------------------------------------------
+// T10 — RSS feed (src/pages/rss.xml.ts). `gatsby-plugin-feed` was always
+// commented out in gatsby-config.js, so there's no prior Gatsby field set to
+// mirror here beyond what the feed itself needs: title/slug/publishedAt for
+// every post (same ordering as the T7 listing pages), plus `_rawExcerpt` so
+// the feed can carry a real per-item description (rendered the same way
+// ExcerptText.astro renders it for the single-post page).
+// ---------------------------------------------------------------------------
+
+export interface RssFeedItem {
+  id: string;
+  title: string;
+  publishedAt: string;
+  slug: SlugRef;
+  _rawExcerpt: unknown;
+}
+
+const RSS_FEED_FIELDS = /* groq */ `
+  "id": _id,
+  title,
+  publishedAt,
+  slug { current },
+  "_rawExcerpt": excerpt
+`;
+
+/** All published posts, newest first, for the RSS feed — unpaginated (feed readers expect the full recent history, not one listing page). */
+export async function getRssFeedItems(): Promise<RssFeedItem[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog"] | order(publishedAt desc) { ${RSS_FEED_FIELDS} }`
+  );
+}
