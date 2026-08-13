@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
+import sitemap from '@astrojs/sitemap';
 
 // astro.config.mjs runs in plain Node, before Vite's env-loading kicks in for
 // the rest of the app, so `.env` isn't automatically read into `process.env`
@@ -46,6 +47,18 @@ export default defineConfig({
       config: {
         forward: ['dataLayer.push'],
       },
+    }),
+    // T11: replaces gatsby-plugin-sitemap. Auto-discovers all static routes
+    // (including getStaticPaths-driven dynamic routes from T6-T8) under
+    // `site` above. /rss.xml (T10) and /404 aren't real navigable pages for
+    // sitemap purposes, so they're filtered out; the throwaway /debug/sanity
+    // page from T2 is filtered out too since it isn't part of the real route
+    // tree and is slated for deletion.
+    sitemap({
+      filter: (page) =>
+        !page.endsWith('/rss.xml') &&
+        !page.endsWith('/404') &&
+        !page.includes('/debug/'),
     }),
   ],
 });
