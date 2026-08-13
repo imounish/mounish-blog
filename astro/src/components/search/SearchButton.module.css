@@ -1,0 +1,19 @@
+/* T13: ported from src/components/search/SearchButton.module.css (Gatsby
+   app), renamed to camelCase to match Vite's CSS Modules (see
+   SignUpModal.module.css's T12 note for the same rename rationale). */
+.zoomInOut:hover {
+  animation: zoom-in-zoom-out 0.5s;
+  animation-duration: 500ms;
+}
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

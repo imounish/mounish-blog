@@ -5,15 +5,16 @@
 // separate SSR-hooks file the way Gatsby does — it all lives in one shared
 // layout here.
 //
-// Not ported here (out of T3's scope, per 03-design-system-and-layout.md
-// step 3 — only header/footer/slot): the search modal
-// (SearchModalContextProvider/<Search />) and the newsletter signup modal
-// (SignUpModalContextProvider/<SignUp />) that Layout.jsx also wraps pages
-// in. Those belong to the search (T13) and newsletter (T12) tasks.
+// T13: the search modal (SearchModalContextProvider/<Search />) is now
+// wired up too — see Search.jsx, rendered into Header.astro's
+// `search-button` slot below. The newsletter signup modal
+// (SignUpModalContextProvider/<SignUp />) is out of scope here; that's
+// NewsletterSection.astro's own island (T12).
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/theme/ThemeToggle.jsx';
+import Search from '../components/search/Search.jsx';
 import SEO from '../components/SEO.astro';
 import { matchesExcludedPath } from '../utils/gaExclude';
 import { siteConfig } from '../lib/siteConfig';
@@ -167,6 +168,7 @@ const isExcludedFromTracking = matchesExcludedPath(
   <body class="dark:bg-black">
     <Header>
       <ThemeToggle client:load slot="theme-toggle" />
+      <Search client:load slot="search-button" />
     </Header>
     <slot />
     <Footer />
