@@ -1,0 +1,18 @@
+---
+// T9: port of src/components/homepage/FeaturedCategories.jsx.
+//
+// Same data-fetching split as FeaturedBlogs.astro: index.astro fetches once
+// via `getFeaturedContent()` and passes `categories` down as a prop.
+import Section from '../partials/Section.astro';
+import FeaturedCategoriesGrid from '../categories/FeaturedCategoriesGrid.astro';
+import type { CategoryListItem } from '../../lib/sanity';
+
+interface Props {
+  categories: CategoryListItem[];
+}
+const { categories } = Astro.props;
+---
+
+<Section sectionHeading="top categories">
+  <FeaturedCategoriesGrid categories={categories} />
+</Section>

@@ -491,3 +491,76 @@ export async function getAuthorListPage(
     { offset, end: offset + limit }
   );
 }
+
+// ---------------------------------------------------------------------------
+// T9 — homepage "featured" content + tags page.
+//
+// Field sets mirror:
+//   - src/components/homepage/FeaturedBlogs.jsx / FeaturedCategories.jsx
+//     (both `useStaticQuery` a singleton `allSanityFeatured(filter: { _id: {
+//     eq: "featuredItems" } })` doc referencing `blogs[]` / `categories[]`)
+//   - src/pages/tags.jsx's `TagsListQuery` (`allSanityTag` + `allSanityBlog`
+//     with `tags` included)
+// ---------------------------------------------------------------------------
+
+export interface FeaturedContent {
+  blogs: BlogListItem[];
+  categories: CategoryListItem[];
+}
+
+const FEATURED_QUERY = /* groq */ `
+  *[_type == "featured" && _id == "featuredItems"][0] {
+    blogs[]-> { ${BLOG_GRID_FIELDS} },
+    categories[]-> { ${CATEGORY_GRID_FIELDS} }
+  }
+`;
+
+/** The homepage's singleton "featured blogs + categories" doc, or null if none is set up. */
+export async function getFeaturedContent(): Promise<FeaturedContent | null> {
+  const result = await sanityClient.fetch(FEATURED_QUERY);
+  return result
+    ? {
+        blogs: result.blogs ?? [],
+        categories: result.categories ?? [],
+      }
+    : null;
+}
+
+/** One tag list item — tags.jsx's `allSanityTag` field set. */
+export interface TagListItem {
+  id: string;
+  title: string;
+  slug: SlugRef;
+}
+
+const TAG_LIST_QUERY = /* groq */ `
+  *[_type == "tag"] {
+    "id": _id,
+    title,
+    slug { current }
+  }
+`;
+
+export async function getTagList(): Promise<TagListItem[]> {
+  return sanityClient.fetch(TAG_LIST_QUERY);
+}
+
+/** A blog list item with its tags — tags.jsx's `allSanityBlog` field set (BLOG_GRID_FIELDS + tags). */
+export interface BlogWithTags extends BlogListItem {
+  tags: { title: string; slug: SlugRef }[] | null;
+}
+
+const BLOG_WITH_TAGS_FIELDS = /* groq */ `
+  ${BLOG_GRID_FIELDS},
+  tags[]-> {
+    title,
+    slug { current }
+  }
+`;
+
+/** All blogs (unpaginated), each with its resolved `tags`, for tags.jsx's client-side tag filter. */
+export async function getAllBlogsWithTags(): Promise<BlogWithTags[]> {
+  return sanityClient.fetch(
+    `*[_type == "blog"] | order(publishedAt desc) { ${BLOG_WITH_TAGS_FIELDS} }`
+  );
+}

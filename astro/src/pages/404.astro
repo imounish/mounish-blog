@@ -1,0 +1,49 @@
+---
+// T9: port of src/pages/404.jsx. Astro serves this file as the static
+// not-found page for genuinely unmatched routes, same convention as
+// Gatsby's /404/ page: https://docs.astro.build/en/basics/astro-pages/#custom-404-error-page
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import MarginedContainer from '../components/partials/MarginedContainer.astro';
+import PageSpace from '../components/partials/PageSpace.astro';
+import Section from '../components/partials/Section.astro';
+import SectionRest from '../components/partials/SectionRest.astro';
+import AnimatedArrowButton from '../components/buttons/AnimatedArrowButton.astro';
+import kowalski from '../assets/kowalski.png';
+---
+
+<Layout
+  title="not found"
+  description="You have lost your way buddy! Please go back to Home."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="oh man! you've lost your way">
+        <SectionRest class="flex flex-col lg:flex-row lg:justify-between">
+          <p class="font-warnocksubh text-lg font-light text-gray-900 dark:text-gray-50 sm:text-xl">
+            But the good news is you are now free to visit
+            <AnimatedArrowButton path="/" class="w-min pb-1.5">
+              home
+            </AnimatedArrowButton>
+            or you can see all my
+            <AnimatedArrowButton path="/posts" class="w-min pb-1.5">
+              posts
+            </AnimatedArrowButton>
+            or you can explore various
+            <AnimatedArrowButton path="/categories" class="w-min pb-1.5">
+              categories
+            </AnimatedArrowButton>
+          </p>
+          <div class="flex justify-center py-2 sm:py-4 lg:py-8">
+            <div class="flex flex-col justify-center">
+              <Image src={kowalski} alt="Kowalski" height={540} width={540} />
+              <p class="font-warnockcapt flex justify-center text-sm font-light text-gray-700 dark:text-gray-300 sm:text-base">
+                Easy, Kowalski, easy&hellip; You don't want this stuff going kaboom!
+              </p>
+            </div>
+          </div>
+        </SectionRest>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>

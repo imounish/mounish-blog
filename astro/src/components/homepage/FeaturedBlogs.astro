@@ -1,0 +1,20 @@
+---
+// T9: port of src/components/homepage/FeaturedBlogs.jsx.
+//
+// The Gatsby version fetches its own data via `useStaticQuery`; here the
+// fetch happens once in the page (index.astro, via `getFeaturedContent()`)
+// and is passed down, following the convention T7/T8's pages already
+// established (data-fetching in pages/lib, display components take props).
+import Section from '../partials/Section.astro';
+import FeaturedBlogGrid from '../blogs/FeaturedBlogGrid.astro';
+import type { BlogListItem } from '../../lib/sanity';
+
+interface Props {
+  blogs: BlogListItem[];
+}
+const { blogs } = Astro.props;
+---
+
+<Section sectionHeading="top posts">
+  <FeaturedBlogGrid blogs={blogs} />
+</Section>

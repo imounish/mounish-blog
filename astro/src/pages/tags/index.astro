@@ -1,0 +1,121 @@
+---
+// T9: port of src/pages/tags.jsx.
+//
+// The Gatsby page derives `activeTag` from `location.search` at render time
+// (only meaningful once client-hydrated, since there's no server/location
+// during the static build) and filters `allSanityBlog` client-side by tag.
+// Astro has no client-side render pass to lean on for that, so this
+// precomputes every tag's blog list at build time (`blogsByTag` below) and
+// ships a small vanilla <script> — same "hand-written script, not a
+// hydrated island" precedent T3/T6 set for ScrollToTop/dark-mode — that
+// reads `?search=` on load and toggles which precomputed panel is visible.
+// No fetch/filter work happens in the browser, so this works with or
+// without JS enabled for the *content* (JS is only required for filtering,
+// matching the Gatsby page's own JS-dependent behavior).
+import Layout from '../../layouts/Layout.astro';
+import PageSpace from '../../components/partials/PageSpace.astro';
+import MarginedContainer from '../../components/partials/MarginedContainer.astro';
+import Break from '../../components/partials/Break.astro';
+import Section from '../../components/partials/Section.astro';
+import SectionTop from '../../components/partials/SectionTop.astro';
+import SectionMiddle from '../../components/partials/SectionMiddle.astro';
+import BlogGrid from '../../components/blogs/BlogGrid.astro';
+import { getTagList, getAllBlogsWithTags, type BlogWithTags } from '../../lib/sanity';
+
+const tags = await getTagList();
+const allBlogs = await getAllBlogsWithTags();
+
+const blogsByTag = new Map<string, BlogWithTags[]>();
+for (const tag of tags) {
+  blogsByTag.set(
+    tag.slug.current,
+    allBlogs.filter((blog) => blog.tags?.some((t) => t.slug.current === tag.slug.current))
+  );
+}
+---
+
+<Layout
+  title="tags"
+  description="Explore the articles on this website through the tags that are used on this website."
+>
+  <PageSpace>
+    <MarginedContainer>
+      <Section sectionHeading="all tags">
+        <SectionTop>
+          <ul class="flex flex-wrap gap-2.5">
+            {
+              tags.map((tag) => (
+                <li>
+                  <a
+                    href={`/tags/?search=${tag.slug.current}`}
+                    title={tag.title}
+                    data-tag-link={tag.slug.current}
+                    class="tag-link font-worksans rounded-md bg-gray-700 px-2 py-1.5 text-sm font-light uppercase text-gray-200 hover:bg-gray-900 dark:bg-gray-400 dark:text-black dark:hover:bg-gray-200"
+                  >
+                    {tag.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </SectionTop>
+        <Break />
+        <SectionMiddle>
+          <p
+            id="tags-select-message"
+            class="font-warnockcapt flex justify-center text-xl font-light lowercase text-gray-700 dark:text-gray-300 sm:text-2xl"
+          >
+            select a tag to view posts
+          </p>
+          {
+            tags.map((tag) => {
+              const blogs = blogsByTag.get(tag.slug.current) ?? [];
+              return (
+                <div data-tag-panel={tag.slug.current} hidden>
+                  {blogs.length > 0 ? (
+                    <BlogGrid blogs={blogs} />
+                  ) : (
+                    <p class="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
+                      The brains are at work writing new posts for {tag.title} tag !!!
+                    </p>
+                  )}
+                </div>
+              );
+            })
+          }
+        </SectionMiddle>
+      </Section>
+    </MarginedContainer>
+  </PageSpace>
+</Layout>
+
+<style>
+  .tag-link.is-active {
+    opacity: 0.5;
+  }
+</style>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const activeTag = params.get('search');
+
+  const selectMessage = document.getElementById('tags-select-message');
+  const panels = document.querySelectorAll<HTMLElement>('[data-tag-panel]');
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-tag-link]');
+
+  panels.forEach((panel) => {
+    panel.hidden = !(activeTag && panel.dataset.tagPanel === activeTag);
+  });
+
+  if (selectMessage) {
+    selectMessage.hidden = Boolean(activeTag);
+  }
+
+  links.forEach((link) => {
+    const slug = link.dataset.tagLink;
+    if (activeTag && slug === activeTag) {
+      link.classList.add('is-active');
+      link.setAttribute('href', '/tags/');
+    }
+  });
+</script>
