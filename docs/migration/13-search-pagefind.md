@@ -28,8 +28,8 @@ Replace the four bundled `flexsearch` indices with [Pagefind](https://pagefind.a
 
 ## Definition of done
 
-- [ ] Search works end-to-end on the branch-preview site: opening the search modal, typing a query, and getting relevant results linking to real pages.
-- [ ] No flexsearch-related code or dependencies remain.
-- [ ] The Pagefind post-build step is part of the actual Netlify build command, not a manual local-only step.
-- [ ] A rough before/after check of client JS shipped for search (e.g. via browser dev tools network tab) shows a real reduction versus the current 4-index flexsearch setup.
-- [ ] No automated tests required — verify with a handful of real queries covering post titles, category names, and author names.
+- [ ] Search works end-to-end on the branch-preview site: opening the search modal, typing a query, and getting relevant results linking to real pages. (Verified against a local `astro preview` server instead — no Netlify branch-preview credentials in this environment. Live search itself, via a Node script reproducing `SearchResult.jsx`'s query flow against the built `dist/pagefind` index, worked and returned correct top results for 4 real terms.)
+- [x] No flexsearch-related code or dependencies remain.
+- [x] The Pagefind post-build step is part of the actual Netlify build command, not a manual local-only step.
+- [x] A rough before/after check of client JS shipped for search (e.g. via browser dev tools network tab) shows a real reduction versus the current 4-index flexsearch setup.
+- [x] No automated tests required — verify with a handful of real queries covering post titles, category names, and author names.
