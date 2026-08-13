@@ -3,15 +3,19 @@
 // NewsletterSection in as a static include for now; its actual form
 // behavior is finished in T12 — don't block this task on that").
 //
-// The Gatsby version (src/components/homepage/NewsletterSection.jsx) opens a
-// @material-tailwind Tooltip + a sign-up modal via SignUpModalContext.
-// @material-tailwind was dropped in T3, and the sign-up modal itself hasn't
-// been ported yet (out of scope until T12/newsletter cleanup and T13/search
-// wire up their own modals) — so this renders the same marketing copy with
-// an inert, disabled "subscribe" button rather than faking modal behavior
-// that doesn't exist yet. T12 replaces this with the real, working form.
+// T12: replaces the inert, disabled placeholder button with the real,
+// working signup flow — NewsletterSignup.jsx, a lightly-hydrated React
+// island (client:load) that bundles the trigger button, SignUpModalContext,
+// and the Beehiiv-backed SignUpModal/FormContainer/SignUpForm. See that
+// file for why it's one self-contained island instead of mirroring
+// Gatsby's page-wide SignUpModalContextProvider.
+//
+// Not ported: the Gatsby version's @material-tailwind Tooltip ("More info"
+// on hover) — @material-tailwind was dropped repo-wide in T3, and the
+// tooltip was non-essential copy, not part of the signup flow itself.
 import Section from '../partials/Section.astro';
 import SectionRest from '../partials/SectionRest.astro';
+import NewsletterSignup from '../newsletter/NewsletterSignup.jsx';
 
 interface Props {
   heading?: string;
@@ -27,14 +31,7 @@ const { heading, class: className } = Astro.props;
     >
       Hit that subscribe button and get latest updates from me right to your inbox.
     </p>
-    <button
-      type="button"
-      disabled
-      title="Newsletter sign-up is coming soon"
-      class="font-worksans my-2 w-full cursor-not-allowed rounded-lg bg-gray-900 px-4 py-2.5 text-lg font-medium lowercase text-white opacity-70 dark:bg-white dark:text-black sm:w-96"
-    >
-      subscribe
-    </button>
+    <NewsletterSignup client:load />
     <div class="flex flex-row items-center justify-center pt-1">
       <p class="font-warnockcapt text-md text-base text-gray-600 dark:text-gray-400 sm:text-lg">
         I'll keep your email safe.
