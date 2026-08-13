@@ -87,7 +87,7 @@ function SearchResult({ pagefind, searchQuery }) {
               </p>
               <ul className="flex flex-col gap-2 pb-4 pt-2">
                 {groups[key].map((result) => (
-                  <SearchResultItem key={result.url} result={result} />
+                  <SearchResultItem key={result.url} section={key} result={result} />
                 ))}
               </ul>
             </React.Fragment>
@@ -100,7 +100,7 @@ function SearchResult({ pagefind, searchQuery }) {
           </p>
           <ul className="flex flex-col gap-2 pb-4 pt-2">
             {groups.other.map((result) => (
-              <SearchResultItem key={result.url} result={result} />
+              <SearchResultItem key={result.url} section="other" result={result} />
             ))}
           </ul>
         </>

@@ -3,6 +3,12 @@ dist/
 # generated types
 .astro/
 
+# dev-mode copy of the Pagefind index, synced from dist/pagefind by
+# scripts/sync-pagefind-dev.mjs (see package.json's predev/pagefind:sync
+# scripts) so `astro dev` has something to serve at /pagefind/pagefind.js.
+# This is a build artifact snapshot, not source.
+public/pagefind/
+
 # dependencies
 node_modules/
 

@@ -46,37 +46,49 @@ const cover = buildSanityImageUrl(category.coverImage.asset, { width: 1600 });
   description={`Explore all the articles written in the category ${category.title} on this website.`}
 >
   <PageSpace>
-    <img
-      src={cover.src}
-      width={cover.width}
-      height={cover.height}
-      alt={category.coverImage.alt || ''}
-      loading="lazy"
-      class="category-image block w-full"
-    />
-    <MarginedContainer>
-      <Section>
-        <SectionHeading class="pt-2 font-medium lg:pt-4">
-          {category.title}
-        </SectionHeading>
-        <SectionTop>
-          <div class="italic">
-            <DescriptionText value={category._rawDescription} />
-          </div>
-        </SectionTop>
-        <Break />
-        <SectionMiddle>
-          {blogs.length > 0 && <BlogGrid blogs={blogs} />}
-          {
-            blogs.length === 0 && (
-              <p class="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
-                The brains are at work writing new posts !!!
-              </p>
-            )
-          }
-        </SectionMiddle>
-      </Section>
-    </MarginedContainer>
+    <!-- T13 (search formatting follow-up): see posts/[slug].astro for why
+         data-pagefind-body is here — scopes the index to this category's own
+         title/description/image, keeping the /categories listing page out. -->
+    <div data-pagefind-body>
+      <img
+        src={cover.src}
+        width={cover.width}
+        height={cover.height}
+        alt={category.coverImage.alt || ''}
+        loading="lazy"
+        data-pagefind-meta="image[src]"
+        class="category-image block w-full"
+      />
+      <MarginedContainer>
+        <Section>
+          <SectionHeading class="pt-2 font-medium lg:pt-4">
+            <span data-pagefind-meta="title">{category.title}</span>
+          </SectionHeading>
+          <SectionTop>
+            <div class="italic">
+              <DescriptionText value={category._rawDescription} />
+            </div>
+          </SectionTop>
+          <Break />
+          <SectionMiddle>
+            <!-- data-pagefind-ignore: this category's post list belongs to
+                 each post's own indexed page, not this category page's
+                 excerpt/relevance — same reasoning as posts/[slug].astro
+                 excluding its "other posts in this category" widget. -->
+            <div data-pagefind-ignore>
+              {blogs.length > 0 && <BlogGrid blogs={blogs} />}
+              {
+                blogs.length === 0 && (
+                  <p class="font-warnockcapt flex justify-center text-xl font-light text-gray-700 dark:text-gray-300 sm:text-2xl">
+                    The brains are at work writing new posts !!!
+                  </p>
+                )
+              }
+            </div>
+          </SectionMiddle>
+        </Section>
+      </MarginedContainer>
+    </div>
   </PageSpace>
 </Layout>
 

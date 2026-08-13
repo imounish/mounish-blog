@@ -22,12 +22,25 @@ const image = buildSanityImageUrl(author.profileImage.asset, { width: 512, heigh
       height={image.height}
       alt={author.profileImage.alt || ''}
       loading="lazy"
+      data-pagefind-meta="image[src]"
       class="block h-32 w-32 rounded-full md:h-48 md:w-48 xl:h-64 xl:w-64"
     />
     <div>
       <SectionHeading class="w-full text-center">
-        {author.name}
+        <span data-pagefind-meta="title">{author.name}</span>
       </SectionHeading>
+      {
+        author.description && (
+          // Search-only: Gatsby's flexsearch author index carried this
+          // one-line description (shown in AuthorSearchResultItem), but
+          // neither app renders it visibly on the author's own page — kept
+          // sr-only here so search parity doesn't add visible UI Gatsby
+          // never had.
+          <span class="sr-only" data-pagefind-meta="description">
+            {author.description}
+          </span>
+        )
+      }
       <div>
         <RichText value={author._rawBio} />
       </div>

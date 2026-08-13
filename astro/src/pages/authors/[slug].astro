@@ -40,7 +40,15 @@ const blogs = await getAuthorPageBlogs(author._id);
 <Layout title={author.name} description={author.description ?? undefined}>
   <PageSpace>
     <MarginedContainer>
-      <AuthorHero author={author} />
+      <!-- T13 (search formatting follow-up): see posts/[slug].astro for why
+           data-pagefind-body is here — scopes the index to this author's own
+           name/image/bio. Deliberately excludes the "recent posts" grid
+           below (outside this wrapper): those posts are indexed on their
+           own pages already, and Gatsby's flexsearch author index never
+           carried this either. -->
+      <div data-pagefind-body>
+        <AuthorHero author={author} />
+      </div>
       <Break />
       <Section sectionHeading="recent posts">
         <SectionTop>

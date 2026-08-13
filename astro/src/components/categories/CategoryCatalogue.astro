@@ -35,7 +35,7 @@ const mobileBlogs = otherBlogs.slice(0, 2);
         path={`/categories/${category.slug.current}`}
         highlightColor="maroon"
       >
-        {category.title}
+        <span data-pagefind-meta="category">{category.title}</span>
       </Title>
       {
         category._rawDescription != null && (
@@ -52,7 +52,12 @@ const mobileBlogs = otherBlogs.slice(0, 2);
       </a>
     </div>
   </div>
-  <div class="lg:col-span-3">
+  <div class="lg:col-span-3" data-pagefind-ignore>
+    <!-- data-pagefind-ignore: these are *other* posts in the same category,
+         not this post's own content — indexing them leaked neighboring
+         posts' titles into this post's search excerpt (see
+         posts/[slug].astro). The category name/description above stays
+         indexed since it genuinely describes this post. -->
     <div class="hidden grid-cols-3 gap-4 lg:grid">
       {
         desktopBlogs.map((blog) => (

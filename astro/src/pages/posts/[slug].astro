@@ -62,81 +62,96 @@ const canonicalUrl = `${siteConfig.siteUrl}/posts/${slug}/`;
 >
   <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
   <Container>
-    <MarginedContainer>
-      <ScrollToTop showBelow={800} />
-      <PostHeadingSection
-        postTitle={post.title}
-        postSubHeading={post.subTitle}
-        postPublishedAt={post.publishedAt}
-        timeToRead={post.timeToRead}
-        postUrl={canonicalUrl}
+    <!-- T13 (search formatting follow-up): scopes Pagefind's index to real
+         article content (title, cover image, category, body) instead of the
+         whole page — once any element on the site carries data-pagefind-body,
+         Pagefind switches to indexing only elements with that attribute,
+         which also keeps non-article pages (the /posts listing, homepage,
+         etc.) out of the index entirely. See categories/[slug].astro and
+         authors/[slug].astro for the matching wrappers. -->
+    <div data-pagefind-body>
+      <MarginedContainer>
+        <ScrollToTop showBelow={800} />
+        <PostHeadingSection
+          postTitle={post.title}
+          postSubHeading={post.subTitle}
+          postPublishedAt={post.publishedAt}
+          timeToRead={post.timeToRead}
+          postUrl={canonicalUrl}
+        />
+      </MarginedContainer>
+
+      <img
+        src={cover.src}
+        width={cover.width}
+        height={cover.height}
+        alt={post.coverImage.alt || ''}
+        loading="lazy"
+        data-pagefind-meta="image[src]"
+        class="cover-image block w-full"
       />
-    </MarginedContainer>
 
-    <img
-      src={cover.src}
-      width={cover.width}
-      height={cover.height}
-      alt={post.coverImage.alt || ''}
-      loading="lazy"
-      class="cover-image block w-full"
-    />
-
-    <MarginedContainer>
-      <Section>
-        <SectionTop>
-          {
-            post.category && (
-              <>
-                <CategoryCatalogue category={post.category} currentSlug={slug as string} />
-                <Break />
-              </>
-            )
-          }
-        </SectionTop>
-        <SectionMiddle class="text-container">
-          <ExcerptText value={post._rawExcerpt} />
-          <RichText value={post._rawBody} />
-          <div class="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
+      <MarginedContainer>
+        <Section>
+          <SectionTop>
             {
-              post.tags && post.tags.length > 0 && (
-                <TagsArray
-                  tags={post.tags}
-                  class="flex flex-row items-center justify-start gap-2 sm:col-span-1"
-                />
+              post.category && (
+                // CategoryCatalogue scopes its own data-pagefind-ignore
+                // internally (the "other posts in this category" grid, not
+                // the category name/description itself — see the component).
+                <>
+                  <CategoryCatalogue category={post.category} currentSlug={slug as string} />
+                  <Break />
+                </>
               )
             }
-            <SocialShareRow
-              url={canonicalUrl}
-              title={post.title}
-              class="flex flex-row justify-end gap-4 sm:col-span-1 sm:justify-between"
-            />
-          </div>
-        </SectionMiddle>
-        <SectionBottom>
-          {
-            post.author && (
-              <div class="flex flex-col gap-1">
-                <p class="font-lora text-base text-gray-700 dark:text-gray-300 md:text-lg">
-                  This post was written by{' '}
-                  <a
-                    class="text-gray-900 hover:underline dark:text-gray-100"
-                    href={`/authors/${post.author.slug.current}`}
-                  >
-                    {post.author.name}
-                  </a>
-                </p>
-                {post.author.description && (
-                  <p class="font-warnockcapt text-base font-light italic text-gray-500 md:text-lg">
-                    {post.author.description}
+          </SectionTop>
+          <SectionMiddle class="text-container">
+            <ExcerptText value={post._rawExcerpt} />
+            <RichText value={post._rawBody} />
+            <div class="grid grid-flow-col gap-8 pb-0 pt-6 sm:grid-cols-2 md:pb-2">
+              {
+                post.tags && post.tags.length > 0 && (
+                  <TagsArray
+                    tags={post.tags}
+                    class="flex flex-row items-center justify-start gap-2 sm:col-span-1"
+                  />
+                )
+              }
+              <SocialShareRow
+                url={canonicalUrl}
+                title={post.title}
+                class="flex flex-row justify-end gap-4 sm:col-span-1 sm:justify-between"
+              />
+            </div>
+          </SectionMiddle>
+          <SectionBottom>
+            {
+              post.author && (
+                <div class="flex flex-col gap-1">
+                  <p class="font-lora text-base text-gray-700 dark:text-gray-300 md:text-lg">
+                    This post was written by{' '}
+                    <a
+                      class="text-gray-900 hover:underline dark:text-gray-100"
+                      href={`/authors/${post.author.slug.current}`}
+                    >
+                      {post.author.name}
+                    </a>
                   </p>
-                )}
-              </div>
-            )
-          }
-        </SectionBottom>
-        <Break />
-      </Section>
+                  {post.author.description && (
+                    <p class="font-warnockcapt text-base font-light italic text-gray-500 md:text-lg">
+                      {post.author.description}
+                    </p>
+                  )}
+                </div>
+              )
+            }
+          </SectionBottom>
+          <Break />
+        </Section>
+      </MarginedContainer>
+    </div>
+    <MarginedContainer>
       <NewsletterSection class="pb-8" heading="want to stay in touch?" />
     </MarginedContainer>
   </Container>
