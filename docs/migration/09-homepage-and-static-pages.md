@@ -28,7 +28,7 @@ None specific beyond what T1–T3 already established.
 
 ## Definition of done
 
-- [ ] Homepage, tags page, and 404 page all render on the branch-preview site with parity to the live site.
-- [ ] `NewsletterSection` is a single shared component used by both the homepage and the blog post template, not duplicated.
-- [ ] The full route set for the site now exists on the branch-preview deploy (every page type that exists on the live site has an Astro equivalent).
-- [ ] No automated tests required — verify all three pages visually against the live site, and confirm the 404 page actually renders for a genuinely nonexistent URL on the preview deploy.
+- [x] Homepage, tags page, and 404 page all render — verified via local `npm run build` output (`dist/index.html`, `dist/tags/index.html`, `dist/404.html`) with field-for-field parity to the Gatsby sources (`src/pages/index.jsx`, `tags.jsx`, `404.jsx`) and their component dependencies. Live branch-preview visual comparison not done — no Netlify credentials in this environment, same gap as T1–T8.
+- [x] `NewsletterSection` is a single shared component used by both the homepage and the blog post template, not duplicated — confirmed only one file (`astro/src/components/homepage/NewsletterSection.astro`) exists, imported by both `astro/src/pages/index.astro` and `astro/src/pages/posts/[slug].astro`.
+- [x] The full route set for the site now exists locally (confirmed via `npm run build` producing all 19 pages: `/`, `/tags`, `/404`, `/posts`, `/posts/*`, `/categories`, `/categories/*`, `/authors`, `/authors/*`). Whether this route set is live on a branch-preview deploy was not verified — no Netlify credentials in this environment.
+- [ ] No automated tests required — visual comparison against the *live* site was not performed (no Netlify credentials/browser access in this environment); the 404 page was confirmed to build as `dist/404.html` (Astro's static-404 convention) but not confirmed to actually serve for a genuinely nonexistent URL on a live preview deploy.
