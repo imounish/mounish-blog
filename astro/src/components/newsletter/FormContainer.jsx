@@ -16,7 +16,20 @@ function FormContainer() {
   const [responseStatus, setResponseStatus] = useState(null);
   const [responseMessage, setResponseMessage] = useState(null);
 
-  const postUrl = import.meta.env.PUBLIC_BEEHIIV_API_URL;
+  // T14: PUBLIC_BEEHIIV_API_URL was found unset anywhere in this repo (no
+  // `.env` entry, no netlify.toml branch-context value, no doc beyond the
+  // tracker's own "get this wrong and the signup form fails silently"
+  // warning) — meaning the client had no URL to POST to and would fail
+  // silently exactly as warned, since nothing had exercised the real
+  // browser->function fetch path before now (T12's sign-off only invoked
+  // the function handler directly in Node, bypassing this entirely).
+  // Netlify Functions are always reachable at `/.netlify/functions/<name>`
+  // from the site root regardless of the `base = "astro"` build setting
+  // (that only affects where Netlify looks for the function's source),
+  // so this is a safe, non-secret default — the env var can still override
+  // it if a deploy ever needs a different path.
+  const postUrl =
+    import.meta.env.PUBLIC_BEEHIIV_API_URL || '/.netlify/functions/subscribe-user';
 
   const handleFormSubmit = async (formData) => {
     const requestBody = {

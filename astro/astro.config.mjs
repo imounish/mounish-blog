@@ -21,6 +21,14 @@ export default defineConfig({
   // the feed (src/pages/rss.xml.ts) — same origin as siteConfig.ts's
   // siteUrl (ported from gatsby-config.js's siteMetadata.siteUrl).
   site: 'https://blog.mounish.dev',
+  // T14: verified against the live Gatsby site (blog.mounish.dev) that every
+  // non-root path 301-redirects a bare URL to its trailing-slash form (e.g.
+  // `/posts` -> `/posts/`, `/categories/movies` -> `/categories/movies/`).
+  // Astro's default (`'ignore'`) serves both forms as 200 with no redirect,
+  // which would silently diverge from previously-indexed/bookmarked URLs.
+  // Setting this explicitly to `'always'` matches Gatsby's real behavior
+  // instead of leaving it to Astro's default.
+  trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()]
   },
