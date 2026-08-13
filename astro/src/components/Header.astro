@@ -14,6 +14,22 @@
 // wired up from the page/layout that owns the framework integration, so
 // Layout.astro renders <Header /> and <ThemeToggle client:load /> as
 // siblings inside the same nav bar markup, keeping this file framework-free.
+//
+// `w-full` below: @material-tailwind/react's <Navbar> (which this header
+// replaces — see the file-top comment) applies `width: w-full` as part of
+// its own default base styles, invisibly, regardless of the `className`
+// prop passed to it (confirmed in its source,
+// theme/components/navbar/index.js: `styles.base.navbar.initial.width`).
+// Header.jsx's className never mentioned width at all and still got a
+// full-width fixed header for free because of that default. Dropping
+// Navbar for a plain <header> here (T3) lost that implicit default without
+// anyone adding it back explicitly — the header shrank to fit its content
+// (~413px instead of the viewport width), which broke the absolutely
+// centered nav's containing block (see the nav wrapper div below): it
+// computed `left: 50%` against that narrow shrunk header instead of the
+// full-width bar Gatsby actually has, landing the nav crammed against the
+// logo and overlapping the theme-toggle/search controls instead of
+// centered across the header.
 import menu from '../constants/menu';
 import Logo from './Logo.astro';
 import styles from './Header.module.css';
@@ -22,7 +38,7 @@ import styles from './Header.module.css';
 <header
   id="site-header"
   data-pagefind-ignore
-  class="font-worksans fixed top-0 z-10 h-max max-w-full px-6 py-2 text-lg opacity-100 backdrop-blur-lg transition-[top] duration-500 dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
+  class="font-worksans fixed top-0 z-10 h-max w-full max-w-full px-6 py-2 text-lg opacity-100 backdrop-blur-lg transition-[top] duration-500 dark:bg-black/75 dark:shadow-gray-900/40 lg:px-8 lg:py-4"
 >
   <div class="relative flex items-center justify-between text-black dark:text-gray-50">
     <Logo />
