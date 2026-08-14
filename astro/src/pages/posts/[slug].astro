@@ -60,7 +60,7 @@ const canonicalUrl = `${siteConfig.siteUrl}/posts/${slug}/`;
   author={post.author ?? undefined}
   canonicalUrl={canonicalUrl}
 >
-  <ProgressBar height="2" duration="0.4" bgColor="#E76161" />
+  <ProgressBar height="4" duration="0.4" bgColor="#E76161" />
   <Container>
     <!-- T13 (search formatting follow-up): scopes Pagefind's index to real
          article content (title, cover image, category, body) instead of the
@@ -159,7 +159,11 @@ const canonicalUrl = `${siteConfig.siteUrl}/posts/${slug}/`;
 
 <style>
   /* T6: port of single-blog-post.module.css. */
-  .text-container {
+  /* .text-container is applied via SectionMiddle's `class` prop, so it's
+     rendered on an element that never receives this file's own
+     data-astro-cid-* scope attribute — :global() is required or the rule
+     silently never matches. */
+  :global(.text-container) {
     margin-right: 25vw;
   }
   .cover-image {
@@ -167,7 +171,7 @@ const canonicalUrl = `${siteConfig.siteUrl}/posts/${slug}/`;
     object-fit: cover;
   }
   @media only screen and (max-width: 960px) {
-    .text-container {
+    :global(.text-container) {
       margin-right: 0;
     }
     .cover-image {

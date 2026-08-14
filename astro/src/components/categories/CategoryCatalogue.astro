@@ -21,10 +21,12 @@ interface Props {
 }
 const { category, currentSlug, class: className } = Astro.props;
 
+// T6/fix: matches Gatsby's CustomBlogItem — the current post stays in this
+// list (rendered disabled via CategoryCatalogueItem, not filtered out), so a
+// category with only one post still shows that post's own thumbnail here.
 const allBlogs = await getBlogsByCategory(category._id);
-const otherBlogs = allBlogs.filter((blog) => blog.slug.current !== currentSlug);
-const desktopBlogs = otherBlogs.slice(0, 3);
-const mobileBlogs = otherBlogs.slice(0, 2);
+const desktopBlogs = allBlogs.slice(0, 3);
+const mobileBlogs = allBlogs.slice(0, 2);
 ---
 
 <div class={`grid gap-4 pb-6 lg:grid-cols-4 lg:pb-8 ${className || ''}`}>
@@ -61,14 +63,22 @@ const mobileBlogs = otherBlogs.slice(0, 2);
     <div class="hidden grid-cols-3 gap-4 lg:grid">
       {
         desktopBlogs.map((blog) => (
-          <CategoryCatalogueItem blog={blog} categoryTitle={category.title} />
+          <CategoryCatalogueItem
+            blog={blog}
+            categoryTitle={category.title}
+            disabled={blog.slug.current === currentSlug}
+          />
         ))
       }
     </div>
     <div class="grid grid-cols-2 gap-4 lg:hidden">
       {
         mobileBlogs.map((blog) => (
-          <CategoryCatalogueItem blog={blog} categoryTitle={category.title} />
+          <CategoryCatalogueItem
+            blog={blog}
+            categoryTitle={category.title}
+            disabled={blog.slug.current === currentSlug}
+          />
         ))
       }
     </div>

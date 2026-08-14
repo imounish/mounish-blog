@@ -15,6 +15,17 @@
 //      keep-vs-drop decision on `@material-tailwind/react`. This file only
 //      needs to carry the fonts/colors that were previously wrapped by it.
 //
+// `screens` below is carried over separately: `withMT()` (dropped per point
+// 2) also silently overrode Tailwind's default breakpoints with Material
+// Tailwind's own (see node_modules/@material-tailwind/react/theme/base/
+// breakpoints.js) — every `sm:`/`md:`/`lg:`/`xl:`/`2xl:` class across the
+// whole Gatsby site, and the `container` utility's per-breakpoint max-width,
+// was authored against these values, not Tailwind's defaults. Dropping
+// `withMT()` without re-adding this silently widened `.container` (and every
+// other responsive utility) site-wide. `lg-max` (a Material Tailwind extra,
+// `{ max: '960px' }`) is omitted — grepping the Gatsby source confirms it
+// was never actually used.
+//
 // This file is wired in via the `@config` directive in `global.css` so the
 // custom-font-family/color tokens below still generate real utility classes
 // (`font-worksans`, `text-custom-red`, etc.) under Tailwind v4's CSS-first
@@ -24,6 +35,13 @@ export default {
     './src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}',
   ],
   theme: {
+    screens: {
+      sm: '540px',
+      md: '720px',
+      lg: '960px',
+      xl: '1140px',
+      '2xl': '1320px',
+    },
     fontFamily: {
       worksans: ['work-sans', 'sans-serif'],
       warnock: ['warnock', 'serif'],

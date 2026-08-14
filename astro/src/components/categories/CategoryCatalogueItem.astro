@@ -1,46 +1,67 @@
 ---
 // T6: sub-component of CategoryCatalogue.astro — ports CustomBlogItem() from
-// src/components/categories/CategoryCatalogue.jsx. The current post is
-// filtered out of the list before this is rendered (see
-// CategoryCatalogue.astro), so the "disabled" self-referencing state from
-// the Gatsby version doesn't apply here.
+// src/components/categories/CategoryCatalogue.jsx, including its "disabled"
+// state for when this item is the post currently being viewed: Gatsby keeps
+// the current post in the "other posts in this category" list (dimmed,
+// unlinked) rather than filtering it out, so a category with only one post
+// still shows that post's own thumbnail here instead of an empty grid.
 import { buildSanityImageUrl } from '../../lib/sanityImage';
 import type { CategoryCatalogueBlog } from '../../lib/sanity';
 
 interface Props {
   blog: CategoryCatalogueBlog;
   categoryTitle: string;
+  disabled?: boolean;
 }
-const { blog, categoryTitle } = Astro.props;
+const { blog, categoryTitle, disabled = false } = Astro.props;
 const image = buildSanityImageUrl(blog.coverImage.asset, { width: 400 });
 ---
 
-<div class="font-worksans">
-  <a href={`/posts/${blog.slug.current}/`} title={blog.title}>
-    <img
-      src={image.src}
-      width={image.width}
-      height={image.height}
-      alt={blog.coverImage.alt || ''}
-      loading="lazy"
-      class="blog-catalogue-image block h-auto w-full scale-100 rounded-md transition-transform duration-300 ease-in-out hover:scale-105"
-    />
-    <h2
-      class="font-lora w-full pb-1 pt-2 text-base font-normal text-gray-800 no-underline dark:text-gray-200 xl:text-lg"
-    >
-      <span
-        class="font-warnockdisp pr-2 text-sm font-light text-gray-800 no-underline dark:text-gray-200 xl:text-base"
-      >
-        {categoryTitle}
-      </span>
-      {blog.title}
-    </h2>
-  </a>
-</div>
+{
+  disabled ? (
+    <div class="disabled">
+      <img
+        src={image.src}
+        width={image.width}
+        height={image.height}
+        alt={blog.coverImage.alt || ''}
+        loading="lazy"
+        class="blog-catalogue-image block h-auto w-full scale-100 rounded-md hover:scale-105"
+      />
+      <h2 class="font-lora w-full pb-1 pt-2 text-base font-normal text-gray-800 no-underline dark:text-gray-200 xl:text-lg">
+        <span class="font-warnockdisp pr-2 text-sm font-light text-gray-800 no-underline dark:text-gray-200 xl:text-base">
+          {categoryTitle}
+        </span>
+        {blog.title}
+      </h2>
+    </div>
+  ) : (
+    <div class="font-worksans">
+      <a href={`/posts/${blog.slug.current}/`} title={blog.title}>
+        <img
+          src={image.src}
+          width={image.width}
+          height={image.height}
+          alt={blog.coverImage.alt || ''}
+          loading="lazy"
+          class="blog-catalogue-image block h-auto w-full scale-100 rounded-md hover:scale-105"
+        />
+        <h2 class="font-lora w-full pb-1 pt-2 text-base font-normal text-gray-800 no-underline dark:text-gray-200 xl:text-lg">
+          <span class="font-warnockdisp pr-2 text-sm font-light text-gray-800 no-underline dark:text-gray-200 xl:text-base">
+            {categoryTitle}
+          </span>
+          {blog.title}
+        </h2>
+      </a>
+    </div>
+  )
+}
 
 <style>
   .blog-catalogue-image {
     height: 136px;
+    object-fit: cover;
+    transition: 0.3s ease-in-out transform;
   }
   @media only screen and (min-width: 960px) {
     .blog-catalogue-image {
@@ -51,5 +72,9 @@ const image = buildSanityImageUrl(blog.coverImage.asset, { width: 400 });
     .blog-catalogue-image {
       height: 180px;
     }
+  }
+  .disabled {
+    opacity: 0.6;
+    pointer-events: none;
   }
 </style>

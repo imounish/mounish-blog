@@ -36,6 +36,37 @@ body * {
   opacity: 1;
 }
 
+/* Port of QuoteText.module.css — decorative quote-mark glyphs on
+   blockquotes rendered from Portable Text body content (see
+   ../lib/portableText.tsx). CSS Modules only hash class/id selectors, so
+   this bare-element rule was already effectively global in the Gatsby
+   original. */
+blockquote::before {
+  content: "\201C";
+  display: block;
+  color: #b83854;
+  font-family: Georgia, serif;
+  font-size: 5rem;
+  height: 0;
+  left: -1.5rem;
+  position: relative;
+  top: -0.75rem;
+  text-align: start;
+}
+
+blockquote::after {
+  content: "\201D";
+  display: block;
+  color: #b83854;
+  font-family: Georgia, serif;
+  font-size: 5rem;
+  height: 0;
+  right: -1.5rem;
+  position: relative;
+  bottom: -1.68rem;
+  text-align: end;
+}
+
 /* work sans font */
 @font-face {
   font-family: 'work-sans';
