@@ -50,7 +50,7 @@ blockquote::before {
   height: 0;
   left: -1.5rem;
   position: relative;
-  top: -0.75rem;
+  top: -3.45rem;
   text-align: start;
 }
 
@@ -63,23 +63,21 @@ blockquote::after {
   height: 0;
   right: -1.5rem;
   position: relative;
-  bottom: -1.68rem;
+  bottom: 0.85rem;
   text-align: end;
 }
 
 /* work sans font */
 @font-face {
   font-family: 'work-sans';
-  src: url(/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf)
-    format('truetype-variations');
+  src: url(/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf) format('truetype-variations');
   font-style: normal;
   font-weight: 1 999;
 }
 
 @font-face {
   font-family: 'work-sans';
-  src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf)
-    format('truetype-variations');
+  src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype-variations');
   font-style: italic;
   font-weight: 1 999;
 }
@@ -103,8 +101,7 @@ blockquote::after {
 
 @font-face {
   font-family: 'lora';
-  src: url(/fonts/Lora/Lora-Italic-VariableFont_wght.ttf)
-    format('truetype-variations');
+  src: url(/fonts/Lora/Lora-Italic-VariableFont_wght.ttf) format('truetype-variations');
   font-style: italic;
   font-weight: 1 999;
 }
