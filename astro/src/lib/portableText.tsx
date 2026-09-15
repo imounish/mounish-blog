@@ -22,8 +22,21 @@ import { tryGetImageDimensions, tryGetFileAsset } from '@sanity/asset-utils';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // eslint-disable-next-line import/no-unresolved -- deep import matches RichText.jsx
 import vsDark from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
+import DOMPurify from 'isomorphic-dompurify';
 import { buildInlineImageUrl } from './sanityImage';
 import { sanityAssetConfig } from './sanityAssetConfig';
+
+// Captions are stored in Sanity as strings that may embed simple HTML (e.g.
+// `From <a href="...">Giphy</a>`). We inject them as raw HTML to keep those
+// anchors live, so sanitize first with a tight allowlist — the CMS is
+// author-only, but this is cheap build-time defense-in-depth against a
+// compromised source baking script/attribute vectors into the static output.
+function sanitizeCaption(caption: string): string {
+  return DOMPurify.sanitize(caption, {
+    ALLOWED_TAGS: ['a', 'em', 'strong'],
+    ALLOWED_ATTR: ['href', 'target', 'rel'],
+  });
+}
 
 function tryGetVideoUrl(assetRef: unknown): { url: string; extension: string } | null {
   const asset = tryGetFileAsset(assetRef as never, sanityAssetConfig);
@@ -127,9 +140,10 @@ const richTextComponents: PortableTextComponents = {
             className="block w-full rounded-md"
           />
           {value?.caption && (
-            <p className="font-worksans text-center text-xs text-gray-500 md:text-sm">
-              {value.caption}
-            </p>
+            <p
+              className="font-worksans text-center text-xs text-gray-500 md:text-sm"
+              dangerouslySetInnerHTML={{ __html: sanitizeCaption(value.caption) }}
+            />
           )}
         </div>
       );
@@ -153,9 +167,10 @@ const richTextComponents: PortableTextComponents = {
             {fallback && <source src={fallback.url} type={`video/${fallback.extension}`} />}
           </video>
           {value.caption && (
-            <figcaption className="font-worksans text-center text-xs text-gray-500 md:text-sm">
-              {value.caption}
-            </figcaption>
+            <figcaption
+              className="font-worksans text-center text-xs text-gray-500 md:text-sm"
+              dangerouslySetInnerHTML={{ __html: sanitizeCaption(value.caption) }}
+            />
           )}
         </figure>
       );
